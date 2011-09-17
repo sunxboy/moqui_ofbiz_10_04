@@ -2,14 +2,19 @@ To use the Apache OFBiz 10.04 ported data model add the following to the
 entity-facade element of the Moqui Conf XML file:
 
     <entity-facade>
-        <datasource group-name="org.ofbiz" database-conf-name="derby" schema-name="OFBIZ" runtime-add-missing="false">
+        <datasource group-name="org.ofbiz" database-conf-name="derby"
+                    schema-name="OFBIZ" runtime-add-missing="false">
             <inline-jdbc pool-minsize="2" pool-maxsize="10">
-                <xa-properties databaseName="${moqui.runtime}/../../../pj/pj_ofbiz_10.04/runtime/data/derby/ofbiz"/>
+                <xa-properties databaseName="${moqui.runtime}/../../../ofbiz_10.04/runtime/data/derby/ofbiz"/>
             </inline-jdbc>
         </datasource>
-        <datasource group-name="org.ofbiz.tenant" database-conf-name="derby" schema-name="OFBIZ" runtime-add-missing="false">
+        <datasource group-name="org.ofbiz.tenant" database-conf-name="derby"
+                    schema-name="OFBIZ" runtime-add-missing="false">
             <inline-jdbc pool-minsize="2" pool-maxsize="10">
-                <xa-properties databaseName="${moqui.runtime}/../../../pj/pj_ofbiz_10.04/runtime/data/derby/ofbiztenant"/>
+                <xa-properties databaseName="${moqui.runtime}/../../../ofbiz_10.04/runtime/data/derby/ofbiztenant"/>
             </inline-jdbc>
         </datasource>
     </entity-facade>
+
+NOTE: change the path to the Apache OFBiz Derby DB directories, or change to
+point to whatever database is applicable.
