@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-definition-1.0.xsd">
+
+    <entity group-name="org.ofbiz" entity-name="TimeEntry" package-name="org.ofbiz.workeffort.timesheet">
+        <field name="timeEntryId" type="id" is-pk="true"/>
+        <field name="partyId" type="id"/>
+        <field name="fromDate" type="date-time"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="rateTypeId" type="id"/>
+        <field name="workEffortId" type="id"/>
+        <field name="timesheetId" type="id"/>
+        <field name="invoiceId" type="id"/>
+        <field name="invoiceItemSeqId" type="id"/>
+        <field name="hours" type="number-float"/>
+        <field name="comments" type="text-long"/>
+        <relationship type="one" fk-name="TIME_ENT_PRTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="TIME_ENT_RTTP" related-entity-name="RateType">
+            <key-map field-name="rateTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="TIME_ENT_WEFF" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one" fk-name="TIME_ENT_TSHT" related-entity-name="Timesheet">
+            <key-map field-name="timesheetId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="Invoice">
+            <key-map field-name="invoiceId"/>
+        </relationship>
+        <relationship type="one" fk-name="TIME_ENT_INVIT" related-entity-name="InvoiceItem">
+            <key-map field-name="invoiceId"/>
+            <key-map field-name="invoiceItemSeqId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="Timesheet" package-name="org.ofbiz.workeffort.timesheet">
+        <field name="timesheetId" type="id" is-pk="true"/>
+        <field name="partyId" type="id"/>
+        <field name="clientPartyId" type="id"/>
+        <field name="fromDate" type="date-time"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="statusId" type="id"/>
+        <field name="approvedByUserLoginId" type="id-very-long"/>
+        <field name="comments" type="text-long"/>
+        <relationship type="one" fk-name="TIMESHEET_PRTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="TIMESHEET_CPTY" title="Client" related-entity-name="Party">
+            <key-map field-name="clientPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="TIMESHEET_STS" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+        <relationship type="one" fk-name="TIMESHEET_AB_UL" title="ApprovedBy" related-entity-name="UserLogin">
+            <key-map field-name="approvedByUserLoginId" related-field-name="userLoginId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="TimesheetRole" package-name="org.ofbiz.workeffort.timesheet">
+        <field name="timesheetId" type="id" is-pk="true"/>
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="roleTypeId" type="id" is-pk="true"/>
+        <relationship type="one" fk-name="TIMESHTRL_TSHT" related-entity-name="Timesheet">
+            <key-map field-name="timesheetId"/>
+        </relationship>
+        <relationship type="one" fk-name="TIMESHTRL_PRTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="RoleType">
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="TIMESHTRL_PTRL" related-entity-name="PartyRole">
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ApplicationSandbox" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="applicationId" type="id" is-pk="true"/>
+        <field name="workEffortId" type="id"/>
+        <field name="partyId" type="id"/>
+        <field name="roleTypeId" type="id"/>
+        <field name="fromDate" type="date-time"/>
+        <field name="runtimeDataId" type="id"/>
+        <relationship type="one" fk-name="APP_SNDBX_WEPA" related-entity-name="WorkEffortPartyAssignment">
+            <key-map field-name="workEffortId"/>
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+            <key-map field-name="fromDate"/>
+        </relationship>
+        <relationship type="one" fk-name="APP_SNDBX_RNTMDTA" related-entity-name="RuntimeData">
+            <key-map field-name="runtimeDataId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="CommunicationEventWorkEff" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortId" type="id" is-pk="true"/>
+        <field name="communicationEventId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="COMEV_WEFF_WEFF" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one" fk-name="COMEV_WEFF_CMEV" related-entity-name="CommunicationEvent">
+            <key-map field-name="communicationEventId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="Deliverable" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="deliverableId" type="id" is-pk="true"/>
+        <field name="deliverableTypeId" type="id"/>
+        <field name="deliverableName" type="text-medium"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="DELIVERABLE_DLTYP" related-entity-name="DeliverableType">
+            <key-map field-name="deliverableTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="DeliverableType" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="deliverableTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffort" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortId" type="id" is-pk="true"/>
+        <field name="workEffortTypeId" type="id"/>
+        <field name="currentStatusId" type="id"/>
+        <field name="lastStatusUpdate" type="date-time"/>
+        <field name="workEffortPurposeTypeId" type="id"/>
+        <field name="workEffortParentId" type="id"/>
+        <field name="scopeEnumId" type="id"/>
+        <field name="priority" type="number-integer"/>
+        <field name="percentComplete" type="number-integer"/>
+        <field name="workEffortName" type="text-medium"/>
+        <field name="showAsEnumId" type="id"/>
+        <field name="sendNotificationEmail" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <field name="locationDesc" type="text-long"/>
+        <field name="estimatedStartDate" type="date-time"/>
+        <field name="estimatedCompletionDate" type="date-time"/>
+        <field name="actualStartDate" type="date-time"/>
+        <field name="actualCompletionDate" type="date-time"/>
+        <field name="estimatedMilliSeconds" type="number-float"/>
+        <field name="estimatedSetupMillis" type="number-float"/>
+        <field name="estimateCalcMethod" type="id"/>
+        <field name="actualMilliSeconds" type="number-float"/>
+        <field name="actualSetupMillis" type="number-float"/>
+        <field name="totalMilliSecondsAllowed" type="number-float"/>
+        <field name="totalMoneyAllowed" type="currency-amount"/>
+        <field name="moneyUomId" type="id"/>
+        <field name="specialTerms" type="text-long"/>
+        <field name="timeTransparency" type="number-integer"/>
+        <field name="universalId" type="text-medium"/>
+        <field name="sourceReferenceId" type="id-long"/>
+        <field name="fixedAssetId" type="id"/>
+        <field name="facilityId" type="id"/>
+        <field name="infoUrl" type="text-long"/>
+        <field name="recurrenceInfoId" type="id"/>
+        <field name="tempExprId" type="id"/>
+        <field name="runtimeDataId" type="id"/>
+        <field name="noteId" type="id"/>
+        <field name="serviceLoaderName" type="text-medium"/>
+        <field name="quantityToProduce" type="number-decimal"/>
+        <field name="quantityProduced" type="number-decimal"/>
+        <field name="quantityRejected" type="number-decimal"/>
+        <field name="reservPersons" type="number-decimal"/>
+        <field name="reserv2ndPPPerc" type="number-decimal"/>
+        <field name="reservNthPPPerc" type="number-decimal"/>
+        <field name="accommodationMapId" type="id"/>
+        <field name="accommodationSpotId" type="id"/>
+        <field name="revisionNumber" type="number-integer"/>
+        <field name="createdDate" type="date-time"/>
+        <field name="createdByUserLogin" type="id-very-long"/>
+        <field name="lastModifiedDate" type="date-time"/>
+        <field name="lastModifiedByUserLogin" type="id-very-long"/>
+        <relationship type="one" fk-name="WK_EFFRT_TYPE" related-entity-name="WorkEffortType">
+            <key-map field-name="workEffortTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="WK_EFFRT_PRPTYP" related-entity-name="WorkEffortPurposeType">
+            <key-map field-name="workEffortPurposeTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="WK_EFFRT_PARENT" title="Parent" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortParentId" related-field-name="workEffortId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="WorkEffortTypeAttr">
+            <key-map field-name="workEffortTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="WK_EFFRT_CURSTTS" title="Current" related-entity-name="OfbizStatusItem">
+            <key-map field-name="currentStatusId" related-field-name="statusId"/>
+        </relationship>
+        <relationship type="one" fk-name="WK_EFFRT_SC_ENUM" title="Scope" related-entity-name="Enumeration">
+            <key-map field-name="scopeEnumId" related-field-name="enumId"/>
+        </relationship>
+        <relationship type="one" fk-name="WK_EFFRT_FXDASST" related-entity-name="FixedAsset">
+            <key-map field-name="fixedAssetId"/>
+        </relationship>
+        <relationship type="one" fk-name="WK_EFFRT_FACILITY" related-entity-name="Facility">
+            <key-map field-name="facilityId"/>
+        </relationship>
+        <relationship type="one" fk-name="WK_EFFRT_MON_UOM" title="Money" related-entity-name="OfbizUom">
+            <key-map field-name="moneyUomId" related-field-name="uomId"/>
+        </relationship>
+        <relationship type="one" fk-name="WK_EFFRT_RECINFO" related-entity-name="RecurrenceInfo">
+            <key-map field-name="recurrenceInfoId"/>
+        </relationship>
+        <relationship type="one" fk-name="WK_EFFRT_TEMPEXPR" related-entity-name="TemporalExpression">
+            <key-map field-name="tempExprId"/>
+        </relationship>
+        <relationship type="one" fk-name="WK_EFFRT_RNTMDTA" related-entity-name="RuntimeData">
+            <key-map field-name="runtimeDataId"/>
+        </relationship>
+        <relationship type="one" fk-name="WK_EFFRT_NOTE" related-entity-name="NoteData">
+            <key-map field-name="noteId"/>
+        </relationship>
+        <relationship type="one" fk-name="WK_EFFRT_CUS_MET" related-entity-name="CustomMethod">
+            <key-map field-name="estimateCalcMethod" related-field-name="customMethodId"/>
+        </relationship>
+        <relationship type="one" fk-name="WK_EFFRT_ACC_MAP" related-entity-name="AccommodationMap">
+            <key-map field-name="accommodationMapId"/>
+        </relationship>
+        <relationship type="one" fk-name="WK_EFFRT_ACC_SPOT" related-entity-name="AccommodationSpot">
+            <key-map field-name="accommodationSpotId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortAssoc" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortIdFrom" type="id" is-pk="true"/>
+        <field name="workEffortIdTo" type="id" is-pk="true"/>
+        <field name="workEffortAssocTypeId" type="id" is-pk="true"/>
+        <field name="sequenceNum" type="number-integer"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <relationship type="one" fk-name="WK_EFFRTASSC_TYP" related-entity-name="WorkEffortAssocType">
+            <key-map field-name="workEffortAssocTypeId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="WorkEffortAssocTypeAttr">
+            <key-map field-name="workEffortAssocTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="WK_EFFRTASSC_FWE" title="From" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortIdFrom" related-field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one" fk-name="WK_EFFRTASSC_TWE" title="To" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortIdTo" related-field-name="workEffortId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortAssocAttribute" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortIdFrom" type="id" is-pk="true"/>
+        <field name="workEffortIdTo" type="id" is-pk="true"/>
+        <field name="workEffortAssocTypeId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <field name="attrValue" type="text-long"/>
+        <relationship type="one" fk-name="WK_EFFRTASSC_ATTR" related-entity-name="WorkEffortAssoc">
+            <key-map field-name="workEffortIdFrom"/>
+            <key-map field-name="workEffortIdTo"/>
+            <key-map field-name="workEffortAssocTypeId"/>
+            <key-map field-name="fromDate"/>
+        </relationship>
+        <relationship type="many" related-entity-name="WorkEffortAssocTypeAttr">
+            <key-map field-name="attrName"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortAssocType" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortAssocTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="WK_EFFRTASSC_TPAR" title="Parent" related-entity-name="WorkEffortAssocType">
+            <key-map field-name="parentTypeId" related-field-name="workEffortAssocTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortAssocTypeAttr" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortAssocTypeId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <relationship type="one" fk-name="WK_EFFRTASSC_TATR" related-entity-name="WorkEffortAssocType">
+            <key-map field-name="workEffortAssocTypeId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="WorkEffortAssocAttribute">
+            <key-map field-name="attrName"/>
+        </relationship>
+        <relationship type="many" related-entity-name="WorkEffortAssoc">
+            <key-map field-name="workEffortAssocTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortAttribute" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <field name="attrValue" type="text-long"/>
+        <relationship type="one" fk-name="WK_EFFRT_ATTR_WE" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="WorkEffortTypeAttr">
+            <key-map field-name="attrName"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortBilling" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortId" type="id" is-pk="true"/>
+        <field name="invoiceId" type="id" is-pk="true"/>
+        <field name="invoiceItemSeqId" type="id" is-pk="true"/>
+        <field name="percentage" type="number-float"/>
+        <relationship type="one" fk-name="WK_EFFBLNG_WEFF" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="Invoice">
+            <key-map field-name="invoiceId"/>
+        </relationship>
+        <relationship type="one" fk-name="WK_EFFBLNG_INVITM" related-entity-name="InvoiceItem">
+            <key-map field-name="invoiceId"/>
+            <key-map field-name="invoiceItemSeqId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortContactMech" package-name="org.ofbiz.workeffort.workeffort" table-name="WORK_EFFORT_CONTACT_MECH_NEW">
+        <field name="workEffortId" type="id" is-pk="true"/>
+        <field name="contactMechId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="comments" type="text-long"/>
+        <relationship type="one" fk-name="WKEFF_CMECH_WKEFF" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_CMECH_CMECH" related-entity-name="ContactMech">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="TelecomNumber">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortContent" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortId" type="id" is-pk="true"/>
+        <field name="contentId" type="id" is-pk="true"/>
+        <field name="workEffortContentTypeId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <relationship type="one" fk-name="WKEFF_CNT_WKEFF" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_CNT_CNT" related-entity-name="Content">
+            <key-map field-name="contentId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_CNT_WCTP" related-entity-name="WorkEffortContentType">
+            <key-map field-name="workEffortContentTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortContentType" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortContentTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="WEFFCTP_TP_PAR" title="Parent" related-entity-name="WorkEffortContentType">
+            <key-map field-name="parentTypeId" related-field-name="workEffortContentTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortDeliverableProd" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortId" type="id" is-pk="true"/>
+        <field name="deliverableId" type="id" is-pk="true"/>
+        <relationship type="one" fk-name="WKEFF_DELPRD_WEFF" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_DELPRD_DEL" related-entity-name="Deliverable">
+            <key-map field-name="deliverableId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortEventReminder" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortId" type="id" is-pk="true"/>
+        <field name="sequenceId" type="id" is-pk="true"/>
+        <field name="contactMechId" type="id"/>
+        <field name="partyId" type="id"/>
+        <field name="reminderDateTime" type="date-time"/>
+        <field name="repeatCount" type="number-integer"/>
+        <field name="repeatInterval" type="number-integer"/>
+        <field name="currentCount" type="number-integer"/>
+        <field name="reminderOffset" type="number-integer"/>
+        <field name="localeId" type="id"/>
+        <field name="timeZoneId" type="id-long"/>
+        <relationship type="one" fk-name="WE_EVENT_REMIND_WE" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one" fk-name="WE_EVENT_REMIND_CM" related-entity-name="ContactMech">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one" fk-name="WE_EVENT_REMIND_PY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortFixedAssetAssign" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortId" type="id" is-pk="true"/>
+        <field name="fixedAssetId" type="id" is-pk="true"/>
+        <field name="statusId" type="id"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="availabilityStatusId" type="id"/>
+        <field name="allocatedCost" type="currency-amount"/>
+        <field name="comments" type="text-long"/>
+        <relationship type="one" fk-name="WKEFF_FXDAA_WEFF" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_FXDAA_FXAS" related-entity-name="FixedAsset">
+            <key-map field-name="fixedAssetId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_FXDAA_STTS" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_FXDAA_AVAIL" title="Availability" related-entity-name="OfbizStatusItem">
+            <key-map field-name="availabilityStatusId" related-field-name="statusId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortFixedAssetStd" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortId" type="id" is-pk="true"/>
+        <field name="fixedAssetTypeId" type="id" is-pk="true"/>
+        <field name="estimatedQuantity" type="number-float"/>
+        <field name="estimatedDuration" type="number-float"/>
+        <field name="estimatedCost" type="currency-amount"/>
+        <relationship type="one" fk-name="WKEFF_FASTD_WEFF" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_FASTD_FAT" related-entity-name="FixedAssetType">
+            <key-map field-name="fixedAssetTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortGoodStandard" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortId" type="id" is-pk="true"/>
+        <field name="productId" type="id" is-pk="true"/>
+        <field name="workEffortGoodStdTypeId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="statusId" type="id"/>
+        <field name="estimatedQuantity" type="number-float"/>
+        <field name="estimatedCost" type="currency-amount"/>
+        <relationship type="one" fk-name="WKEFF_GDSTD_WEFF" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_GDSTD_TYPE" related-entity-name="WorkEffortGoodStandardType">
+            <key-map field-name="workEffortGoodStdTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_GDSTD_PROD" related-entity-name="Product">
+            <key-map field-name="productId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_GDSTD_STTS" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortGoodStandardType" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortGoodStdTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="WKEFF_GDSTD_TPAR" title="Parent" related-entity-name="WorkEffortGoodStandardType">
+            <key-map field-name="parentTypeId" related-field-name="workEffortGoodStdTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortIcalData" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortId" type="id" is-pk="true"/>
+        <field name="icalData" type="text-very-long"/>
+        <relationship type="one" fk-name="WKEFF_ICAL_DATA" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortInventoryAssign" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortId" type="id" is-pk="true"/>
+        <field name="inventoryItemId" type="id" is-pk="true"/>
+        <field name="statusId" type="id"/>
+        <field name="quantity" type="number-float"/>
+        <relationship type="one" fk-name="WKEFF_INVAS_WEFF" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_INVAS_INVIT" related-entity-name="InventoryItem">
+            <key-map field-name="inventoryItemId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_INVAS_STTS" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortInventoryProduced" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortId" type="id" is-pk="true"/>
+        <field name="inventoryItemId" type="id" is-pk="true"/>
+        <relationship type="one" fk-name="WKEFF_INVPD_WEFF" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_INVPD_INVIT" related-entity-name="InventoryItem">
+            <key-map field-name="inventoryItemId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortCostCalc" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortId" type="id" is-pk="true"/>
+        <field name="costComponentTypeId" type="id" is-pk="true"/>
+        <field name="costComponentCalcId" type="id"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <relationship type="one" fk-name="WK_EFFRT_COS_WEF" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one" fk-name="WK_EFFRT_COS_CCT" related-entity-name="CostComponentType">
+            <key-map field-name="costComponentTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="WK_EFFRT_COS_CCC" related-entity-name="CostComponentCalc">
+            <key-map field-name="costComponentCalcId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortKeyword" package-name="org.ofbiz.workeffort.workeffort" cache="never">
+        <field name="workEffortId" type="id" is-pk="true"/>
+        <field name="keyword" type="text-medium" is-pk="true"/>
+        <field name="relevancyWeight" type="number-integer"/>
+        <relationship type="one" fk-name="WEFF_KWD_WEFF" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+    <index name="WEFF_KWD_KWD">
+    <index-field name="keyword"/>
+    </index>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortNote" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortId" type="id" is-pk="true"/>
+        <field name="noteId" type="id" is-pk="true"/>
+        <field name="internalNote" type="text-indicator"/>
+        <relationship type="one" fk-name="WKEFF_NTE_WEFF" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_NTE_NOTE" related-entity-name="NoteData">
+            <key-map field-name="noteId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortPartyAssignment" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortId" type="id" is-pk="true"/>
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="roleTypeId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="assignedByUserLoginId" type="id-very-long"/>
+        <field name="statusId" type="id"/>
+        <field name="statusDateTime" type="date-time"/>
+        <field name="expectationEnumId" type="id"/>
+        <field name="delegateReasonEnumId" type="id"/>
+        <field name="facilityId" type="id"/>
+        <field name="comments" type="text-long"/>
+        <field name="mustRsvp" type="text-indicator"/>
+        <field name="availabilityStatusId" type="id"/>
+        <relationship type="one" fk-name="WKEFF_PA_WE" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="Person">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="PartyRole">
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="RoleType">
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_PA_ABUSRLOG" title="AssignedBy" related-entity-name="UserLogin">
+            <key-map field-name="assignedByUserLoginId" related-field-name="userLoginId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_PA_STTS" title="Assignment" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_PA_EXP_ENUM" title="Expectation" related-entity-name="Enumeration">
+            <key-map field-name="expectationEnumId" related-field-name="enumId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_PA_DELR_ENM" title="DelegateReason" related-entity-name="Enumeration">
+            <key-map field-name="delegateReasonEnumId" related-field-name="enumId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_PA_FACILITY" related-entity-name="Facility">
+            <key-map field-name="facilityId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_PA_AVSTTS" title="Availability" related-entity-name="OfbizStatusItem">
+            <key-map field-name="availabilityStatusId" related-field-name="statusId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortPurposeType" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortPurposeTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="WK_EFFRT_PTYPE_PAR" title="Parent" related-entity-name="WorkEffortPurposeType">
+            <key-map field-name="parentTypeId" related-field-name="workEffortPurposeTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortReview" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortId" type="id" is-pk="true"/>
+        <field name="userLoginId" type="id-very-long" is-pk="true"/>
+        <field name="reviewDate" type="date-time" is-pk="true"/>
+        <field name="statusId" type="id"/>
+        <field name="postedAnonymous" type="text-indicator"/>
+        <field name="rating" type="number-float"/>
+        <field name="reviewText" type="text-very-long"/>
+        <relationship type="one" fk-name="WEFF_REVIEW_WEFF" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one" fk-name="WEFF_REVIEW_UL" related-entity-name="UserLogin">
+            <key-map field-name="userLoginId"/>
+        </relationship>
+        <relationship type="one" fk-name="WEFF_REVIEW_STTS" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortSearchConstraint" package-name="org.ofbiz.workeffort.workeffort" cache="never">
+        <field name="workEffortSearchResultId" type="id" is-pk="true"/>
+        <field name="constraintSeqId" type="id" is-pk="true"/>
+        <field name="constraintName" type="text-long"/>
+        <field name="infoString" type="text-long"/>
+        <field name="includeSubWorkEfforts" type="text-indicator"/>
+        <field name="isAnd" type="text-indicator"/>
+        <field name="anyPrefix" type="text-indicator"/>
+        <field name="anySuffix" type="text-indicator"/>
+        <field name="removeStems" type="text-indicator"/>
+        <field name="lowValue" type="text-medium"/>
+        <field name="highValue" type="text-medium"/>
+        <relationship type="one" fk-name="WEFF_SCHRSI_RES" related-entity-name="WorkEffortSearchResult">
+            <key-map field-name="workEffortSearchResultId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortSearchResult" package-name="org.ofbiz.workeffort.workeffort" cache="never">
+        <field name="workEffortSearchResultId" type="id" is-pk="true"/>
+        <field name="visitId" type="id"/>
+        <field name="orderByName" type="text-long"/>
+        <field name="isAscending" type="text-indicator"/>
+        <field name="numResults" type="number-integer"/>
+        <field name="secondsTotal" type="number-float"/>
+        <field name="searchDate" type="date-time"/>
+        <relationship type="one" fk-name="WEFF_SCHRES_VST" related-entity-name="Visit">
+            <key-map field-name="visitId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortSkillStandard" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortId" type="id" is-pk="true"/>
+        <field name="skillTypeId" type="id" is-pk="true"/>
+        <field name="estimatedNumPeople" type="number-float"/>
+        <field name="estimatedDuration" type="number-float"/>
+        <field name="estimatedCost" type="currency-amount"/>
+        <relationship type="one" fk-name="WKEFF_SKLSTD_WEFF" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_SKLSTD_SKTP" related-entity-name="SkillType">
+            <key-map field-name="skillTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortStatus" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortId" type="id" is-pk="true"/>
+        <field name="statusId" type="id" is-pk="true"/>
+        <field name="statusDatetime" type="date-time" is-pk="true"/>
+        <field name="setByUserLogin" type="id-very-long"/>
+        <field name="reason" type="text-long"/>
+        <relationship type="one" fk-name="WKEFF_STTS_WE" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_STTS_STTS" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+        <relationship type="one" fk-name="WKEFF_STTS_SB_UL" title="SetBy" related-entity-name="UserLogin">
+            <key-map field-name="setByUserLogin" related-field-name="userLoginId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortTransBox" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="processWorkEffortId" type="id" is-pk="true"/>
+        <field name="toActivityId" type="id-long" is-pk="true"/>
+        <field name="transitionId" type="id-long" is-pk="true"/>
+        <relationship type="one" fk-name="WKEFF_TXBX_WE" related-entity-name="WorkEffort">
+            <key-map field-name="processWorkEffortId" related-field-name="workEffortId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortType" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="WK_EFFRT_TYPE_PAR" title="Parent" related-entity-name="WorkEffortType">
+            <key-map field-name="parentTypeId" related-field-name="workEffortTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortTypeAttr" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortTypeId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <relationship type="one" fk-name="WK_EFFRT_TYPE_ATR" related-entity-name="WorkEffortType">
+            <key-map field-name="workEffortTypeId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="WorkEffortAttribute">
+            <key-map field-name="attrName"/>
+        </relationship>
+        <relationship type="many" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WorkEffortSurveyAppl" package-name="org.ofbiz.workeffort.workeffort">
+        <field name="workEffortId" type="id" is-pk="true"/>
+        <field name="surveyId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <relationship type="one" related-entity-name="Survey">
+            <key-map field-name="surveyId"/>
+        </relationship>
+        <relationship type="one" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one" related-entity-name="ProductStoreSurveyAppl">
+            <key-map field-name="surveyId" related-field-name="productStoreSurveyId"/>
+        </relationship>
+    </entity>
+</entities>
+

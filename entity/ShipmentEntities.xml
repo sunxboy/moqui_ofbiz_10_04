@@ -1,0 +1,1367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-definition-1.0.xsd">
+
+    <entity group-name="org.ofbiz" entity-name="ItemIssuance" package-name="org.ofbiz.shipment.issuance">
+        <field name="itemIssuanceId" type="id" is-pk="true"/>
+        <field name="orderId" type="id"/>
+        <field name="orderItemSeqId" type="id"/>
+        <field name="shipGroupSeqId" type="id"/>
+        <field name="inventoryItemId" type="id"/>
+        <field name="shipmentId" type="id"/>
+        <field name="shipmentItemSeqId" type="id"/>
+        <field name="fixedAssetId" type="id"/>
+        <field name="maintHistSeqId" type="id"/>
+        <field name="issuedDateTime" type="date-time"/>
+        <field name="issuedByUserLoginId" type="id-very-long"/>
+        <field name="quantity" type="number-decimal"/>
+        <field name="cancelQuantity" type="number-decimal"/>
+        <relationship type="one" fk-name="ITEM_ISS_INVITM" related-entity-name="InventoryItem">
+            <key-map field-name="inventoryItemId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="OrderItemShipGrpInvRes">
+            <key-map field-name="orderId"/>
+            <key-map field-name="orderItemSeqId"/>
+            <key-map field-name="shipGroupSeqId"/>
+            <key-map field-name="inventoryItemId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="Shipment">
+            <key-map field-name="shipmentId"/>
+        </relationship>
+        <relationship type="one" fk-name="ITEM_ISS_SHITM" related-entity-name="ShipmentItem">
+            <key-map field-name="shipmentId"/>
+            <key-map field-name="shipmentItemSeqId"/>
+        </relationship>
+        <relationship type="one" fk-name="ITEM_ISS_FAMNT" related-entity-name="FixedAssetMaint">
+            <key-map field-name="fixedAssetId"/>
+            <key-map field-name="maintHistSeqId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="OrderHeader">
+            <key-map field-name="orderId"/>
+        </relationship>
+        <relationship type="one" fk-name="ITEM_ISS_ORITM" related-entity-name="OrderItem">
+            <key-map field-name="orderId"/>
+            <key-map field-name="orderItemSeqId"/>
+        </relationship>
+        <relationship type="one" fk-name="ITEM_ISS_IBUL" title="IssuedBy" related-entity-name="UserLogin">
+            <key-map field-name="issuedByUserLoginId" related-field-name="userLoginId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="ItemIssuanceAndInventoryItem" package-name="org.ofbiz.shipment.issuance">
+        <member-entity entity-alias="IISS" entity-name="ItemIssuance">
+        </member-entity>
+        <member-entity entity-alias="IITM" entity-name="InventoryItem" join-from-alias="IISS">
+            <key-map field-name="inventoryItemId"/>
+        </member-entity>
+        <alias-all entity-alias="IISS">
+        </alias-all>
+        <alias-all entity-alias="IITM">
+        </alias-all>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="ItemIssuanceRole" package-name="org.ofbiz.shipment.issuance">
+        <field name="itemIssuanceId" type="id" is-pk="true"/>
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="roleTypeId" type="id" is-pk="true"/>
+        <relationship type="one" fk-name="ITEM_ISSRL_ITMIS" related-entity-name="ItemIssuance">
+            <key-map field-name="itemIssuanceId"/>
+        </relationship>
+        <relationship type="one" fk-name="ITEM_ISSRL_PTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="ITEM_ISSRL_PTRL" related-entity-name="PartyRole">
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="Picklist" package-name="org.ofbiz.shipment.picklist">
+        <field name="picklistId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+        <field name="facilityId" type="id"/>
+        <field name="shipmentMethodTypeId" type="id"/>
+        <field name="statusId" type="id"/>
+        <field name="picklistDate" type="date-time"/>
+        <field name="createdByUserLogin" type="id-very-long"/>
+        <field name="lastModifiedByUserLogin" type="id-very-long"/>
+        <relationship type="one" fk-name="PICKLST_FLTY" related-entity-name="Facility">
+            <key-map field-name="facilityId"/>
+        </relationship>
+        <relationship type="one" fk-name="PICKLST_SMTP" related-entity-name="ShipmentMethodType">
+            <key-map field-name="shipmentMethodTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="PICKLST_STTS" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="OfbizStatusValidChangeToDetail">
+            <key-map field-name="statusId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="PicklistAndBinAndItem" package-name="org.ofbiz.shipment.picklist">
+        <member-entity entity-alias="PL" entity-name="Picklist" join-from-alias="IISS">
+            <key-map field-name="inventoryItemId"/>
+        </member-entity>
+        <member-entity entity-alias="PLB" entity-name="PicklistBin" join-from-alias="PL">
+            <key-map field-name="picklistId"/>
+        </member-entity>
+        <member-entity entity-alias="PLI" entity-name="PicklistItem" join-from-alias="PLB">
+            <key-map field-name="picklistBinId"/>
+        </member-entity>
+        <alias-all entity-alias="PL">
+        </alias-all>
+        <alias-all entity-alias="PLB">
+        </alias-all>
+        <alias-all entity-alias="PLI">
+        </alias-all>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="PicklistBin" package-name="org.ofbiz.shipment.picklist">
+        <field name="picklistBinId" type="id" is-pk="true"/>
+        <field name="picklistId" type="id"/>
+        <field name="binLocationNumber" type="number-integer"/>
+        <field name="primaryOrderId" type="id"/>
+        <field name="primaryShipGroupSeqId" type="id"/>
+        <relationship type="one" fk-name="PCKLST_BIN_PKLT" related-entity-name="Picklist">
+            <key-map field-name="picklistId"/>
+        </relationship>
+        <relationship type="one" fk-name="PCKLST_BIN_OISG" title="Primary" related-entity-name="OrderItemShipGroup">
+            <key-map field-name="primaryOrderId" related-field-name="orderId"/>
+            <key-map field-name="primaryShipGroupSeqId" related-field-name="shipGroupSeqId"/>
+        </relationship>
+        <relationship type="one-nofk" title="Primary" related-entity-name="OrderHeader">
+            <key-map field-name="primaryOrderId" related-field-name="orderId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PicklistItem" package-name="org.ofbiz.shipment.picklist">
+        <field name="picklistBinId" type="id" is-pk="true"/>
+        <field name="orderId" type="id" is-pk="true"/>
+        <field name="orderItemSeqId" type="id" is-pk="true"/>
+        <field name="shipGroupSeqId" type="id" is-pk="true"/>
+        <field name="inventoryItemId" type="id" is-pk="true"/>
+        <field name="itemStatusId" type="id"/>
+        <field name="quantity" type="number-decimal"/>
+        <relationship type="one" fk-name="PCKLST_ITM_BIN" related-entity-name="PicklistBin">
+            <key-map field-name="picklistBinId"/>
+        </relationship>
+        <relationship type="one" fk-name="PCKLST_ITM_OISG" related-entity-name="OrderItemShipGroup">
+            <key-map field-name="orderId"/>
+            <key-map field-name="shipGroupSeqId"/>
+        </relationship>
+        <relationship type="one" fk-name="PCKLST_ITM_ODIT" related-entity-name="OrderItem">
+            <key-map field-name="orderId"/>
+            <key-map field-name="orderItemSeqId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="OrderHeader">
+            <key-map field-name="orderId"/>
+        </relationship>
+        <relationship type="one" fk-name="PICKLST_ITM_STTS" related-entity-name="OfbizStatusItem">
+            <key-map field-name="itemStatusId" related-field-name="statusId"/>
+        </relationship>
+        <relationship type="one" fk-name="PCKLST_ITM_INV" related-entity-name="InventoryItem">
+            <key-map field-name="inventoryItemId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="InventoryItemAndLocation">
+            <key-map field-name="inventoryItemId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="OrderItemShipGrpInvRes">
+            <key-map field-name="orderId"/>
+            <key-map field-name="orderItemSeqId"/>
+            <key-map field-name="shipGroupSeqId"/>
+            <key-map field-name="inventoryItemId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="ItemIssuance">
+            <key-map field-name="orderId"/>
+            <key-map field-name="orderItemSeqId"/>
+            <key-map field-name="shipGroupSeqId"/>
+            <key-map field-name="inventoryItemId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="PicklistItemAndBin" package-name="org.ofbiz.shipment.picklist">
+        <member-entity entity-alias="PB" entity-name="PicklistBin" join-from-alias="PLB">
+            <key-map field-name="picklistBinId"/>
+        </member-entity>
+        <member-entity entity-alias="PI" entity-name="PicklistItem" join-from-alias="PB">
+            <key-map field-name="picklistBinId"/>
+        </member-entity>
+        <alias-all entity-alias="PB">
+        </alias-all>
+        <alias-all entity-alias="PI">
+        </alias-all>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="PicklistRole" package-name="org.ofbiz.shipment.picklist">
+        <field name="picklistId" type="id" is-pk="true"/>
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="roleTypeId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="createdByUserLogin" type="id-very-long"/>
+        <field name="lastModifiedByUserLogin" type="id-very-long"/>
+        <relationship type="one" fk-name="PCKLST_RLE_PKLT" related-entity-name="Picklist">
+            <key-map field-name="picklistId"/>
+        </relationship>
+        <relationship type="one" fk-name="PCKLST_RLE_PRLE" related-entity-name="PartyRole">
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="RoleType">
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="PartyNameView">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="PCKLST_RLE_CBUL" title="CreatedBy" related-entity-name="UserLogin">
+            <key-map field-name="createdByUserLogin" related-field-name="userLoginId"/>
+        </relationship>
+        <relationship type="one" fk-name="PCKLST_RLE_LMUL" title="LastModifiedBy" related-entity-name="UserLogin">
+            <key-map field-name="lastModifiedByUserLogin" related-field-name="userLoginId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PicklistStatusHistory" package-name="org.ofbiz.shipment.picklist">
+        <field name="picklistId" type="id" is-pk="true"/>
+        <field name="changeDate" type="date-time" is-pk="true"/>
+        <field name="changeUserLoginId" type="id-very-long"/>
+        <field name="statusId" type="id"/>
+        <field name="statusIdTo" type="id"/>
+        <relationship type="one" fk-name="PCKLST_STHST_PKLT" related-entity-name="Picklist">
+            <key-map field-name="picklistId"/>
+        </relationship>
+        <relationship type="one" fk-name="PCKLST_STHST_CUL" title="Change" related-entity-name="UserLogin">
+            <key-map field-name="changeUserLoginId" related-field-name="userLoginId"/>
+        </relationship>
+        <relationship type="one" fk-name="PCKLST_STHST_FSI" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+        <relationship type="one" fk-name="PCKLST_STHST_TSI" title="To" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusIdTo" related-field-name="statusId"/>
+        </relationship>
+        <relationship type="one" fk-name="PCKLST_STHST_SVC" related-entity-name="OfbizStatusValidChange">
+            <key-map field-name="statusId"/>
+            <key-map field-name="statusIdTo"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="RejectionReason" package-name="org.ofbiz.shipment.receipt">
+        <field name="rejectionId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ShipmentReceipt" package-name="org.ofbiz.shipment.receipt">
+        <field name="receiptId" type="id" is-pk="true"/>
+        <field name="inventoryItemId" type="id"/>
+        <field name="productId" type="id"/>
+        <field name="shipmentId" type="id"/>
+        <field name="shipmentItemSeqId" type="id"/>
+        <field name="shipmentPackageSeqId" type="id"/>
+        <field name="orderId" type="id"/>
+        <field name="orderItemSeqId" type="id"/>
+        <field name="returnId" type="id"/>
+        <field name="returnItemSeqId" type="id"/>
+        <field name="rejectionId" type="id"/>
+        <field name="receivedByUserLoginId" type="id-very-long"/>
+        <field name="datetimeReceived" type="date-time"/>
+        <field name="itemDescription" type="text-long"/>
+        <field name="quantityAccepted" type="number-decimal"/>
+        <field name="quantityRejected" type="number-decimal"/>
+        <relationship type="one" fk-name="SHP_RCPT_INVITM" related-entity-name="InventoryItem">
+            <key-map field-name="inventoryItemId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHP_RCPT_PROD" related-entity-name="Product">
+            <key-map field-name="productId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHP_RCPT_SHPKG" related-entity-name="ShipmentPackage">
+            <key-map field-name="shipmentId"/>
+            <key-map field-name="shipmentPackageSeqId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="OrderHeader">
+            <key-map field-name="orderId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHP_RCPT_ORDITM" related-entity-name="OrderItem">
+            <key-map field-name="orderId"/>
+            <key-map field-name="orderItemSeqId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHP_RCPT_REJRSN" related-entity-name="RejectionReason">
+            <key-map field-name="rejectionId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHP_RCPT_USERLGN" related-entity-name="UserLogin">
+            <key-map field-name="receivedByUserLoginId" related-field-name="userLoginId"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="SHP_RCPT_SHIPMT" related-entity-name="Shipment">
+            <key-map field-name="shipmentId"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="SHP_RCPT_SHIPIT" related-entity-name="ShipmentItem">
+            <key-map field-name="shipmentId"/>
+            <key-map field-name="shipmentItemSeqId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHP_RCPT_RETINVITM" related-entity-name="ReturnItem">
+            <key-map field-name="returnId"/>
+            <key-map field-name="returnItemSeqId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ShipmentReceiptRole" package-name="org.ofbiz.shipment.receipt">
+        <field name="receiptId" type="id" is-pk="true"/>
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="roleTypeId" type="id" is-pk="true"/>
+        <relationship type="one" fk-name="SHP_RCPTRL_RCPT" related-entity-name="ShipmentReceipt">
+            <key-map field-name="receiptId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHP_RCPTRL_PTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHP_RCPTRL_PTRL" related-entity-name="PartyRole">
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="ShipmentReceiptAndItem" package-name="org.ofbiz.shipment.shipment">
+        <member-entity entity-alias="SR" entity-name="ShipmentReceipt" join-from-alias="PB">
+            <key-map field-name="picklistBinId"/>
+        </member-entity>
+        <member-entity entity-alias="II" entity-name="InventoryItem" join-from-alias="SR">
+            <key-map field-name="inventoryItemId"/>
+        </member-entity>
+        <alias-all entity-alias="SR">
+        </alias-all>
+        <alias entity-alias="II" name="facilityId">
+        </alias>
+        <alias entity-alias="II" name="locationSeqId">
+        </alias>
+        <alias entity-alias="II" name="quantityOnHandTotal">
+        </alias>
+        <alias entity-alias="II" name="availableToPromiseTotal">
+        </alias>
+        <alias entity-alias="II" name="unitCost">
+        </alias>
+    </view-entity> -->
+    <!-- <view-entity entity-name="CarrierAndShipmentMethod" package-name="org.ofbiz.shipment.shipment">
+        <member-entity entity-alias="CS" entity-name="CarrierShipmentMethod" join-from-alias="SR">
+            <key-map field-name="inventoryItemId"/>
+        </member-entity>
+        <member-entity entity-alias="SM" entity-name="ShipmentMethodType" join-from-alias="CS">
+            <key-map field-name="shipmentMethodTypeId"/>
+        </member-entity>
+        <alias entity-alias="CS" name="shipmentMethodTypeId">
+        </alias>
+        <alias entity-alias="CS" name="partyId">
+        </alias>
+        <alias entity-alias="CS" name="roleTypeId">
+        </alias>
+        <alias entity-alias="CS" name="sequenceNumber">
+        </alias>
+        <alias entity-alias="SM" name="description">
+        </alias>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="CarrierShipmentMethod" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentMethodTypeId" type="id" is-pk="true"/>
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="roleTypeId" type="id" is-pk="true"/>
+        <field name="sequenceNumber" type="number-integer"/>
+        <field name="carrierServiceCode" type="text-medium"/>
+        <relationship type="one" fk-name="CARR_SHMETH_TYPE" related-entity-name="ShipmentMethodType">
+            <key-map field-name="shipmentMethodTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="CARR_SHMETH_PARTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="CARR_SHMETH_PROLE" related-entity-name="PartyRole">
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="CarrierShipmentBoxType" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentBoxTypeId" type="id" is-pk="true"/>
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="packagingTypeCode" type="id"/>
+        <field name="oversizeCode" type="text-short"/>
+        <relationship type="one" fk-name="CARR_SHBX_TYPE" related-entity-name="ShipmentBoxType">
+            <key-map field-name="shipmentBoxTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="CARR_SHBX_PARTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="Delivery" package-name="org.ofbiz.shipment.shipment">
+        <field name="deliveryId" type="id" is-pk="true"/>
+        <field name="originFacilityId" type="id"/>
+        <field name="destFacilityId" type="id"/>
+        <field name="actualStartDate" type="date-time"/>
+        <field name="actualArrivalDate" type="date-time"/>
+        <field name="estimatedStartDate" type="date-time"/>
+        <field name="estimatedArrivalDate" type="date-time"/>
+        <field name="fixedAssetId" type="id"/>
+        <field name="startMileage" type="number-decimal"/>
+        <field name="endMileage" type="number-decimal"/>
+        <field name="fuelUsed" type="number-decimal"/>
+        <relationship type="one" fk-name="DELIV_FXAS" related-entity-name="FixedAsset">
+            <key-map field-name="fixedAssetId"/>
+        </relationship>
+        <relationship type="one" fk-name="DELIV_OFAC" title="Origin" related-entity-name="Facility">
+            <key-map field-name="originFacilityId" related-field-name="facilityId"/>
+        </relationship>
+        <relationship type="one" fk-name="DELIV_DFAC" title="Dest" related-entity-name="Facility">
+            <key-map field-name="destFacilityId" related-field-name="facilityId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="OrderShipmentInfoSummary" package-name="org.ofbiz.shipment.shipment">
+    <description>This view is meant for getting all tracking information for all shipments associated with an order, it does not include information to determine which packages in a given shipment correspond to that order, or to determine what information applies to each line item of the order.</description>
+        <member-entity entity-alias="II" entity-name="ItemIssuance" join-from-alias="CS">
+            <key-map field-name="shipmentMethodTypeId"/>
+        </member-entity>
+        <member-entity entity-alias="SRS" entity-name="ShipmentRouteSegment" join-from-alias="II">
+            <key-map field-name="shipmentId"/>
+        </member-entity>
+        <member-entity entity-alias="SPRS" entity-name="ShipmentPackageRouteSeg" join-from-alias="SRS">
+            <key-map field-name="shipmentId"/>
+            <key-map field-name="shipmentRouteSegmentId"/>
+        </member-entity>
+        <alias entity-alias="II" name="orderId">
+        </alias>
+        <alias entity-alias="II" name="orderItemSeqId">
+        </alias>
+        <alias entity-alias="II" name="shipmentId">
+        </alias>
+        <alias entity-alias="II" name="shipGroupSeqId">
+        </alias>
+        <alias entity-alias="SRS" name="shipmentRouteSegmentId">
+        </alias>
+        <alias entity-alias="SRS" name="carrierPartyId">
+        </alias>
+        <alias entity-alias="SRS" name="actualStartDate">
+        </alias>
+        <alias entity-alias="SRS" name="shipmentMethodTypeId">
+        </alias>
+        <alias entity-alias="SPRS" name="shipmentPackageSeqId">
+        </alias>
+        <alias entity-alias="SPRS" name="trackingCode">
+        </alias>
+        <alias entity-alias="SPRS" name="boxNumber">
+        </alias>
+        <relationship type="one-nofk" related-entity-name="Shipment">
+            <key-map field-name="shipmentId"/>
+        </relationship>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="Shipment" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentId" type="id" is-pk="true"/>
+        <field name="shipmentTypeId" type="id"/>
+        <field name="statusId" type="id"/>
+        <field name="primaryOrderId" type="id"/>
+        <field name="primaryReturnId" type="id"/>
+        <field name="primaryShipGroupSeqId" type="id"/>
+        <field name="picklistBinId" type="id"/>
+        <field name="estimatedReadyDate" type="date-time"/>
+        <field name="estimatedShipDate" type="date-time"/>
+        <field name="estimatedShipWorkEffId" type="id"/>
+        <field name="estimatedArrivalDate" type="date-time"/>
+        <field name="estimatedArrivalWorkEffId" type="id"/>
+        <field name="latestCancelDate" type="date-time"/>
+        <field name="estimatedShipCost" type="currency-amount"/>
+        <field name="currencyUomId" type="id"/>
+        <field name="handlingInstructions" type="text-long"/>
+        <field name="originFacilityId" type="id"/>
+        <field name="destinationFacilityId" type="id"/>
+        <field name="originContactMechId" type="id"/>
+        <field name="originTelecomNumberId" type="id"/>
+        <field name="destinationContactMechId" type="id"/>
+        <field name="destinationTelecomNumberId" type="id"/>
+        <field name="partyIdTo" type="id"/>
+        <field name="partyIdFrom" type="id"/>
+        <field name="additionalShippingCharge" type="currency-amount"/>
+        <field name="addtlShippingChargeDesc" type="text-long"/>
+        <field name="createdDate" type="date-time"/>
+        <field name="createdByUserLogin" type="id-very-long"/>
+        <field name="lastModifiedDate" type="date-time"/>
+        <field name="lastModifiedByUserLogin" type="id-very-long"/>
+        <relationship type="one" fk-name="SHPMNT_TYPE" related-entity-name="ShipmentType">
+            <key-map field-name="shipmentTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_STTS" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_ESHWEFF" title="EstimatedShip" related-entity-name="WorkEffort">
+            <key-map field-name="estimatedShipWorkEffId" related-field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_EARRWEFF" title="EstimatedArrival" related-entity-name="WorkEffort">
+            <key-map field-name="estimatedArrivalWorkEffId" related-field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_CUOM" title="Currency" related-entity-name="OfbizUom">
+            <key-map field-name="currencyUomId" related-field-name="uomId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_OFAC" title="Origin" related-entity-name="Facility">
+            <key-map field-name="originFacilityId" related-field-name="facilityId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_DFAC" title="Destination" related-entity-name="Facility">
+            <key-map field-name="destinationFacilityId" related-field-name="facilityId"/>
+        </relationship>
+        <relationship type="one-nofk" title="Origin" related-entity-name="ContactMech">
+            <key-map field-name="originContactMechId" related-field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one-nofk" title="Dest" related-entity-name="ContactMech">
+            <key-map field-name="destinationContactMechId" related-field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_OPAD" title="Origin" related-entity-name="PostalAddress">
+            <key-map field-name="originContactMechId" related-field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_OTCN" title="Origin" related-entity-name="TelecomNumber">
+            <key-map field-name="originTelecomNumberId" related-field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_DPAD" title="Destination" related-entity-name="PostalAddress">
+            <key-map field-name="destinationContactMechId" related-field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_DTCN" title="Destination" related-entity-name="TelecomNumber">
+            <key-map field-name="destinationTelecomNumberId" related-field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_PODR" title="Primary" related-entity-name="OrderHeader">
+            <key-map field-name="primaryOrderId" related-field-name="orderId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_PRTNHDR" title="Primary" related-entity-name="ReturnHeader">
+            <key-map field-name="primaryReturnId" related-field-name="returnId"/>
+        </relationship>
+        <relationship type="one" related-entity-name="PicklistBin">
+            <key-map field-name="picklistBinId"/>
+        </relationship>
+        <relationship type="one-nofk" title="Primary" related-entity-name="OrderItemShipGroup">
+            <key-map field-name="primaryOrderId" related-field-name="orderId"/>
+            <key-map field-name="primaryShipGroupSeqId" related-field-name="shipGroupSeqId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="ShipmentTypeAttr">
+            <key-map field-name="shipmentTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_PRTYTO" title="To" related-entity-name="Party">
+            <key-map field-name="partyIdTo" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" title="To" related-entity-name="Person">
+            <key-map field-name="partyIdTo" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" title="To" related-entity-name="PartyGroup">
+            <key-map field-name="partyIdTo" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_PRTYFM" title="From" related-entity-name="Party">
+            <key-map field-name="partyIdFrom" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" title="From" related-entity-name="Person">
+            <key-map field-name="partyIdFrom" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" title="From" related-entity-name="PartyGroup">
+            <key-map field-name="partyIdFrom" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="ShipmentManifestView">
+            <key-map field-name="shipmentId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="ShipmentAndItem" package-name="org.ofbiz.shipment.shipment">
+        <member-entity entity-alias="SH" entity-name="Shipment" join-from-alias="SRS">
+            <key-map field-name="shipmentId"/>
+            <key-map field-name="shipmentRouteSegmentId"/>
+        </member-entity>
+        <member-entity entity-alias="SITM" entity-name="ShipmentItem" join-from-alias="SH">
+            <key-map field-name="shipmentId"/>
+        </member-entity>
+        <alias entity-alias="SH" name="shipmentId">
+        </alias>
+        <alias entity-alias="SH" name="shipmentTypeId">
+        </alias>
+        <alias entity-alias="SH" name="statusId">
+        </alias>
+        <alias entity-alias="SH" name="primaryOrderId">
+        </alias>
+        <alias entity-alias="SH" name="estimatedReadyDate">
+        </alias>
+        <alias entity-alias="SH" name="estimatedShipDate">
+        </alias>
+        <alias entity-alias="SH" name="estimatedArrivalDate">
+        </alias>
+        <alias entity-alias="SH" name="latestCancelDate">
+        </alias>
+        <alias entity-alias="SH" name="estimatedShipCost">
+        </alias>
+        <alias entity-alias="SH" name="handlingInstructions">
+        </alias>
+        <alias entity-alias="SH" name="originFacilityId">
+        </alias>
+        <alias entity-alias="SH" name="destinationFacilityId">
+        </alias>
+        <alias entity-alias="SH" name="originContactMechId">
+        </alias>
+        <alias entity-alias="SH" name="destinationContactMechId">
+        </alias>
+        <alias entity-alias="SH" name="partyIdTo">
+        </alias>
+        <alias entity-alias="SH" name="partyIdFrom">
+        </alias>
+        <alias entity-alias="SITM" name="shipmentItemSeqId">
+        </alias>
+        <alias entity-alias="SITM" name="productId">
+        </alias>
+        <alias entity-alias="SITM" name="quantity">
+        </alias>
+        <alias entity-alias="SITM" name="shipmentContentDescription">
+        </alias>
+        <relationship type="one-nofk" related-entity-name="Shipment">
+            <key-map field-name="shipmentId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="ShipmentItem">
+            <key-map field-name="shipmentId"/>
+            <key-map field-name="shipmentItemSeqId"/>
+        </relationship>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="ShipmentAttribute" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <field name="attrValue" type="text-long"/>
+        <relationship type="one" fk-name="SHPMNT_ATTR" related-entity-name="Shipment">
+            <key-map field-name="shipmentId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="ShipmentTypeAttr">
+            <key-map field-name="attrName"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ShipmentBoxType" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentBoxTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+        <field name="dimensionUomId" type="id"/>
+        <field name="boxLength" type="number-decimal"/>
+        <field name="boxWidth" type="number-decimal"/>
+        <field name="boxHeight" type="number-decimal"/>
+        <field name="weightUomId" type="id"/>
+        <field name="boxWeight" type="number-decimal"/>
+        <relationship type="one" fk-name="SHMT_BXTP_DUOM" title="Dimension" related-entity-name="OfbizUom">
+            <key-map field-name="dimensionUomId" related-field-name="uomId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHMT_BXTP_WUOM" title="Weight" related-entity-name="OfbizUom">
+            <key-map field-name="weightUomId" related-field-name="uomId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ShipmentContactMech" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentId" type="id" is-pk="true"/>
+        <field name="shipmentContactMechTypeId" type="id" is-pk="true"/>
+        <field name="contactMechId" type="id"/>
+        <relationship type="one" fk-name="SHPMT_CMECH" related-entity-name="Shipment">
+            <key-map field-name="shipmentId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMT_CMECH_CM" related-entity-name="ContactMech">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMT_CMECH_TYPE" related-entity-name="ShipmentContactMechType">
+            <key-map field-name="shipmentContactMechTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ShipmentContactMechType" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentContactMechTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ShipmentCostEstimate" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentCostEstimateId" type="id" is-pk="true"/>
+        <field name="shipmentMethodTypeId" type="id"/>
+        <field name="carrierPartyId" type="id"/>
+        <field name="carrierRoleTypeId" type="id"/>
+        <field name="productStoreShipMethId" type="id"/>
+        <field name="productStoreId" type="id"/>
+        <field name="partyId" type="id"/>
+        <field name="roleTypeId" type="id"/>
+        <field name="geoIdTo" type="id"/>
+        <field name="geoIdFrom" type="id"/>
+        <field name="weightBreakId" type="id"/>
+        <field name="weightUomId" type="id"/>
+        <field name="weightUnitPrice" type="currency-amount"/>
+        <field name="quantityBreakId" type="id"/>
+        <field name="quantityUomId" type="id"/>
+        <field name="quantityUnitPrice" type="currency-amount"/>
+        <field name="priceBreakId" type="id"/>
+        <field name="priceUomId" type="id"/>
+        <field name="priceUnitPrice" type="currency-amount"/>
+        <field name="orderFlatPrice" type="currency-amount"/>
+        <field name="orderPricePercent" type="number-decimal"/>
+        <field name="orderItemFlatPrice" type="currency-amount"/>
+        <field name="shippingPricePercent" type="number-decimal"/>
+        <field name="productFeatureGroupId" type="id"/>
+        <field name="oversizeUnit" type="number-decimal"/>
+        <field name="oversizePrice" type="currency-amount"/>
+        <field name="featurePercent" type="number-decimal"/>
+        <field name="featurePrice" type="currency-amount"/>
+        <relationship type="one" fk-name="SHPMNT_CE_CSHMTH" related-entity-name="CarrierShipmentMethod">
+            <key-map field-name="shipmentMethodTypeId"/>
+            <key-map field-name="carrierPartyId" related-field-name="partyId"/>
+            <key-map field-name="carrierRoleTypeId" related-field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_CE_PARTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_CE_ROLET" related-entity-name="RoleType">
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="PartyRole">
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_CE_WUOM" title="Weight" related-entity-name="OfbizUom">
+            <key-map field-name="weightUomId" related-field-name="uomId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_CE_QUOM" title="Quantity" related-entity-name="OfbizUom">
+            <key-map field-name="quantityUomId" related-field-name="uomId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_CE_PUOM" title="Price" related-entity-name="OfbizUom">
+            <key-map field-name="priceUomId" related-field-name="uomId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_CE_TGEO" title="To" related-entity-name="OfbizGeo">
+            <key-map field-name="geoIdTo" related-field-name="geoId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_CE_FGEO" title="From" related-entity-name="OfbizGeo">
+            <key-map field-name="geoIdFrom" related-field-name="geoId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_CE_WHT_QB" title="Weight" related-entity-name="QuantityBreak">
+            <key-map field-name="weightBreakId" related-field-name="quantityBreakId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_CE_QNT_QB" title="Quantity" related-entity-name="QuantityBreak">
+            <key-map field-name="quantityBreakId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_CE_PRC_QB" title="Price" related-entity-name="QuantityBreak">
+            <key-map field-name="priceBreakId" related-field-name="quantityBreakId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ShipmentGatewayConfigType" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentGatewayConfTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="SGCT_PAR" title="Parent" related-entity-name="ShipmentGatewayConfigType">
+            <key-map field-name="parentTypeId" related-field-name="shipmentGatewayConfTypeId"/>
+        </relationship>
+        <relationship type="many" title="Sibling" related-entity-name="ShipmentGatewayConfigType">
+            <key-map field-name="parentTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ShipmentGatewayConfig" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentGatewayConfigId" type="id" is-pk="true"/>
+        <field name="shipmentGatewayConfTypeId" type="id"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="SGC_SGCT" related-entity-name="ShipmentGatewayConfigType">
+            <key-map field-name="shipmentGatewayConfTypeId" related-field-name="shipmentGatewayConfTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ShipmentGatewayDhl" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentGatewayConfigId" type="id" is-pk="true"/>
+        <field name="connectUrl" type="text-long"/>
+        <field name="connectTimeout" type="number-integer"/>
+        <field name="headVersion" type="text-medium"/>
+        <field name="headAction" type="text-long"/>
+        <field name="accessUserId" type="text-long" encrypt="true"/>
+        <field name="accessPassword" type="text-long" encrypt="true"/>
+        <field name="accessAccountNbr" type="text-long" encrypt="true"/>
+        <field name="accessShippingKey" type="text-long" encrypt="true"/>
+        <field name="labelImageFormat" type="text-medium"/>
+        <field name="rateEstimateTemplate" type="text-long"/>
+        <relationship type="one" fk-name="SGDHL_SGC" related-entity-name="ShipmentGatewayConfig">
+            <key-map field-name="shipmentGatewayConfigId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ShipmentGatewayFedex" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentGatewayConfigId" type="id" is-pk="true"/>
+        <field name="connectUrl" type="text-long"/>
+        <field name="connectSoapUrl" type="text-long"/>
+        <field name="connectTimeout" type="number-integer"/>
+        <field name="accessAccountNbr" type="text-long" encrypt="true"/>
+        <field name="accessMeterNumber" type="text-long" encrypt="true"/>
+        <field name="accessUserKey" type="text-long" encrypt="true"/>
+        <field name="accessUserPwd" type="text-long" encrypt="true"/>
+        <field name="labelImageType" type="text-medium"/>
+        <field name="defaultDropoffType" type="text-long"/>
+        <field name="defaultPackagingType" type="text-long"/>
+        <field name="templateShipment" type="text-long"/>
+        <field name="templateSubscription" type="text-long"/>
+        <field name="rateEstimateTemplate" type="text-long"/>
+        <relationship type="one" fk-name="SGFED_SGC" related-entity-name="ShipmentGatewayConfig">
+            <key-map field-name="shipmentGatewayConfigId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ShipmentGatewayUps" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentGatewayConfigId" type="id" is-pk="true"/>
+        <field name="connectUrl" type="text-long"/>
+        <field name="connectTimeout" type="number-integer"/>
+        <field name="shipperNumber" type="text-long"/>
+        <field name="billShipperAccountNumber" type="text-long"/>
+        <field name="accessLicenseNumber" type="text-long" encrypt="true"/>
+        <field name="accessUserId" type="text-long" encrypt="true"/>
+        <field name="accessPassword" type="text-long" encrypt="true"/>
+        <field name="saveCertInfo" type="text-medium"/>
+        <field name="saveCertPath" type="text-long"/>
+        <field name="shipperPickupType" type="text-medium"/>
+        <field name="maxEstimateWeight" type="number-decimal"/>
+        <field name="minEstimateWeight" type="number-decimal"/>
+        <field name="codAllowCod" type="text-long"/>
+        <field name="codSurchargeAmount" type="number-decimal"/>
+        <field name="codSurchargeCurrencyUomId" type="text-medium"/>
+        <field name="codSurchargeApplyToPackage" type="text-medium"/>
+        <field name="codFundsCode" type="text-medium"/>
+        <field name="defaultReturnLabelMemo" type="text-long"/>
+        <field name="defaultReturnLabelSubject" type="text-long"/>
+        <relationship type="one" fk-name="SGUPS_SGC" related-entity-name="ShipmentGatewayConfig">
+            <key-map field-name="shipmentGatewayConfigId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ShipmentGatewayUsps" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentGatewayConfigId" type="id" is-pk="true"/>
+        <field name="connectUrl" type="text-long"/>
+        <field name="connectTimeout" type="number-integer"/>
+        <field name="accessUserId" type="text-long" encrypt="true"/>
+        <field name="accessPassword" type="text-long" encrypt="true"/>
+        <field name="maxEstimateWeight" type="number-integer"/>
+        <relationship type="one" fk-name="SGUSPS_SGC" related-entity-name="ShipmentGatewayConfig">
+            <key-map field-name="shipmentGatewayConfigId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ShipmentItem" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentId" type="id" is-pk="true"/>
+        <field name="shipmentItemSeqId" type="id" is-pk="true"/>
+        <field name="productId" type="id"/>
+        <field name="quantity" type="number-decimal"/>
+        <field name="shipmentContentDescription" type="text-long"/>
+        <relationship type="one" fk-name="SHPMNT_ITM_SHPMT" related-entity-name="Shipment">
+            <key-map field-name="shipmentId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_ITM_PROD" related-entity-name="Product">
+            <key-map field-name="productId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ShipmentItemBilling" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentId" type="id" is-pk="true"/>
+        <field name="shipmentItemSeqId" type="id" is-pk="true"/>
+        <field name="invoiceId" type="id" is-pk="true"/>
+        <field name="invoiceItemSeqId" type="id" is-pk="true"/>
+        <relationship type="one-nofk" related-entity-name="Shipment">
+            <key-map field-name="shipmentId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_ITBL_SPIM" related-entity-name="ShipmentItem">
+            <key-map field-name="shipmentId"/>
+            <key-map field-name="shipmentItemSeqId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="Invoice">
+            <key-map field-name="invoiceId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_ITBL_INIM" related-entity-name="InvoiceItem">
+            <key-map field-name="invoiceId"/>
+            <key-map field-name="invoiceItemSeqId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ShipmentItemFeature" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentId" type="id" is-pk="true"/>
+        <field name="shipmentItemSeqId" type="id" is-pk="true"/>
+        <field name="productFeatureId" type="id" is-pk="true"/>
+        <relationship type="one-nofk" related-entity-name="Shipment">
+            <key-map field-name="shipmentId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_ITFT_SPIM" related-entity-name="ShipmentItem">
+            <key-map field-name="shipmentId"/>
+            <key-map field-name="shipmentItemSeqId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_ITFT_FEAT" related-entity-name="ProductFeature">
+            <key-map field-name="productFeatureId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="ShipmentManifestView" package-name="org.ofbiz.shipment.shipment">
+        <member-entity entity-alias="SITM" entity-name="ShipmentItem" join-from-alias="SH">
+            <key-map field-name="shipmentId"/>
+        </member-entity>
+        <member-entity entity-alias="PROD" entity-name="Product" join-from-alias="SITM" join-optional="true">
+            <key-map field-name="productId"/>
+        </member-entity>
+        <member-entity entity-alias="ITMI" entity-name="ItemIssuance" join-from-alias="SITM">
+            <key-map field-name="shipmentId"/>
+            <key-map field-name="shipmentItemSeqId"/>
+        </member-entity>
+        <member-entity entity-alias="SPCT" entity-name="ShipmentPackageContent" join-from-alias="SITM">
+            <key-map field-name="shipmentId"/>
+            <key-map field-name="shipmentItemSeqId"/>
+        </member-entity>
+        <member-entity entity-alias="SPKG" entity-name="ShipmentPackage" join-from-alias="SPCT">
+            <key-map field-name="shipmentId"/>
+            <key-map field-name="shipmentPackageSeqId"/>
+        </member-entity>
+        <member-entity entity-alias="WTUOM" entity-name="OfbizUom" join-from-alias="SPKG" join-optional="true">
+            <key-map field-name="weightUomId" related-field-name="uomId"/>
+        </member-entity>
+        <member-entity entity-alias="SPRS" entity-name="ShipmentPackageRouteSeg" join-from-alias="SPKG">
+            <key-map field-name="shipmentId"/>
+            <key-map field-name="shipmentPackageSeqId"/>
+        </member-entity>
+        <member-entity entity-alias="SRTS" entity-name="ShipmentRouteSegment" join-from-alias="SPRS">
+            <key-map field-name="shipmentId"/>
+            <key-map field-name="shipmentRouteSegmentId"/>
+        </member-entity>
+        <member-entity entity-alias="OFAC" entity-name="Facility" join-from-alias="SRTS" join-optional="true">
+            <key-map field-name="originFacilityId" related-field-name="facilityId"/>
+        </member-entity>
+        <member-entity entity-alias="DFAC" entity-name="Facility" join-from-alias="SRTS" join-optional="true">
+            <key-map field-name="destFacilityId" related-field-name="facilityId"/>
+        </member-entity>
+        <member-entity entity-alias="OPAD" entity-name="PostalAddress" join-from-alias="SRTS" join-optional="true">
+            <key-map field-name="originContactMechId" related-field-name="contactMechId"/>
+        </member-entity>
+        <member-entity entity-alias="OTCN" entity-name="TelecomNumber" join-from-alias="SRTS" join-optional="true">
+            <key-map field-name="originTelecomNumberId" related-field-name="contactMechId"/>
+        </member-entity>
+        <member-entity entity-alias="DPAD" entity-name="PostalAddress" join-from-alias="SRTS" join-optional="true">
+            <key-map field-name="destContactMechId" related-field-name="contactMechId"/>
+        </member-entity>
+        <member-entity entity-alias="DTCN" entity-name="TelecomNumber" join-from-alias="SRTS" join-optional="true">
+            <key-map field-name="destTelecomNumberId" related-field-name="contactMechId"/>
+        </member-entity>
+        <member-entity entity-alias="CPER" entity-name="Person" join-from-alias="SRTS" join-optional="true">
+            <key-map field-name="carrierPartyId" related-field-name="partyId"/>
+        </member-entity>
+        <member-entity entity-alias="CPGP" entity-name="PartyGroup" join-from-alias="SRTS" join-optional="true">
+            <key-map field-name="carrierPartyId" related-field-name="partyId"/>
+        </member-entity>
+        <member-entity entity-alias="SHMT" entity-name="ShipmentMethodType" join-from-alias="SRTS" join-optional="true">
+            <key-map field-name="shipmentMethodTypeId" related-field-name="shipmentMethodTypeId"/>
+        </member-entity>
+        <alias entity-alias="SITM" name="shipmentId">
+        </alias>
+        <alias entity-alias="SITM" name="shipmentItemSeqId">
+        </alias>
+        <alias entity-alias="SITM" name="productId">
+        </alias>
+        <alias entity-alias="SITM" name="quantity">
+        </alias>
+        <alias entity-alias="SITM" name="shipmentContentDescription">
+        </alias>
+        <alias entity-alias="PROD" name="internalName">
+        </alias>
+        <alias entity-alias="ITMI" name="itemIssuanceId">
+        </alias>
+        <alias entity-alias="ITMI" name="orderId">
+        </alias>
+        <alias entity-alias="ITMI" name="orderItemSeqId">
+        </alias>
+        <alias entity-alias="ITMI" name="inventoryItemId">
+        </alias>
+        <alias entity-alias="ITMI" name="issuedDateTime">
+        </alias>
+        <alias entity-alias="ITMI" name="issuedByUserLoginId">
+        </alias>
+        <alias entity-alias="ITMI" name="issuedQuantity" field="quantity">
+        </alias>
+        <alias entity-alias="SPCT" name="packageQuantity" field="quantity">
+        </alias>
+        <alias entity-alias="SPKG" name="shipmentPackageSeqId">
+        </alias>
+        <alias entity-alias="SPKG" name="packageDateCreated" field="dateCreated">
+        </alias>
+        <alias entity-alias="SPKG" name="weight">
+        </alias>
+        <alias entity-alias="WTUOM" name="weightUomAbbreviation" field="abbreviation">
+        </alias>
+        <alias entity-alias="WTUOM" name="weightUomDescription" field="description">
+        </alias>
+        <alias entity-alias="SPRS" name="trackingCode">
+        </alias>
+        <alias entity-alias="SPRS" name="boxNumber">
+        </alias>
+        <alias entity-alias="SRTS" name="shipmentRouteSegmentId">
+        </alias>
+        <alias entity-alias="SRTS" name="deliveryId">
+        </alias>
+        <alias entity-alias="SRTS" name="originFacilityId">
+        </alias>
+        <alias entity-alias="SRTS" name="destFacilityId">
+        </alias>
+        <alias entity-alias="SRTS" name="originContactMechId">
+        </alias>
+        <alias entity-alias="SRTS" name="originTelecomNumberId">
+        </alias>
+        <alias entity-alias="SRTS" name="destContactMechId">
+        </alias>
+        <alias entity-alias="SRTS" name="destTelecomNumberId">
+        </alias>
+        <alias entity-alias="SRTS" name="carrierPartyId">
+        </alias>
+        <alias entity-alias="SRTS" name="shipmentMethodTypeId">
+        </alias>
+        <alias entity-alias="SRTS" name="actualCost">
+        </alias>
+        <alias entity-alias="SRTS" name="actualStartDate">
+        </alias>
+        <alias entity-alias="SRTS" name="actualArrivalDate">
+        </alias>
+        <alias entity-alias="SRTS" name="estimatedStartDate">
+        </alias>
+        <alias entity-alias="SRTS" name="estimatedArrivalDate">
+        </alias>
+        <alias entity-alias="OFAC" name="originFacilityName" field="facilityName">
+        </alias>
+        <alias entity-alias="DFAC" name="destFacilityName" field="facilityName">
+        </alias>
+        <alias entity-alias="OPAD" name="originToName" field="toName">
+        </alias>
+        <alias entity-alias="OPAD" name="originAttnName" field="attnName">
+        </alias>
+        <alias entity-alias="OPAD" name="originAddress1" field="address1">
+        </alias>
+        <alias entity-alias="OPAD" name="originAddress2" field="address2">
+        </alias>
+        <alias entity-alias="OPAD" name="originDirections" field="directions">
+        </alias>
+        <alias entity-alias="OPAD" name="originCity" field="city">
+        </alias>
+        <alias entity-alias="OPAD" name="originPostalCode" field="postalCode">
+        </alias>
+        <alias entity-alias="OPAD" name="originCountryGeoId" field="countryGeoId">
+        </alias>
+        <alias entity-alias="OPAD" name="originStateProvinceGeoId" field="stateProvinceGeoId">
+        </alias>
+        <alias entity-alias="OPAD" name="originPostalCodeGeoId" field="postalCodeGeoId">
+        </alias>
+        <alias entity-alias="OTCN" name="originCountryCode" field="countryCode">
+        </alias>
+        <alias entity-alias="OTCN" name="originAreaCode" field="areaCode">
+        </alias>
+        <alias entity-alias="OTCN" name="originContactNumber" field="contactNumber">
+        </alias>
+        <alias entity-alias="DPAD" name="destToName" field="toName">
+        </alias>
+        <alias entity-alias="DPAD" name="destAttnName" field="attnName">
+        </alias>
+        <alias entity-alias="DPAD" name="destAddress1" field="address1">
+        </alias>
+        <alias entity-alias="DPAD" name="destAddress2" field="address2">
+        </alias>
+        <alias entity-alias="DPAD" name="destDirections" field="directions">
+        </alias>
+        <alias entity-alias="DPAD" name="destCity" field="city">
+        </alias>
+        <alias entity-alias="DPAD" name="destPostalCode" field="postalCode">
+        </alias>
+        <alias entity-alias="DPAD" name="destCountryGeoId" field="countryGeoId">
+        </alias>
+        <alias entity-alias="DPAD" name="destStateProvinceGeoId" field="stateProvinceGeoId">
+        </alias>
+        <alias entity-alias="DPAD" name="destPostalCodeGeoId" field="postalCodeGeoId">
+        </alias>
+        <alias entity-alias="DTCN" name="destCountryCode" field="countryCode">
+        </alias>
+        <alias entity-alias="DTCN" name="destAreaCode" field="areaCode">
+        </alias>
+        <alias entity-alias="DTCN" name="destContactNumber" field="contactNumber">
+        </alias>
+        <alias entity-alias="CPER" name="carrierFirstName" field="firstName">
+        </alias>
+        <alias entity-alias="CPER" name="carrierLastName" field="lastName">
+        </alias>
+        <alias entity-alias="CPGP" name="carrierGroupName" field="groupName">
+        </alias>
+        <alias entity-alias="SHMT" name="shipmentMethodDescription" field="description">
+        </alias>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="ShipmentMethodType" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentMethodTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+        <field name="sequenceNum" type="number-integer"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ShipmentPackage" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentId" type="id" is-pk="true"/>
+        <field name="shipmentPackageSeqId" type="id" is-pk="true"/>
+        <field name="shipmentBoxTypeId" type="id"/>
+        <field name="dateCreated" type="date-time"/>
+        <field name="boxLength" type="number-decimal"/>
+        <field name="boxHeight" type="number-decimal"/>
+        <field name="boxWidth" type="number-decimal"/>
+        <field name="dimensionUomId" type="id"/>
+        <field name="weight" type="number-decimal"/>
+        <field name="weightUomId" type="id"/>
+        <field name="insuredValue" type="currency-amount"/>
+        <relationship type="one" fk-name="SHPKG_SHPMNT" related-entity-name="Shipment">
+            <key-map field-name="shipmentId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPKG_BXTYP" related-entity-name="ShipmentBoxType">
+            <key-map field-name="shipmentBoxTypeId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="CarrierShipmentBoxType">
+            <key-map field-name="shipmentBoxTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPKG_DUOM" title="Dimension" related-entity-name="OfbizUom">
+            <key-map field-name="dimensionUomId" related-field-name="uomId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPKG_WUOM" title="Weight" related-entity-name="OfbizUom">
+            <key-map field-name="weightUomId" related-field-name="uomId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ShipmentPackageContent" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentId" type="id" is-pk="true"/>
+        <field name="shipmentPackageSeqId" type="id" is-pk="true"/>
+        <field name="shipmentItemSeqId" type="id" is-pk="true"/>
+        <field name="quantity" type="number-decimal"/>
+        <field name="subProductId" type="id"/>
+        <field name="subProductQuantity" type="number-decimal"/>
+        <relationship type="one" fk-name="PCK_CNTNT_SHPKG" related-entity-name="ShipmentPackage">
+            <key-map field-name="shipmentId"/>
+            <key-map field-name="shipmentPackageSeqId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="Shipment">
+            <key-map field-name="shipmentId"/>
+        </relationship>
+        <relationship type="one" fk-name="PCK_CNTNT_SHITM" related-entity-name="ShipmentItem">
+            <key-map field-name="shipmentId"/>
+            <key-map field-name="shipmentItemSeqId"/>
+        </relationship>
+        <relationship type="one" fk-name="PCK_CNTNT_PROD" title="Sub" related-entity-name="Product">
+            <key-map field-name="subProductId" related-field-name="productId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ShipmentPackageRouteSeg" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentId" type="id" is-pk="true"/>
+        <field name="shipmentPackageSeqId" type="id" is-pk="true"/>
+        <field name="shipmentRouteSegmentId" type="id" is-pk="true"/>
+        <field name="trackingCode" type="text-medium"/>
+        <field name="boxNumber" type="text-medium"/>
+        <field name="labelImage" type="binary-very-long"/>
+        <field name="labelIntlSignImage" type="binary-very-long"/>
+        <field name="labelHtml" type="text-very-long"/>
+        <field name="labelPrinted" type="text-indicator"/>
+        <field name="internationalInvoice" type="binary-very-long"/>
+        <field name="packageTransportCost" type="currency-amount"/>
+        <field name="packageServiceCost" type="currency-amount"/>
+        <field name="packageOtherCost" type="currency-amount"/>
+        <field name="codAmount" type="currency-amount"/>
+        <field name="insuredAmount" type="currency-amount"/>
+        <field name="currencyUomId" type="id"/>
+        <relationship type="one" fk-name="SHPKRTSG_SHPKG" related-entity-name="ShipmentPackage">
+            <key-map field-name="shipmentId"/>
+            <key-map field-name="shipmentPackageSeqId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="Shipment">
+            <key-map field-name="shipmentId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPKRTSG_RTSG" related-entity-name="ShipmentRouteSegment">
+            <key-map field-name="shipmentId"/>
+            <key-map field-name="shipmentRouteSegmentId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPKRTSG_CUOM" title="Currency" related-entity-name="OfbizUom">
+            <key-map field-name="currencyUomId" related-field-name="uomId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ShipmentRouteSegment" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentId" type="id" is-pk="true"/>
+        <field name="shipmentRouteSegmentId" type="id" is-pk="true"/>
+        <field name="deliveryId" type="id"/>
+        <field name="originFacilityId" type="id"/>
+        <field name="destFacilityId" type="id"/>
+        <field name="originContactMechId" type="id"/>
+        <field name="originTelecomNumberId" type="id"/>
+        <field name="destContactMechId" type="id"/>
+        <field name="destTelecomNumberId" type="id"/>
+        <field name="carrierPartyId" type="id"/>
+        <field name="shipmentMethodTypeId" type="id"/>
+        <field name="carrierServiceStatusId" type="id"/>
+        <field name="carrierDeliveryZone" type="text-medium"/>
+        <field name="carrierRestrictionCodes" type="text-medium"/>
+        <field name="carrierRestrictionDesc" type="text-very-long"/>
+        <field name="billingWeight" type="number-decimal"/>
+        <field name="billingWeightUomId" type="id"/>
+        <field name="actualTransportCost" type="currency-amount"/>
+        <field name="actualServiceCost" type="currency-amount"/>
+        <field name="actualOtherCost" type="currency-amount"/>
+        <field name="actualCost" type="currency-amount"/>
+        <field name="currencyUomId" type="id"/>
+        <field name="actualStartDate" type="date-time"/>
+        <field name="actualArrivalDate" type="date-time"/>
+        <field name="estimatedStartDate" type="date-time"/>
+        <field name="estimatedArrivalDate" type="date-time"/>
+        <field name="trackingIdNumber" type="text-medium"/>
+        <field name="trackingDigest" type="text-very-long"/>
+        <field name="updatedByUserLoginId" type="id-very-long"/>
+        <field name="lastUpdatedDate" type="date-time"/>
+        <field name="homeDeliveryType" type="id"/>
+        <field name="homeDeliveryDate" type="date-time"/>
+        <field name="thirdPartyAccountNumber" type="id"/>
+        <field name="thirdPartyPostalCode" type="id"/>
+        <field name="thirdPartyCountryGeoCode" type="id"/>
+        <field name="upsHighValueReport" type="binary-very-long"/>
+        <relationship type="one" fk-name="SHPMT_RTSEG_SHPMT" related-entity-name="Shipment">
+            <key-map field-name="shipmentId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMT_RTSEG_DEL" related-entity-name="Delivery">
+            <key-map field-name="deliveryId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMT_RTSEG_CPTY" title="Carrier" related-entity-name="Party">
+            <key-map field-name="carrierPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" title="Carrier" related-entity-name="Person">
+            <key-map field-name="carrierPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" title="Carrier" related-entity-name="PartyGroup">
+            <key-map field-name="carrierPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMT_RTSEG_SHMT" related-entity-name="ShipmentMethodType">
+            <key-map field-name="shipmentMethodTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMT_RTSEG_OFAC" title="Origin" related-entity-name="Facility">
+            <key-map field-name="originFacilityId" related-field-name="facilityId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMT_RTSEG_DFAC" title="Dest" related-entity-name="Facility">
+            <key-map field-name="destFacilityId" related-field-name="facilityId"/>
+        </relationship>
+        <relationship type="one-nofk" title="Origin" related-entity-name="ContactMech">
+            <key-map field-name="originContactMechId" related-field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one-nofk" title="Dest" related-entity-name="ContactMech">
+            <key-map field-name="destContactMechId" related-field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMT_RTSEG_OPAD" title="Origin" related-entity-name="PostalAddress">
+            <key-map field-name="originContactMechId" related-field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMT_RTSEG_OTCN" title="Origin" related-entity-name="TelecomNumber">
+            <key-map field-name="originTelecomNumberId" related-field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMT_RTSEG_DPAD" title="Dest" related-entity-name="PostalAddress">
+            <key-map field-name="destContactMechId" related-field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMT_RTSEG_DTCN" title="Dest" related-entity-name="TelecomNumber">
+            <key-map field-name="destTelecomNumberId" related-field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPKRTSG_CSSTS" title="CarrierService" related-entity-name="OfbizStatusItem">
+            <key-map field-name="carrierServiceStatusId" related-field-name="statusId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMT_RTSEG_CUOM" title="Currency" related-entity-name="OfbizUom">
+            <key-map field-name="currencyUomId" related-field-name="uomId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPKRTSG_BWUOM" title="BillingWeight" related-entity-name="OfbizUom">
+            <key-map field-name="billingWeightUomId" related-field-name="uomId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="ShipmentPackageRouteDetail" package-name="org.ofbiz.shipment.shipment">
+    <description>View to list information about individual packages with route information, for getting the carrier labels for a package.</description>
+        <member-entity entity-alias="SPRS" entity-name="ShipmentPackageRouteSeg" join-from-alias="SRTS" join-optional="true">
+            <key-map field-name="shipmentMethodTypeId" related-field-name="shipmentMethodTypeId"/>
+        </member-entity>
+        <member-entity entity-alias="SRS" entity-name="ShipmentRouteSegment" join-from-alias="SPRS">
+            <key-map field-name="shipmentId"/>
+            <key-map field-name="shipmentRouteSegmentId"/>
+        </member-entity>
+        <member-entity entity-alias="S" entity-name="Shipment" join-from-alias="SPRS">
+            <key-map field-name="shipmentId"/>
+        </member-entity>
+        <alias entity-alias="SPRS" name="shipmentId">
+        </alias>
+        <alias entity-alias="SPRS" name="shipmentPackageSeqId">
+        </alias>
+        <alias entity-alias="SPRS" name="shipmentRouteSegmentId">
+        </alias>
+        <alias entity-alias="SPRS" name="labelPrinted">
+        </alias>
+        <alias entity-alias="SRS" name="carrierPartyId">
+        </alias>
+        <alias entity-alias="SRS" name="carrierServiceStatusId">
+        </alias>
+        <alias entity-alias="SRS" name="shipmentMethodTypeId">
+        </alias>
+        <alias entity-alias="S" name="statusId">
+        </alias>
+        <alias entity-alias="S" name="primaryOrderId">
+        </alias>
+    </view-entity> -->
+    <!-- <view-entity entity-name="ShipmentRouteSegmentDetail" package-name="org.ofbiz.shipment.shipment">
+    <description>View to list a shipment route segment with extra shipment information, for scheduling shipment route segments</description>
+        <member-entity entity-alias="SRS" entity-name="ShipmentRouteSegment" join-from-alias="SPRS">
+            <key-map field-name="shipmentId"/>
+        </member-entity>
+        <member-entity entity-alias="S" entity-name="Shipment" join-from-alias="SRS">
+            <key-map field-name="shipmentId"/>
+        </member-entity>
+        <alias entity-alias="SRS" name="shipmentId">
+        </alias>
+        <alias entity-alias="SRS" name="shipmentRouteSegmentId">
+        </alias>
+        <alias entity-alias="SRS" name="originFacilityId">
+        </alias>
+        <alias entity-alias="SRS" name="carrierPartyId">
+        </alias>
+        <alias entity-alias="SRS" name="carrierServiceStatusId">
+        </alias>
+        <alias entity-alias="SRS" name="shipmentMethodTypeId">
+        </alias>
+        <alias entity-alias="SRS" name="billingWeight">
+        </alias>
+        <alias entity-alias="SRS" name="billingWeightUomId">
+        </alias>
+        <alias entity-alias="S" name="statusId">
+        </alias>
+        <alias entity-alias="S" name="primaryOrderId">
+        </alias>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="ShipmentStatus" package-name="org.ofbiz.shipment.shipment">
+        <field name="statusId" type="id" is-pk="true"/>
+        <field name="shipmentId" type="id" is-pk="true"/>
+        <field name="statusDate" type="date-time"/>
+        <relationship type="one" fk-name="SHPMNT_STTS_STTS" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPMNT_STTS_SHMT" related-entity-name="Shipment">
+            <key-map field-name="shipmentId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ShipmentType" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="SHPMNT_TYPPAR" title="Parent" related-entity-name="ShipmentType">
+            <key-map field-name="parentTypeId" related-field-name="shipmentTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ShipmentTypeAttr" package-name="org.ofbiz.shipment.shipment">
+        <field name="shipmentTypeId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <relationship type="one" fk-name="SHPMNT_TYPATR" related-entity-name="ShipmentType">
+            <key-map field-name="shipmentTypeId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="ShipmentAttribute">
+            <key-map field-name="attrName"/>
+        </relationship>
+        <relationship type="many" related-entity-name="Shipment">
+            <key-map field-name="shipmentTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ShippingDocument" package-name="org.ofbiz.shipment.shipment">
+        <field name="documentId" type="id" is-pk="true"/>
+        <field name="shipmentId" type="id"/>
+        <field name="shipmentItemSeqId" type="id"/>
+        <field name="shipmentPackageSeqId" type="id"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="SHPNG_DOC_DOC" related-entity-name="Document">
+            <key-map field-name="documentId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPNG_DOC_SMITM" related-entity-name="ShipmentItem">
+            <key-map field-name="shipmentId"/>
+            <key-map field-name="shipmentItemSeqId"/>
+        </relationship>
+        <relationship type="one" fk-name="SHPNG_DOC_SHPKG" related-entity-name="ShipmentPackage">
+            <key-map field-name="shipmentId"/>
+            <key-map field-name="shipmentPackageSeqId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="PackedQtyVsOrderItemQuantity" package-name="org.ofbiz.shipment.shipment">
+    <description>View to report ShipmentPackageContent quantity vs. OrderItem quantity via
+        ItemIssuance</description>
+        <member-entity entity-alias="SPC" entity-name="ShipmentPackageContent" join-from-alias="SRS">
+            <key-map field-name="shipmentId"/>
+        </member-entity>
+        <member-entity entity-alias="II" entity-name="ItemIssuance" join-from-alias="SPC">
+            <key-map field-name="shipmentId"/>
+            <key-map field-name="shipmentItemSeqId"/>
+        </member-entity>
+        <member-entity entity-alias="OI" entity-name="OrderItem" join-from-alias="II">
+            <key-map field-name="orderId"/>
+            <key-map field-name="orderItemSeqId"/>
+        </member-entity>
+        <alias entity-alias="SPC" name="shipmentId">
+        </alias>
+        <alias entity-alias="SPC" name="shipmentPackageSeqId">
+        </alias>
+        <alias entity-alias="SPC" name="packedQuantity" field="quantity">
+        </alias>
+        <alias entity-alias="II" name="issuedQuantity" field="quantity">
+        </alias>
+        <alias entity-alias="OI" name="orderId">
+        </alias>
+        <alias entity-alias="OI" name="orderItemSeqId">
+        </alias>
+        <alias entity-alias="OI" name="orderedQuantity" field="quantity">
+        </alias>
+        <relationship type="one" related-entity-name="OrderHeader">
+            <key-map field-name="orderId"/>
+        </relationship>
+    </view-entity> -->
+</entities>
+

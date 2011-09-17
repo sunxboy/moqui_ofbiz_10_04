@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-definition-1.0.xsd">
+
+    <entity group-name="org.ofbiz" entity-name="JobSandbox" package-name="org.ofbiz.service.schedule" sequence-bank-size="100">
+        <field name="jobId" type="id" is-pk="true"/>
+        <field name="jobName" type="text-medium"/>
+        <field name="runTime" type="date-time"/>
+        <field name="poolId" type="text-medium"/>
+        <field name="statusId" type="id"/>
+        <field name="parentJobId" type="id"/>
+        <field name="previousJobId" type="id"/>
+        <field name="serviceName" type="text-medium"/>
+        <field name="loaderName" type="text-medium"/>
+        <field name="maxRetry" type="number-integer"/>
+        <field name="authUserLoginId" type="id-very-long"/>
+        <field name="runAsUser" type="id-very-long"/>
+        <field name="runtimeDataId" type="id"/>
+        <field name="recurrenceInfoId" type="id"/>
+        <field name="tempExprId" type="id"/>
+        <field name="currentRecurrenceCount" type="number-integer"/>
+        <field name="maxRecurrenceCount" type="number-integer"/>
+        <field name="runByInstanceId" type="id"/>
+        <field name="startDateTime" type="date-time"/>
+        <field name="finishDateTime" type="date-time"/>
+        <field name="cancelDateTime" type="date-time"/>
+        <relationship type="one" fk-name="JOB_SNDBX_RECINFO" related-entity-name="RecurrenceInfo">
+            <key-map field-name="recurrenceInfoId"/>
+        </relationship>
+        <relationship type="one" fk-name="JOB_SNDBX_TEMPEXPR" related-entity-name="TemporalExpression">
+            <key-map field-name="tempExprId"/>
+        </relationship>
+        <relationship type="one" fk-name="JOB_SNDBX_RNTMDTA" related-entity-name="RuntimeData">
+            <key-map field-name="runtimeDataId"/>
+        </relationship>
+        <relationship type="one" fk-name="JOB_SNDBX_AUSRLGN" title="Auth" related-entity-name="UserLogin">
+            <key-map field-name="authUserLoginId" related-field-name="userLoginId"/>
+        </relationship>
+        <relationship type="one" fk-name="JOB_SNDBX_USRLGN" title="RunAs" related-entity-name="UserLogin">
+            <key-map field-name="runAsUser" related-field-name="userLoginId"/>
+        </relationship>
+        <relationship type="one" fk-name="JOB_SNDBX_STTS" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+    <index name="JOB_SNDBX_RUNSTAT">
+    <index-field name="runByInstanceId"/>
+    <index-field name="statusId"/>
+    </index>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="RecurrenceInfo" package-name="org.ofbiz.service.schedule">
+        <field name="recurrenceInfoId" type="id" is-pk="true"/>
+        <field name="startDateTime" type="date-time"/>
+        <field name="exceptionDateTimes" type="text-very-long"/>
+        <field name="recurrenceDateTimes" type="text-very-long"/>
+        <field name="exceptionRuleId" type="id"/>
+        <field name="recurrenceRuleId" type="id"/>
+        <field name="recurrenceCount" type="number-integer"/>
+        <relationship type="one" fk-name="REC_INFO_RCRLE" related-entity-name="RecurrenceRule">
+            <key-map field-name="recurrenceRuleId"/>
+        </relationship>
+        <relationship type="one" fk-name="REC_INFO_EX_RCRLE" title="Exception" related-entity-name="RecurrenceRule">
+            <key-map field-name="exceptionRuleId" related-field-name="recurrenceRuleId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="RecurrenceRule" package-name="org.ofbiz.service.schedule">
+        <field name="recurrenceRuleId" type="id" is-pk="true"/>
+        <field name="frequency" type="text-medium"/>
+        <field name="untilDateTime" type="date-time"/>
+        <field name="countNumber" type="number-integer"/>
+        <field name="intervalNumber" type="number-integer"/>
+        <field name="bySecondList" type="text-very-long"/>
+        <field name="byMinuteList" type="text-very-long"/>
+        <field name="byHourList" type="text-very-long"/>
+        <field name="byDayList" type="text-very-long"/>
+        <field name="byMonthDayList" type="text-very-long"/>
+        <field name="byYearDayList" type="text-very-long"/>
+        <field name="byWeekNoList" type="text-very-long"/>
+        <field name="byMonthList" type="text-very-long"/>
+        <field name="bySetPosList" type="text-very-long"/>
+        <field name="weekStart" type="text-medium"/>
+        <field name="xName" type="text-very-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="RuntimeData" package-name="org.ofbiz.service.schedule" sequence-bank-size="100">
+        <field name="runtimeDataId" type="id" is-pk="true"/>
+        <field name="runtimeInfo" type="text-very-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="TemporalExpression" package-name="org.ofbiz.service.schedule">
+        <field name="tempExprId" type="id" is-pk="true"/>
+        <field name="tempExprTypeId" type="id"/>
+        <field name="description" type="text-long"/>
+        <field name="date1" type="date-time"/>
+        <field name="date2" type="date-time"/>
+        <field name="integer1" type="number-integer"/>
+        <field name="integer2" type="number-integer"/>
+        <field name="string1" type="id"/>
+        <field name="string2" type="id"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="TemporalExpressionAssoc" package-name="org.ofbiz.service.schedule">
+        <field name="fromTempExprId" type="id" is-pk="true"/>
+        <field name="toTempExprId" type="id" is-pk="true"/>
+        <field name="exprAssocType" type="id"/>
+        <relationship type="one" fk-name="TEMP_EXPR_FROM" title="From" related-entity-name="TemporalExpression">
+            <key-map field-name="fromTempExprId" related-field-name="tempExprId"/>
+        </relationship>
+        <relationship type="one" fk-name="TEMP_EXPR_TO" title="To" related-entity-name="TemporalExpression">
+            <key-map field-name="toTempExprId" related-field-name="tempExprId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="TemporalExpressionChild" package-name="org.ofbiz.service.schedule">
+        <member-entity entity-alias="TEA" entity-name="TemporalExpressionAssoc">
+        </member-entity>
+        <member-entity entity-alias="TE" entity-name="TemporalExpression" join-from-alias="TEA">
+            <key-map field-name="toTempExprId" related-field-name="tempExprId"/>
+        </member-entity>
+        <alias-all entity-alias="TEA">
+            <exclude field="toTempExprId"/>
+        </alias-all>
+        <alias-all entity-alias="TE">
+        </alias-all>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="ServiceSemaphore" package-name="org.ofbiz.service.semaphore" sequence-bank-size="100">
+        <field name="serviceName" type="text-medium" is-pk="true"/>
+        <field name="lockThread" type="text-medium"/>
+        <field name="lockTime" type="date-time"/>
+    </entity>
+</entities>
+

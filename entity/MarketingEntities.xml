@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-definition-1.0.xsd">
+
+    <entity group-name="org.ofbiz" entity-name="MarketingCampaign" package-name="org.ofbiz.marketing.campaign">
+        <field name="marketingCampaignId" type="id" is-pk="true"/>
+        <field name="parentCampaignId" type="id"/>
+        <field name="statusId" type="id"/>
+        <field name="campaignName" type="text-medium"/>
+        <field name="campaignSummary" type="text-very-long"/>
+        <field name="budgetedCost" type="currency-amount"/>
+        <field name="actualCost" type="currency-amount"/>
+        <field name="estimatedCost" type="currency-amount"/>
+        <field name="currencyUomId" type="id"/>
+        <field name="fromDate" type="date-time"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="isActive" type="text-indicator"/>
+        <field name="convertedLeads" type="id"/>
+        <field name="expectedResponsePercent" type="number-float"/>
+        <field name="expectedRevenue" type="currency-amount"/>
+        <field name="numSent" type="number-integer"/>
+        <field name="startDate" type="date-time"/>
+        <field name="createdByUserLogin" type="id-very-long"/>
+        <field name="lastModifiedByUserLogin" type="id-very-long"/>
+        <relationship type="one" fk-name="MKTGCPN_PRNT" title="Parent" related-entity-name="MarketingCampaign">
+            <key-map field-name="parentCampaignId" related-field-name="marketingCampaignId"/>
+        </relationship>
+        <relationship type="one" fk-name="MKTGCPN_STS" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+        <relationship type="one" fk-name="MKTGCPN_CUOM" related-entity-name="OfbizUom">
+            <key-map field-name="currencyUomId" related-field-name="uomId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="MarketingCampaignNote" package-name="org.ofbiz.marketing.campaign">
+        <field name="marketingCampaignId" type="id" is-pk="true"/>
+        <field name="noteId" type="id" is-pk="true"/>
+        <relationship type="one" fk-name="MKTGCPN_NOTE_CMPN" related-entity-name="MarketingCampaign">
+            <key-map field-name="marketingCampaignId"/>
+        </relationship>
+        <relationship type="one" fk-name="MKTGCPN_NOTE_NOTE" related-entity-name="NoteData">
+            <key-map field-name="noteId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="MarketingCampaignPrice" package-name="org.ofbiz.marketing.campaign">
+        <field name="marketingCampaignId" type="id" is-pk="true"/>
+        <field name="productPriceRuleId" type="id" is-pk="true"/>
+        <relationship type="one" fk-name="MKTGCPN_PRICE_MC" related-entity-name="MarketingCampaign">
+            <key-map field-name="marketingCampaignId"/>
+        </relationship>
+        <relationship type="one" fk-name="MKTGCPN_PRICE_PP" related-entity-name="ProductPriceRule">
+            <key-map field-name="productPriceRuleId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="MarketingCampaignPromo" package-name="org.ofbiz.marketing.campaign">
+        <field name="marketingCampaignId" type="id" is-pk="true"/>
+        <field name="productPromoId" type="id" is-pk="true"/>
+        <relationship type="one" fk-name="MKTGCPN_PROMO_MC" related-entity-name="MarketingCampaign">
+            <key-map field-name="marketingCampaignId"/>
+        </relationship>
+        <relationship type="one" fk-name="MKTGCPN_PROMO_PP" related-entity-name="ProductPromo">
+            <key-map field-name="productPromoId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="MarketingCampaignRole" package-name="org.ofbiz.marketing.campaign">
+        <field name="marketingCampaignId" type="id" is-pk="true"/>
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="roleTypeId" type="id" is-pk="true"/>
+        <relationship type="one" fk-name="MKTGCPN_ROLE_MC" related-entity-name="MarketingCampaign">
+            <key-map field-name="marketingCampaignId"/>
+        </relationship>
+        <relationship type="one" fk-name="MKTGCPN_ROLE_PR" related-entity-name="PartyRole">
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="RoleType">
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ContactList" package-name="org.ofbiz.marketing.contact">
+        <field name="contactListId" type="id" is-pk="true"/>
+        <field name="contactListTypeId" type="id"/>
+        <field name="contactMechTypeId" type="id"/>
+        <field name="marketingCampaignId" type="id"/>
+        <field name="contactListName" type="text-medium"/>
+        <field name="description" type="text-long"/>
+        <field name="comments" type="text-long"/>
+        <field name="isPublic" type="text-indicator"/>
+        <field name="singleUse" type="text-indicator"/>
+        <field name="ownerPartyId" type="id"/>
+        <field name="verifyEmailFrom" type="text-long"/>
+        <field name="verifyEmailScreen" type="text-long"/>
+        <field name="verifyEmailSubject" type="text-long"/>
+        <field name="verifyEmailWebSiteId" type="id"/>
+        <field name="optOutScreen" type="text-long"/>
+        <field name="createdByUserLogin" type="id-very-long"/>
+        <field name="lastModifiedByUserLogin" type="id-very-long"/>
+        <relationship type="one" fk-name="CNCT_LST_MKCMPN" related-entity-name="MarketingCampaign">
+            <key-map field-name="marketingCampaignId"/>
+        </relationship>
+        <relationship type="one" fk-name="CNCT_LST_TYP" related-entity-name="ContactListType">
+            <key-map field-name="contactListTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="CNCT_LST_CMCHTP" related-entity-name="ContactMechType">
+            <key-map field-name="contactMechTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="CNCT_LST_CBUL" title="CreatedBy" related-entity-name="UserLogin">
+            <key-map field-name="createdByUserLogin" related-field-name="userLoginId"/>
+        </relationship>
+        <relationship type="one" fk-name="CNCT_LST_LMUL" title="LastModifiedBy" related-entity-name="UserLogin">
+            <key-map field-name="lastModifiedByUserLogin" related-field-name="userLoginId"/>
+        </relationship>
+        <relationship type="one" fk-name="CNCT_LST_OPTY" title="Owner" related-entity-name="Party">
+            <key-map field-name="ownerPartyId" related-field-name="partyId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ContactListCommStatus" package-name="org.ofbiz.marketing.contact">
+        <field name="contactListId" type="id" is-pk="true"/>
+        <field name="communicationEventId" type="id" is-pk="true"/>
+        <field name="contactMechId" type="id" is-pk="true"/>
+        <field name="partyId" type="id"/>
+        <field name="messageId" type="text-long"/>
+        <field name="statusId" type="id"/>
+        <relationship type="one" fk-name="CNCT_LST_CST_CL" related-entity-name="ContactList">
+            <key-map field-name="contactListId"/>
+        </relationship>
+        <relationship type="one" fk-name="CNCT_LST_CST_CE" related-entity-name="CommunicationEvent">
+            <key-map field-name="communicationEventId"/>
+        </relationship>
+        <relationship type="one" fk-name="CNCT_LST_CST_CM" related-entity-name="ContactMech">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one" fk-name="CNCT_LST_CST_PT" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="CNCT_LST_CST_ST" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+    <index name="CNTLSTCST_MSG_ID" unique="true">
+    <index-field name="messageId"/>
+    </index>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ContactListParty" package-name="org.ofbiz.marketing.contact">
+        <field name="contactListId" type="id" is-pk="true"/>
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="statusId" type="id"/>
+        <field name="preferredContactMechId" type="id"/>
+        <relationship type="one" fk-name="CNCT_LSTPTY_CLST" related-entity-name="ContactList">
+            <key-map field-name="contactListId"/>
+        </relationship>
+        <relationship type="one" fk-name="CNCT_LSTPTY_PTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="CNCT_LSTPTY_STS" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+        <relationship type="one" fk-name="CNCT_LSTPTY_PCM" title="Preferred" related-entity-name="ContactMech">
+            <key-map field-name="preferredContactMechId" related-field-name="contactMechId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="ContactListPartyAndStatus" package-name="org.ofbiz.marketing.contact">
+        <member-entity entity-alias="CLPS" entity-name="ContactListPartyStatus">
+        </member-entity>
+        <member-entity entity-alias="SI" entity-name="OfbizStatusItem" join-from-alias="CLPS">
+            <key-map field-name="statusId"/>
+        </member-entity>
+        <alias-all entity-alias="CLPS">
+        </alias-all>
+        <alias-all entity-alias="SI">
+        </alias-all>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="ContactListPartyStatus" package-name="org.ofbiz.marketing.contact">
+        <field name="contactListId" type="id" is-pk="true"/>
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="statusDate" type="date-time" is-pk="true"/>
+        <field name="statusId" type="id"/>
+        <field name="setByUserLoginId" type="text-long"/>
+        <field name="optInVerifyCode" type="text-medium"/>
+        <relationship type="one" fk-name="CTLSTPTST_CLP" related-entity-name="ContactListParty">
+            <key-map field-name="contactListId"/>
+            <key-map field-name="partyId"/>
+            <key-map field-name="fromDate"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ContactListType" package-name="org.ofbiz.marketing.contact">
+        <field name="contactListTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="SegmentGroup" package-name="org.ofbiz.marketing.segment">
+        <field name="segmentGroupId" type="id" is-pk="true"/>
+        <field name="segmentGroupTypeId" type="id"/>
+        <field name="description" type="text-long"/>
+        <field name="productStoreId" type="id"/>
+        <relationship type="one" fk-name="SGMTGRP_TYPE" related-entity-name="SegmentGroupType">
+            <key-map field-name="segmentGroupTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="SGMTGRP_PRST" related-entity-name="ProductStore">
+            <key-map field-name="productStoreId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="SegmentGroupClassification" package-name="org.ofbiz.marketing.segment">
+        <field name="segmentGroupId" type="id" is-pk="true"/>
+        <field name="partyClassificationGroupId" type="id" is-pk="true"/>
+        <relationship type="one" fk-name="SGMTGRPCLS_SGGP" related-entity-name="SegmentGroup">
+            <key-map field-name="segmentGroupId"/>
+        </relationship>
+        <relationship type="one" fk-name="SGMTGRPCLS_PCGP" related-entity-name="PartyClassificationGroup">
+            <key-map field-name="partyClassificationGroupId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="SegmentGroupGeo" package-name="org.ofbiz.marketing.segment">
+        <field name="segmentGroupId" type="id" is-pk="true"/>
+        <field name="geoId" type="id" is-pk="true"/>
+        <relationship type="one" fk-name="SGMTGRPGEO_SGGP" related-entity-name="SegmentGroup">
+            <key-map field-name="segmentGroupId"/>
+        </relationship>
+        <relationship type="one" fk-name="SGMTGRPGEO_GEO" related-entity-name="OfbizGeo">
+            <key-map field-name="geoId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="SegmentGroupRole" package-name="org.ofbiz.marketing.segment">
+        <field name="segmentGroupId" type="id" is-pk="true"/>
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="roleTypeId" type="id" is-pk="true"/>
+        <relationship type="one" fk-name="SGMTGRPRL_SGGP" related-entity-name="SegmentGroup">
+            <key-map field-name="segmentGroupId"/>
+        </relationship>
+        <relationship type="one" fk-name="SGMTGRPRL_PRLE" related-entity-name="PartyRole">
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="RoleType">
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="SegmentGroupType" package-name="org.ofbiz.marketing.segment">
+        <field name="segmentGroupTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <!-- <view-entity entity-name="SegmentGroupViewRelatedParties" package-name="org.ofbiz.marketing.segment">
+    <description>This view entity models the following options:
+            - SegmentGroupRole(SGR) -> SegmentGroupRole(SGRTO)
+            - SegmentGroupRole(SGR) -> SegmentGroupRole(SGRTO) -> PartyRelationship(PRSGR)
+            - SegmentGroupRole(SGR) -> SegmentGroupClassification(SGC) -> PartyClassification(PC)
+            - SegmentGroupRole(SGR) -> SegmentGroupClassification(SGC) -> PartyClassification(PC) -> PartyRelationship(PRPC)
+            Typical fields to constrain:
+            - partyId of User -> sgrPartyId (SGR)
+            - partyId of Customer -> sgrToPartyId (SGRTO) AND prSgrPartyIdTo (PRSGR) AND pcPartyId (PC) AND prPcPartyIdTo (PRPC)
+              NOTE: these 4 partyIds represent the 4 options for entity relationship paths listed above
+              NOTE: because not all of these will exist, each needs to be the given partyId(s) OR null
+            - roleTypeId of User -> sgrRoleTypeId (SGR) - ex: SALES_REP, MANAGER, etc
+            - roleTypeId of Customer -> sgrToRoleTypeId (SGRTO)
+              NOTE: because not all of these will exist, each needs to be the given roleTypeId(s) OR null
+            - roleTypeId of _Employer_ in Employee/Employer relationship -> prSgrRoleTypeIdFrom (PRSGR) AND prPcRoleTypeIdFrom (PRPC) - INTERNAL_ORGANIZATIO
+              NOTE: constraining these fields is optional as the EMPLOYEE roleTypeIdTo is often sufficient
+              NOTE: because not all of these will exist, each needs to be the given partyId(s) OR null
+            - roleTypeId of _Employee_ in Employee/Employer relationship -> prSgrRoleTypeIdTo (PRSGR) AND prPcRoleTypeIdTo (PRPC) - EMPLOYEE
+              NOTE: because not all of these will exist, each needs to be the given partyId(s) OR null
+            - partyRelationshipTypeId in Employee/Employer relationship -> prSgrPartyRelationshipTypeId (PRSGR) AND prPcPartyRelationshipTypeId (PRPC)
+              NOTE: because not all of these will exist, each needs to be the given partyId(s) OR null</description>
+        <member-entity entity-alias="SGR" entity-name="SegmentGroupRole" join-from-alias="CLPS">
+            <key-map field-name="statusId"/>
+        </member-entity>
+        <member-entity entity-alias="SGRTO" entity-name="SegmentGroupRole" join-from-alias="SGR" join-optional="true">
+            <key-map field-name="segmentGroupId"/>
+        </member-entity>
+        <member-entity entity-alias="PRSGR" entity-name="PartyRelationship" join-from-alias="SGRTO" join-optional="true">
+            <key-map field-name="partyId" related-field-name="partyIdFrom"/>
+        </member-entity>
+        <member-entity entity-alias="SGC" entity-name="SegmentGroupClassification" join-from-alias="SGR" join-optional="true">
+            <key-map field-name="segmentGroupId"/>
+        </member-entity>
+        <member-entity entity-alias="PC" entity-name="PartyClassification" join-from-alias="SGC">
+            <key-map field-name="partyClassificationGroupId"/>
+        </member-entity>
+        <member-entity entity-alias="PRPC" entity-name="PartyRelationship" join-from-alias="PC" join-optional="true">
+            <key-map field-name="partyId" related-field-name="partyIdFrom"/>
+        </member-entity>
+        <alias-all entity-alias="SGR" prefix="sgr">
+        </alias-all>
+        <alias-all entity-alias="SGRTO" prefix="sgrTo">
+        </alias-all>
+        <alias-all entity-alias="PRSGR" prefix="prSgr">
+        </alias-all>
+        <alias-all entity-alias="SGC" prefix="sgc">
+        </alias-all>
+        <alias-all entity-alias="PC" prefix="pc">
+        </alias-all>
+        <alias-all entity-alias="PRPC" prefix="prPc">
+        </alias-all>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="TrackingCode" package-name="org.ofbiz.marketing.tracking">
+        <field name="trackingCodeId" type="id-long" is-pk="true"/>
+        <field name="trackingCodeTypeId" type="id"/>
+        <field name="marketingCampaignId" type="id"/>
+        <field name="redirectUrl" type="text-long"/>
+        <field name="overrideLogo" type="text-long"/>
+        <field name="overrideCss" type="text-long"/>
+        <field name="prodCatalogId" type="id"/>
+        <field name="comments" type="text-long"/>
+        <field name="description" type="text-long"/>
+        <field name="trackableLifetime" type="number-integer"/>
+        <field name="billableLifetime" type="number-integer"/>
+        <field name="fromDate" type="date-time"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="groupId" type="id"/>
+        <field name="subgroupId" type="id"/>
+        <field name="createdDate" type="date-time"/>
+        <field name="createdByUserLogin" type="id-very-long"/>
+        <field name="lastModifiedDate" type="date-time"/>
+        <field name="lastModifiedByUserLogin" type="id-very-long"/>
+        <relationship type="one" fk-name="TKNG_COD_MKCMPN" related-entity-name="MarketingCampaign">
+            <key-map field-name="marketingCampaignId"/>
+        </relationship>
+        <relationship type="one" fk-name="TKNG_COD_TYP" related-entity-name="TrackingCodeType">
+            <key-map field-name="trackingCodeTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="TrackingCodeOrder" package-name="org.ofbiz.marketing.tracking">
+        <field name="orderId" type="id" is-pk="true"/>
+        <field name="trackingCodeTypeId" type="id" is-pk="true"/>
+        <field name="trackingCodeId" type="id-long"/>
+        <field name="isBillable" type="text-indicator"/>
+        <field name="siteId" type="text-long"/>
+        <field name="hasExported" type="text-indicator"/>
+        <field name="affiliateReferredTimeStamp" type="date-time"/>
+        <relationship type="one" fk-name="TKNG_CODODR_ODR" related-entity-name="OrderHeader">
+            <key-map field-name="orderId"/>
+        </relationship>
+        <relationship type="one" fk-name="TKNG_CODODR_TKCD" related-entity-name="TrackingCode">
+            <key-map field-name="trackingCodeId"/>
+        </relationship>
+        <relationship type="one" fk-name="TKNG_CODODR_TYP" related-entity-name="TrackingCodeType">
+            <key-map field-name="trackingCodeTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="TrackingCodeOrderReturn" package-name="org.ofbiz.marketing.tracking">
+        <field name="returnId" type="id" is-pk="true"/>
+        <field name="orderId" type="id" is-pk="true"/>
+        <field name="orderItemSeqId" type="id"/>
+        <field name="trackingCodeTypeId" type="id" is-pk="true"/>
+        <field name="trackingCodeId" type="id-long"/>
+        <field name="isBillable" type="text-indicator"/>
+        <field name="siteId" type="text-long"/>
+        <field name="hasExported" type="text-indicator"/>
+        <field name="affiliateReferredTimeStamp" type="date-time"/>
+        <relationship type="one" fk-name="TKNG_CODODR_RTN" related-entity-name="ReturnHeader">
+            <key-map field-name="returnId"/>
+        </relationship>
+        <relationship type="one" fk-name="TKNG_CODODR_ODRTN" related-entity-name="OrderHeader">
+            <key-map field-name="orderId"/>
+        </relationship>
+        <relationship type="one" fk-name="TKNG_CODODR_RTNTCD" related-entity-name="TrackingCode">
+            <key-map field-name="trackingCodeId"/>
+        </relationship>
+        <relationship type="one" fk-name="TKNG_CODODR_RTNTYP" related-entity-name="TrackingCodeType">
+            <key-map field-name="trackingCodeTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="TrackingCodeType" package-name="org.ofbiz.marketing.tracking">
+        <field name="trackingCodeTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="TrackingCodeVisit" package-name="org.ofbiz.marketing.tracking">
+        <field name="trackingCodeId" type="id-long" is-pk="true"/>
+        <field name="visitId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="sourceEnumId" type="id"/>
+        <relationship type="one" fk-name="TKNG_CODVST_TKCD" related-entity-name="TrackingCode">
+            <key-map field-name="trackingCodeId"/>
+        </relationship>
+        <relationship type="one" fk-name="TKNG_CODVST_VST" related-entity-name="Visit">
+            <key-map field-name="visitId"/>
+        </relationship>
+        <relationship type="one" fk-name="TKNG_CODVST_SRCEM" related-entity-name="Enumeration">
+            <key-map field-name="sourceEnumId" related-field-name="enumId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="TrackingCodeAndVisit" package-name="org.ofbiz.marketing.reports">
+        <member-entity entity-alias="TC" entity-name="TrackingCode" join-from-alias="PC" join-optional="true">
+            <key-map field-name="partyId" related-field-name="partyIdFrom"/>
+        </member-entity>
+        <member-entity entity-alias="TCV" entity-name="TrackingCodeVisit" join-from-alias="TC" join-optional="true">
+            <key-map field-name="trackingCodeId"/>
+        </member-entity>
+        <alias entity-alias="TC" name="trackingCodeId">
+        </alias>
+        <alias entity-alias="TCV" name="visitId" function="count">
+        </alias>
+        <alias entity-alias="TCV" name="fromDate">
+        </alias>
+    </view-entity> -->
+    <!-- <view-entity entity-name="TrackingCodeAndOrderHeader" package-name="org.ofbiz.marketing.reports">
+        <member-entity entity-alias="TCO" entity-name="TrackingCodeOrder" join-from-alias="TC" join-optional="true">
+            <key-map field-name="trackingCodeId"/>
+        </member-entity>
+        <member-entity entity-alias="OH" entity-name="OrderHeader" join-from-alias="TCO">
+            <key-map field-name="orderId"/>
+        </member-entity>
+        <alias entity-alias="OH" name="grandTotal" function="sum">
+        </alias>
+        <alias entity-alias="TCO" name="orderId" function="count">
+        </alias>
+        <alias entity-alias="OH" name="orderDate">
+        </alias>
+        <alias entity-alias="TCO" name="trackingCodeId">
+        </alias>
+    </view-entity> -->
+    <!-- <view-entity entity-name="TrackingCodeOrderAndOrderHeader" package-name="org.ofbiz.marketing.reports" cache="never">
+        <member-entity entity-alias="TCO" entity-name="TrackingCodeOrder" join-from-alias="TCO">
+            <key-map field-name="orderId"/>
+        </member-entity>
+        <member-entity entity-alias="OH" entity-name="OrderHeader" join-from-alias="TCO">
+            <key-map field-name="orderId"/>
+        </member-entity>
+        <alias entity-alias="TCO" name="orderId">
+        </alias>
+        <alias entity-alias="TCO" name="trackingCodeId">
+        </alias>
+        <alias entity-alias="TCO" name="siteId">
+        </alias>
+        <alias entity-alias="TCO" name="hasExported">
+        </alias>
+        <alias entity-alias="TCO" name="affiliateReferredTimeStamp">
+        </alias>
+        <alias entity-alias="OH" name="statusId">
+        </alias>
+        <relationship type="one" related-entity-name="OrderHeader">
+            <key-map field-name="orderId"/>
+        </relationship>
+    </view-entity> -->
+    <!-- <view-entity entity-name="TrackingCodeOrderReturnAndReturnHeader" package-name="org.ofbiz.marketing.reports" cache="never">
+        <member-entity entity-alias="TCO" entity-name="TrackingCodeOrderReturn" join-from-alias="TCO">
+            <key-map field-name="orderId"/>
+        </member-entity>
+        <member-entity entity-alias="RH" entity-name="ReturnHeader" join-from-alias="TCO">
+            <key-map field-name="returnId"/>
+        </member-entity>
+        <alias entity-alias="TCO" name="returnId">
+        </alias>
+        <alias entity-alias="TCO" name="orderId">
+        </alias>
+        <alias entity-alias="TCO" name="orderItemSeqId">
+        </alias>
+        <alias entity-alias="TCO" name="trackingCodeId">
+        </alias>
+        <alias entity-alias="TCO" name="siteId">
+        </alias>
+        <alias entity-alias="TCO" name="hasExported">
+        </alias>
+        <alias entity-alias="TCO" name="affiliateReferredTimeStamp">
+        </alias>
+        <alias entity-alias="RH" name="statusId">
+        </alias>
+        <relationship type="one" related-entity-name="ReturnHeader">
+            <key-map field-name="returnId"/>
+        </relationship>
+    </view-entity> -->
+    <!-- <view-entity entity-name="MarketingCampaignAndVisit" package-name="org.ofbiz.marketing.reports">
+        <member-entity entity-alias="TC" entity-name="TrackingCode" join-from-alias="TCO">
+            <key-map field-name="returnId"/>
+        </member-entity>
+        <member-entity entity-alias="TCV" entity-name="TrackingCodeVisit" join-from-alias="TC" join-optional="true">
+            <key-map field-name="trackingCodeId"/>
+        </member-entity>
+        <alias entity-alias="TC" name="marketingCampaignId">
+        </alias>
+        <alias entity-alias="TCV" name="visitId" function="count">
+        </alias>
+        <alias entity-alias="TCV" name="fromDate">
+        </alias>
+    </view-entity> -->
+    <!-- <view-entity entity-name="MarketingCampaignAndOrderHeader" package-name="org.ofbiz.marketing.reports">
+        <member-entity entity-alias="TC" entity-name="TrackingCode" join-from-alias="TC" join-optional="true">
+            <key-map field-name="trackingCodeId"/>
+        </member-entity>
+        <member-entity entity-alias="TCO" entity-name="TrackingCodeOrder" join-from-alias="TC">
+            <key-map field-name="trackingCodeId"/>
+        </member-entity>
+        <member-entity entity-alias="OH" entity-name="OrderHeader" join-from-alias="TCO">
+            <key-map field-name="orderId"/>
+        </member-entity>
+        <alias entity-alias="OH" name="grandTotal" function="sum">
+        </alias>
+        <alias entity-alias="TCO" name="orderId" function="count">
+        </alias>
+        <alias entity-alias="OH" name="orderDate">
+        </alias>
+        <alias entity-alias="TC" name="marketingCampaignId">
+        </alias>
+    </view-entity> -->
+</entities>
+

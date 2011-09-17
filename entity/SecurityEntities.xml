@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-definition-1.0.xsd">
+
+    <entity group-name="org.ofbiz" entity-name="X509IssuerProvision" package-name="org.ofbiz.security.cert" cache="never">
+        <field name="certProvisionId" type="id" is-pk="true"/>
+        <field name="commonName" type="text-long"/>
+        <field name="organizationalUnit" type="text-long"/>
+        <field name="organizationName" type="text-long"/>
+        <field name="cityLocality" type="text-long"/>
+        <field name="stateProvince" type="text-long"/>
+        <field name="country" type="text-long"/>
+        <field name="serialNumber" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="UserLogin" package-name="org.ofbiz.security.login">
+        <field name="userLoginId" type="id-very-long" is-pk="true"/>
+        <field name="currentPassword" type="text-medium"/>
+        <field name="passwordHint" type="text-long"/>
+        <field name="isSystem" type="text-indicator"/>
+        <field name="enabled" type="text-indicator"/>
+        <field name="hasLoggedOut" type="text-indicator"/>
+        <field name="requirePasswordChange" type="text-indicator"/>
+        <field name="lastCurrencyUom" type="id"/>
+        <field name="lastLocale" type="text-short"/>
+        <field name="lastTimeZone" type="id-long"/>
+        <field name="disabledDateTime" type="date-time"/>
+        <field name="successiveFailedLogins" type="number-integer"/>
+        <field name="externalAuthId" type="id-very-long"/>
+        <field name="userLdapDn" type="id-very-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="UserLoginPasswordHistory" package-name="org.ofbiz.security.login" cache="never">
+        <field name="userLoginId" type="id-very-long" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="currentPassword" type="text-medium"/>
+        <relationship type="one" fk-name="USER_LPH_USER" related-entity-name="UserLogin">
+            <key-map field-name="userLoginId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="OfbizUserLoginHistory" table-name="USER_LOGIN_HISTORY" package-name="org.ofbiz.security.login" cache="never">
+        <field name="userLoginId" type="id-very-long" is-pk="true"/>
+        <field name="visitId" type="id"/>
+        <field name="blackBoxToken" type="text-very-long"/>
+        <field name="userIpAddress" type="text-medium"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="passwordUsed" type="text-medium" encrypt="true"/>
+        <field name="successfulLogin" type="text-indicator"/>
+        <relationship type="one" fk-name="USER_LH_USER" related-entity-name="UserLogin">
+            <key-map field-name="userLoginId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="UserLoginSession" package-name="org.ofbiz.security.login" cache="never">
+        <field name="userLoginId" type="id-very-long" is-pk="true"/>
+        <field name="savedDate" type="date-time"/>
+        <field name="sessionData" type="text-very-long"/>
+        <relationship type="one" fk-name="USER_SESSION_USER" related-entity-name="UserLogin">
+            <key-map field-name="userLoginId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="SecurityGroup" package-name="org.ofbiz.security.securitygroup">
+        <field name="groupId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="SecurityGroupPermission" package-name="org.ofbiz.security.securitygroup">
+    <description>Defines a permission available to a security group; there is no FK to SecurityPermission because we want to leave open the possibility of ad-hoc permissions, especially for the Entity Data Maintenance pages which have TONS of permissions</description>
+        <field name="groupId" type="id" is-pk="true"/>
+        <field name="permissionId" type="id-long" is-pk="true"/>
+        <relationship type="one" fk-name="SEC_GRP_PERM_GRP" related-entity-name="SecurityGroup">
+            <key-map field-name="groupId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="SecurityPermission">
+            <key-map field-name="permissionId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="SecurityPermission" package-name="org.ofbiz.security.securitygroup">
+        <field name="permissionId" type="id-long" is-pk="true"/>
+        <field name="description" type="text-long"/>
+        <field name="dynamicAccess" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="SecurityPermissionAutoGrant" package-name="org.ofbiz.security.securitygroup">
+        <field name="permissionId" type="id-long" is-pk="true"/>
+        <field name="grantPermission" type="id-very-long" is-pk="true"/>
+        <relationship type="one" fk-name="SEC_PERM_AUTO_GRNT" related-entity-name="SecurityPermission">
+            <key-map field-name="permissionId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="UserLoginAndSecurityGroup" package-name="org.ofbiz.security.securitygroup" cache="never">
+        <member-entity entity-alias="ULSG" entity-name="UserLoginSecurityGroup">
+        </member-entity>
+        <member-entity entity-alias="UL" entity-name="UserLogin" join-from-alias="ULSG">
+            <key-map field-name="userLoginId"/>
+        </member-entity>
+        <alias-all entity-alias="ULSG">
+        </alias-all>
+        <alias-all entity-alias="UL">
+        </alias-all>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="UserLoginSecurityGroup" package-name="org.ofbiz.security.securitygroup">
+    <description>Maps a UserLogin to a security group</description>
+        <field name="userLoginId" type="id-very-long" is-pk="true"/>
+        <field name="groupId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <relationship type="one" fk-name="USER_SECGRP_USER" related-entity-name="UserLogin">
+            <key-map field-name="userLoginId"/>
+        </relationship>
+        <relationship type="one" fk-name="USER_SECGRP_GRP" related-entity-name="SecurityGroup">
+            <key-map field-name="groupId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="SecurityGroupPermission">
+            <key-map field-name="groupId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ProtectedView" package-name="org.ofbiz.security.securitygroup">
+    <description>Defines views protected from data leakage</description>
+        <field name="groupId" type="id" is-pk="true"/>
+        <field name="viewNameId" type="id-long" is-pk="true"/>
+        <field name="maxHits" type="number-integer"/>
+        <field name="maxHitsDuration" type="number-integer"/>
+        <field name="tarpitDuration" type="number-integer"/>
+        <relationship type="one" fk-name="VIEW_SECGRP_GRP" related-entity-name="SecurityGroup">
+            <key-map field-name="groupId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="SecurityGroupPermission">
+            <key-map field-name="groupId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="UserLoginAndProtectedView" package-name="org.ofbiz.security.securitygroup" cache="never">
+        <member-entity entity-alias="ULSGPV" entity-name="UserLoginSecurityGroup" join-from-alias="ULSG">
+            <key-map field-name="userLoginId"/>
+        </member-entity>
+        <member-entity entity-alias="PV" entity-name="ProtectedView" join-from-alias="ULSGPV">
+            <key-map field-name="groupId"/>
+        </member-entity>
+        <alias-all entity-alias="ULSGPV">
+        </alias-all>
+        <alias-all entity-alias="PV">
+        </alias-all>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="TarpittedLoginView" package-name="org.ofbiz.security.securitygroup">
+    <description>Login View couple currently tarpitted : any access to the view for the login is denied</description>
+        <field name="viewNameId" type="id-long" is-pk="true"/>
+        <field name="userLoginId" type="id" is-pk="true"/>
+        <field name="tarpitReleaseDateTime" type="number-integer"/>
+    </entity>
+</entities>
+

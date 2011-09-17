@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-definition-1.0.xsd">
+
+    <entity group-name="org.ofbiz" entity-name="BrowserType" package-name="org.ofbiz.webapp.visit">
+        <field name="browserTypeId" type="id" is-pk="true"/>
+        <field name="browserName" type="text-medium"/>
+        <field name="browserVersion" type="text-short"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PlatformType" package-name="org.ofbiz.webapp.visit">
+        <field name="platformTypeId" type="id" is-pk="true"/>
+        <field name="platformName" type="text-medium"/>
+        <field name="platformVersion" type="text-short"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ProtocolType" package-name="org.ofbiz.webapp.visit">
+        <field name="protocolTypeId" type="id" is-pk="true"/>
+        <field name="protocolName" type="text-medium"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ServerHit" package-name="org.ofbiz.webapp.visit" cache="never">
+        <field name="visitId" type="id" is-pk="true"/>
+        <field name="contentId" type="id-very-long" is-pk="true"/>
+        <field name="hitStartDateTime" type="date-time" is-pk="true"/>
+        <field name="hitTypeId" type="id" is-pk="true"/>
+        <field name="numOfBytes" type="number-integer"/>
+        <field name="runningTimeMillis" type="number-integer"/>
+        <field name="userLoginId" type="id-very-long"/>
+        <field name="statusId" type="id"/>
+        <field name="requestUrl" type="text-long"/>
+        <field name="referrerUrl" type="text-long"/>
+        <field name="serverIpAddress" type="id"/>
+        <field name="serverHostName" type="text-long"/>
+        <relationship type="one" fk-name="SERVER_HIT_SHTYP" related-entity-name="ServerHitType">
+            <key-map field-name="hitTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="SERVER_HIT_VISIT" related-entity-name="Visit">
+            <key-map field-name="visitId"/>
+        </relationship>
+        <relationship type="one" fk-name="SERVER_HIT_STATUS" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+        <relationship type="one" fk-name="SERVER_HIT_USER" related-entity-name="UserLogin">
+            <key-map field-name="userLoginId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ServerHitBin" package-name="org.ofbiz.webapp.visit" cache="never">
+        <field name="serverHitBinId" type="id" is-pk="true"/>
+        <field name="contentId" type="id-very-long"/>
+        <field name="hitTypeId" type="id"/>
+        <field name="serverIpAddress" type="id"/>
+        <field name="serverHostName" type="text-long"/>
+        <field name="binStartDateTime" type="date-time"/>
+        <field name="binEndDateTime" type="date-time"/>
+        <field name="numberHits" type="number-integer"/>
+        <field name="totalTimeMillis" type="number-integer"/>
+        <field name="minTimeMillis" type="number-integer"/>
+        <field name="maxTimeMillis" type="number-integer"/>
+        <relationship type="one" fk-name="SERVER_HBIN_TYPE" related-entity-name="ServerHitType">
+            <key-map field-name="hitTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ServerHitType" package-name="org.ofbiz.webapp.visit">
+        <field name="hitTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="UserAgent" package-name="org.ofbiz.webapp.visit">
+        <field name="userAgentId" type="id" is-pk="true"/>
+        <field name="browserTypeId" type="id"/>
+        <field name="platformTypeId" type="id"/>
+        <field name="protocolTypeId" type="id"/>
+        <field name="userAgentTypeId" type="id"/>
+        <field name="userAgentMethodTypeId" type="id"/>
+        <relationship type="one" fk-name="UAGENT_BROWSER" related-entity-name="BrowserType">
+            <key-map field-name="browserTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="UAGENT_PLATFORM" related-entity-name="PlatformType">
+            <key-map field-name="platformTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="UAGENT_PROTOCOL" related-entity-name="ProtocolType">
+            <key-map field-name="protocolTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="UAGENT_TYPE" related-entity-name="UserAgentType">
+            <key-map field-name="userAgentTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="UAGENT_METHOD" related-entity-name="UserAgentMethodType">
+            <key-map field-name="userAgentMethodTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="UserAgentMethodType" package-name="org.ofbiz.webapp.visit">
+        <field name="userAgentMethodTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="UserAgentType" package-name="org.ofbiz.webapp.visit">
+        <field name="userAgentTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="OfbizVisit" table-name="VISIT" package-name="org.ofbiz.webapp.visit" sequence-bank-size="100" cache="never">
+        <field name="visitId" type="id" is-pk="true"/>
+        <field name="visitorId" type="id"/>
+        <field name="userLoginId" type="id-very-long"/>
+        <field name="userCreated" type="text-indicator"/>
+        <field name="sessionId" type="id-very-long"/>
+        <field name="serverIpAddress" type="id"/>
+        <field name="serverHostName" type="text-long"/>
+        <field name="webappName" type="text-medium"/>
+        <field name="initialLocale" type="text-medium"/>
+        <field name="initialRequest" type="text-long"/>
+        <field name="initialReferrer" type="text-long"/>
+        <field name="initialUserAgent" type="text-long"/>
+        <field name="userAgentId" type="id"/>
+        <field name="clientIpAddress" type="id"/>
+        <field name="clientHostName" type="text-long"/>
+        <field name="clientUser" type="text-medium"/>
+        <field name="clientIpIspName" type="text-medium"/>
+        <field name="clientIpPostalCode" type="text-medium"/>
+        <field name="clientIpStateProvGeoId" type="id"/>
+        <field name="clientIpCountryGeoId" type="id"/>
+        <field name="cookie" type="text-medium"/>
+        <field name="fromDate" type="date-time"/>
+        <field name="thruDate" type="date-time"/>
+        <relationship type="one" fk-name="VISIT_VISITOR" related-entity-name="OfbizVisitor">
+            <key-map field-name="visitorId"/>
+        </relationship>
+        <relationship type="one" fk-name="VISIT_USER_AGNT" related-entity-name="UserAgent">
+            <key-map field-name="userAgentId"/>
+        </relationship>
+        <relationship type="one" fk-name="VISIT_CIP_STPRV" title="ClientIpStateProv" related-entity-name="OfbizGeo">
+            <key-map field-name="clientIpStateProvGeoId" related-field-name="geoId"/>
+        </relationship>
+        <relationship type="one" fk-name="VISIT_CIP_CNTRY" title="ClientIpCountry" related-entity-name="OfbizGeo">
+            <key-map field-name="clientIpCountryGeoId" related-field-name="geoId"/>
+        </relationship>
+    <index name="VISIT_THRU_IDX" unique="false">
+    <index-field name="thruDate"/>
+    </index>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="OfbizVisitor" table-name="VISITOR" package-name="org.ofbiz.webapp.visit" sequence-bank-size="100">
+        <field name="visitorId" type="id" is-pk="true"/>
+        <field name="userLoginId" type="id-very-long"/>
+        <relationship type="one" fk-name="VISITOR_USRLGN" related-entity-name="UserLogin">
+            <key-map field-name="userLoginId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WebPage" package-name="org.ofbiz.webapp.website">
+        <field name="webPageId" type="id" is-pk="true"/>
+        <field name="pageName" type="text-medium"/>
+        <field name="webSiteId" type="id"/>
+        <relationship type="one" fk-name="WEB_PAGE_SITE" related-entity-name="WebSite">
+            <key-map field-name="webSiteId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="WebSite" package-name="org.ofbiz.webapp.website">
+        <field name="webSiteId" type="id" is-pk="true"/>
+        <field name="siteName" type="text-medium"/>
+        <field name="httpHost" type="text-long"/>
+        <field name="httpPort" type="text-short"/>
+        <field name="httpsHost" type="text-long"/>
+        <field name="httpsPort" type="text-short"/>
+        <field name="enableHttps" type="text-indicator"/>
+        <field name="standardContentPrefix" type="text-long"/>
+        <field name="secureContentPrefix" type="text-long"/>
+        <field name="cookieDomain" type="text-long"/>
+        <field name="visualThemeSetId" type="id"/>
+        <relationship type="one" fk-name="WEB_SITE_THEME_SET" related-entity-name="VisualThemeSet">
+            <key-map field-name="visualThemeSetId"/>
+        </relationship>
+    </entity>
+</entities>
+

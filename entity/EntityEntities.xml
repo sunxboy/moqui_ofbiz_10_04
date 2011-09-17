@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-definition-1.0.xsd">
+    <!-- NOTE naming conflict for a few of these, so adding "Ofbiz" prefix -->
+    <entity group-name="org.ofbiz" entity-name="OfbizEntityAuditLog" table-name="ENTITY_AUDIT_LOG" package-name="org.ofbiz.entity.audit">
+        <field name="auditHistorySeqId" type="id" is-pk="true"/>
+        <field name="changedEntityName" type="text-long"/>
+        <field name="changedFieldName" type="text-long"/>
+        <field name="pkCombinedValueText" type="text-long"/>
+        <field name="oldValueText" type="text-long"/>
+        <field name="newValueText" type="text-long"/>
+        <field name="changedDate" type="date-time"/>
+        <field name="changedByInfo" type="text-long"/>
+        <field name="changedSessionInfo" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="EntityKeyStore" package-name="org.ofbiz.entity.crypto">
+        <field name="keyName" type="id-very-long" is-pk="true"/>
+        <field name="keyText" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="OfbizSequenceValueItem" table-name="SEQUENCE_VALUE_ITEM" package-name="org.ofbiz.entity.sequence">
+        <field name="seqName" type="id-long" is-pk="true"/>
+        <field name="seqId" type="number-integer"/>
+    </entity>
+    <entity group-name="org.ofbiz.tenant" entity-name="OfbizTenant" table-name="TENANT" package-name="org.ofbiz.entity.tenant">
+        <field name="tenantId" type="id" is-pk="true"/>
+        <field name="tenantName" type="text-medium"/>
+        <field name="disabled" type="text-indicator"/>
+    </entity>
+    <entity group-name="org.ofbiz.tenant" entity-name="OfbizTenantDataSource" table-name="TENANT_DATA_SOURCE" package-name="org.ofbiz.entity.tenant">
+    <description>There should be one record for each tenant and each group-map for the active delegator.
+            The jdbc fields will override the datasource -> inline-jdbc values for the per-tenant delegator.</description>
+        <field name="tenantId" type="id" is-pk="true"/>
+        <field name="entityGroupName" type="text-medium" is-pk="true"/>
+        <field name="jdbcUri" type="text-long"/>
+        <field name="jdbcUsername" type="text-long"/>
+        <field name="jdbcPassword" type="text-long"/>
+        <relationship type="one" fk-name="TNTDTSRC_TNT" related-entity-name="Tenant">
+            <key-map field-name="tenantId"/>
+        </relationship>
+    </entity>
+</entities>
+

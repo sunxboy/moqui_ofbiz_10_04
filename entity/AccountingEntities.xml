@@ -1,0 +1,3506 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-definition-1.0.xsd">
+
+    <entity group-name="org.ofbiz" entity-name="Budget" package-name="org.ofbiz.accounting.budget">
+        <field name="budgetId" type="id" is-pk="true"/>
+        <field name="budgetTypeId" type="id"/>
+        <field name="customTimePeriodId" type="id"/>
+        <field name="comments" type="text-long"/>
+        <relationship type="one" fk-name="BUDGET_BGTTYP" related-entity-name="BudgetType">
+            <key-map field-name="budgetTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="BUDGET_CTP" related-entity-name="CustomTimePeriod">
+            <key-map field-name="customTimePeriodId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="BudgetTypeAttr">
+            <key-map field-name="budgetTypeId"/>
+        </relationship>
+    </entity>                             
+    <entity group-name="org.ofbiz" entity-name="BudgetAttribute" package-name="org.ofbiz.accounting.budget">
+        <field name="budgetId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <field name="attrValue" type="text-long"/>
+        <relationship type="one" fk-name="BUDGET_ATTR_BDGT" related-entity-name="Budget">
+            <key-map field-name="budgetId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="BudgetTypeAttr">
+            <key-map field-name="attrName"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="BudgetItem" package-name="org.ofbiz.accounting.budget">
+        <field name="budgetId" type="id" is-pk="true"/>
+        <field name="budgetItemSeqId" type="id" is-pk="true"/>
+        <field name="budgetItemTypeId" type="id"/>
+        <field name="amount" type="currency-amount"/>
+        <field name="purpose" type="text-long"/>
+        <field name="justification" type="text-long"/>
+        <relationship type="one" fk-name="BDGTITM_TO_BDGT" related-entity-name="Budget">
+            <key-map field-name="budgetId"/>
+        </relationship>
+        <relationship type="one" fk-name="BUDGET_ITEM_BTYP" related-entity-name="BudgetItemType">
+            <key-map field-name="budgetItemTypeId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="BudgetItemTypeAttr">
+            <key-map field-name="budgetItemTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="BudgetItemAttribute" package-name="org.ofbiz.accounting.budget">
+        <field name="budgetId" type="id" is-pk="true"/>
+        <field name="budgetItemSeqId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <field name="attrValue" type="text-long"/>
+        <relationship type="one" fk-name="BUDGET_ITEM_ATTR" related-entity-name="BudgetItem">
+            <key-map field-name="budgetId"/>
+            <key-map field-name="budgetItemSeqId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="BudgetItemTypeAttr">
+            <key-map field-name="attrName"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="BudgetItemType" package-name="org.ofbiz.accounting.budget">
+        <field name="budgetItemTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="BUDGET_ITM_TYPPAR" title="Parent" related-entity-name="BudgetItemType">
+            <key-map field-name="parentTypeId" related-field-name="budgetItemTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="BudgetItemTypeAttr" package-name="org.ofbiz.accounting.budget">
+        <field name="budgetItemTypeId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <relationship type="one" fk-name="BUDGET_ITMTYPATTR" related-entity-name="BudgetItemType">
+            <key-map field-name="budgetItemTypeId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="BudgetItemAttribute">
+            <key-map field-name="attrName"/>
+        </relationship>
+        <relationship type="many" related-entity-name="BudgetItem">
+            <key-map field-name="budgetItemTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="BudgetReview" package-name="org.ofbiz.accounting.budget">
+        <field name="budgetId" type="id" is-pk="true"/>
+        <field name="budgetReviewId" type="id" is-pk="true"/>
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="budgetReviewResultTypeId" type="id" is-pk="true"/>
+        <field name="reviewDate" type="date-time"/>
+        <relationship type="one" fk-name="BUDGET_RVW_BDGT" related-entity-name="Budget">
+            <key-map field-name="budgetId"/>
+        </relationship>
+        <relationship type="one" fk-name="BUDGET_RVW_PARTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="BUDGET_RVW_RTYPE" related-entity-name="BudgetReviewResultType">
+            <key-map field-name="budgetReviewResultTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="BudgetReviewResultType" package-name="org.ofbiz.accounting.budget">
+        <field name="budgetReviewResultTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+        <field name="comments" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="BudgetRevision" package-name="org.ofbiz.accounting.budget">
+        <field name="budgetId" type="id" is-pk="true"/>
+        <field name="revisionSeqId" type="id" is-pk="true"/>
+        <field name="dateRevised" type="date-time"/>
+        <relationship type="one" fk-name="BUDGET_RVSN_BDGT" related-entity-name="Budget">
+            <key-map field-name="budgetId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="BudgetRevisionImpact" package-name="org.ofbiz.accounting.budget">
+        <field name="budgetId" type="id" is-pk="true"/>
+        <field name="budgetItemSeqId" type="id" is-pk="true"/>
+        <field name="revisionSeqId" type="id" is-pk="true"/>
+        <field name="revisedAmount" type="currency-amount"/>
+        <field name="addDeleteFlag" type="text-indicator"/>
+        <field name="revisionReason" type="text-long"/>
+        <relationship type="one" fk-name="BUDGET_RNIMP_BDGT" related-entity-name="Budget">
+            <key-map field-name="budgetId"/>
+        </relationship>
+        <relationship type="one" fk-name="BUDGET_RNIMP_BITM" related-entity-name="BudgetItem">
+            <key-map field-name="budgetId"/>
+            <key-map field-name="budgetItemSeqId"/>
+        </relationship>
+        <relationship type="one" fk-name="BUDGET_RNIMP_REV" related-entity-name="BudgetRevision">
+            <key-map field-name="budgetId"/>
+            <key-map field-name="revisionSeqId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="BudgetRole" package-name="org.ofbiz.accounting.budget">
+        <field name="budgetId" type="id" is-pk="true"/>
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="roleTypeId" type="id" is-pk="true"/>
+        <relationship type="one" fk-name="BUDGET_ROLE_BDGT" related-entity-name="Budget">
+            <key-map field-name="budgetId"/>
+        </relationship>
+        <relationship type="one" fk-name="BUDGET_ROLE_PARTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="BUDGET_ROLE_PROLE" related-entity-name="PartyRole">
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="BudgetScenario" package-name="org.ofbiz.accounting.budget">
+        <field name="budgetScenarioId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="BudgetScenarioApplication" package-name="org.ofbiz.accounting.budget">
+        <field name="budgetScenarioApplicId" type="id" is-pk="true"/>
+        <field name="budgetScenarioId" type="id" is-pk="true"/>
+        <field name="budgetId" type="id"/>
+        <field name="budgetItemSeqId" type="id"/>
+        <field name="amountChange" type="currency-amount"/>
+        <field name="percentageChange" type="number-decimal"/>
+        <relationship type="one" fk-name="BUDGET_SAPL_BSCN" related-entity-name="BudgetScenario">
+            <key-map field-name="budgetScenarioId"/>
+        </relationship>
+        <relationship type="one" fk-name="BUDGET_SAPL_BDGT" related-entity-name="Budget">
+            <key-map field-name="budgetId"/>
+        </relationship>
+        <relationship type="one" fk-name="BUDGET_SAPL_BITM" related-entity-name="BudgetItem">
+            <key-map field-name="budgetId"/>
+            <key-map field-name="budgetItemSeqId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="BudgetScenarioRule" package-name="org.ofbiz.accounting.budget">
+        <field name="budgetScenarioId" type="id" is-pk="true"/>
+        <field name="budgetItemTypeId" type="id" is-pk="true"/>
+        <field name="amountChange" type="currency-amount"/>
+        <field name="percentageChange" type="number-decimal"/>
+        <relationship type="one" fk-name="BUDGET_SRLE_BSCN" related-entity-name="BudgetScenario">
+            <key-map field-name="budgetScenarioId"/>
+        </relationship>
+        <relationship type="one" fk-name="BUDGET_SRLE_BITP" related-entity-name="BudgetItemType">
+            <key-map field-name="budgetItemTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="BudgetStatus" package-name="org.ofbiz.accounting.budget">
+        <field name="budgetId" type="id" is-pk="true"/>
+        <field name="statusId" type="id" is-pk="true"/>
+        <field name="statusDate" type="date-time"/>
+        <field name="comments" type="text-long"/>
+        <relationship type="one" fk-name="BUDGET_STTS_BDGT" related-entity-name="Budget">
+            <key-map field-name="budgetId"/>
+        </relationship>
+        <relationship type="one" fk-name="BUDGET_STTS_STTS" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="BudgetType" package-name="org.ofbiz.accounting.budget">
+        <field name="budgetTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="BUDGET_TYPE_PAR" title="Parent" related-entity-name="BudgetType">
+            <key-map field-name="parentTypeId" related-field-name="budgetTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="BudgetTypeAttr" package-name="org.ofbiz.accounting.budget">
+        <field name="budgetTypeId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <relationship type="one" fk-name="BUDGET_TPATR_BT" related-entity-name="BudgetType">
+            <key-map field-name="budgetTypeId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="BudgetAttribute">
+            <key-map field-name="attrName"/>
+        </relationship>
+        <relationship type="many" related-entity-name="Budget">
+            <key-map field-name="budgetTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FinAccount" package-name="org.ofbiz.accounting.finaccount">
+        <field name="finAccountId" type="id" is-pk="true"/>
+        <field name="finAccountTypeId" type="id"/>
+        <field name="statusId" type="id"/>
+        <field name="finAccountName" type="text-medium"/>
+        <field name="finAccountCode" type="text-long" encrypt="true"/>
+        <field name="finAccountPin" type="text-long" encrypt="true"/>
+        <field name="currencyUomId" type="id"/>
+        <field name="organizationPartyId" type="id"/>
+        <field name="ownerPartyId" type="id"/>
+        <field name="postToGlAccountId" type="id"/>
+        <field name="fromDate" type="date-time"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="isRefundable" type="text-indicator"/>
+        <field name="replenishPaymentId" type="id"/>
+        <field name="replenishLevel" type="currency-amount"/>
+        <field name="actualBalance" type="currency-amount"/>
+        <field name="availableBalance" type="currency-amount"/>
+        <relationship type="one" fk-name="FINACCT_TYPE" related-entity-name="FinAccountType">
+            <key-map field-name="finAccountTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="FINACCT_CURUOM" title="Currency" related-entity-name="OfbizUom">
+            <key-map field-name="currencyUomId" related-field-name="uomId"/>
+        </relationship>
+        <relationship type="one" fk-name="FINACCT_ORGPTY" title="Organization" related-entity-name="Party">
+            <key-map field-name="organizationPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="FINACCT_OWNPTY" title="Owner" related-entity-name="Party">
+            <key-map field-name="ownerPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="FINACCT_GLAC" title="PostTo" related-entity-name="GlAccount">
+            <key-map field-name="postToGlAccountId" related-field-name="glAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="FINACCT_PAYMETH" title="Replenish" related-entity-name="PaymentMethod">
+            <key-map field-name="replenishPaymentId" related-field-name="paymentMethodId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="FinAccountTypeAttr">
+            <key-map field-name="finAccountTypeId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="FinAccountAndRole" package-name="org.ofbiz.accounting.finaccount">
+        <member-entity entity-alias="FA" entity-name="FinAccount">
+        </member-entity>
+        <member-entity entity-alias="FR" entity-name="FinAccountRole" join-from-alias="FA">
+            <key-map field-name="finAccountId"/>
+        </member-entity>
+        <alias-all entity-alias="FA">
+        </alias-all>
+        <alias entity-alias="FR" name="partyId">
+        </alias>
+        <alias entity-alias="FR" name="roleTypeId">
+        </alias>
+        <alias entity-alias="FR" name="roleFromDate" field="fromDate">
+        </alias>
+        <alias entity-alias="FR" name="roleThruDate" field="thruDate">
+        </alias>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="FinAccountAttribute" package-name="org.ofbiz.accounting.finaccount">
+        <field name="finAccountId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <field name="attrValue" type="text-long"/>
+        <relationship type="one" fk-name="FINACCT_ATTR" related-entity-name="FinAccount">
+            <key-map field-name="finAccountId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="FinAccountTypeAttr">
+            <key-map field-name="attrName"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FinAccountAuth" package-name="org.ofbiz.accounting.finaccount">
+        <field name="finAccountAuthId" type="id" is-pk="true"/>
+        <field name="finAccountId" type="id"/>
+        <field name="amount" type="currency-amount"/>
+        <field name="currencyUomId" type="id"/>
+        <field name="authorizationDate" type="date-time"/>
+        <field name="fromDate" type="date-time"/>
+        <field name="thruDate" type="date-time"/>
+        <relationship type="one" fk-name="FINACT_AUTH_FINACT" related-entity-name="FinAccount">
+            <key-map field-name="finAccountId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FinAccountRole" package-name="org.ofbiz.accounting.finaccount">
+        <field name="finAccountId" type="id" is-pk="true"/>
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="roleTypeId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <relationship type="one" fk-name="FIN_ACT_RL_FNACT" related-entity-name="FinAccount">
+            <key-map field-name="finAccountId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="RoleType">
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIN_ACT_RL_RTRL" related-entity-name="PartyRole">
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FinAccountStatus" package-name="org.ofbiz.accounting.finaccount">
+        <field name="finAccountId" type="id" is-pk="true"/>
+        <field name="statusId" type="id" is-pk="true"/>
+        <field name="statusDate" type="date-time" is-pk="true"/>
+        <field name="statusEndDate" type="date-time"/>
+        <relationship type="one" fk-name="FINACT_STTS_FNA" related-entity-name="FinAccount">
+            <key-map field-name="finAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="FINACT_STTS_STI" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FinAccountTrans" package-name="org.ofbiz.accounting.finaccount">
+        <field name="finAccountTransId" type="id" is-pk="true"/>
+        <field name="finAccountTransTypeId" type="id"/>
+        <field name="finAccountId" type="id"/>
+        <field name="partyId" type="id"/>
+        <field name="glReconciliationId" type="id"/>
+        <field name="transactionDate" type="date-time"/>
+        <field name="entryDate" type="date-time"/>
+        <field name="amount" type="currency-amount"/>
+        <field name="paymentId" type="id"/>
+        <field name="orderId" type="id"/>
+        <field name="orderItemSeqId" type="id"/>
+        <field name="performedByPartyId" type="id"/>
+        <field name="reasonEnumId" type="id"/>
+        <field name="comments" type="text-long"/>
+        <field name="statusId" type="id"/>
+        <relationship type="one" fk-name="FINACCT_TX_TYPE" related-entity-name="FinAccountTransType">
+            <key-map field-name="finAccountTransTypeId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="FinAccountTransTypeAttr">
+            <key-map field-name="finAccountTransTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIN_ACT_TX_FNACT" related-entity-name="FinAccount">
+            <key-map field-name="finAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIN_ACT_TX_PARTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIN_ACT_TX_PMT" related-entity-name="Payment">
+            <key-map field-name="paymentId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIN_ACT_TX_ODITM" related-entity-name="OrderItem">
+            <key-map field-name="orderId"/>
+            <key-map field-name="orderItemSeqId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIN_ACT_TX_PBPTY" title="PerformedBy" related-entity-name="Party">
+            <key-map field-name="performedByPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIN_ACT_REAS_ENUM" title="Reason" related-entity-name="Enumeration">
+            <key-map field-name="reasonEnumId" related-field-name="enumId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIN_ACT_TX_STI" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIN_ACT_TX_GLREC" related-entity-name="GlReconciliation">
+            <key-map field-name="glReconciliationId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FinAccountTransAttribute" package-name="org.ofbiz.accounting.finaccount">
+        <field name="finAccountTransId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <field name="attrValue" type="text-long"/>
+        <relationship type="one" fk-name="FINACCT_TX_ATTR" related-entity-name="FinAccountTrans">
+            <key-map field-name="finAccountTransId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="FinAccountTransTypeAttr">
+            <key-map field-name="attrName"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FinAccountTransType" package-name="org.ofbiz.accounting.finaccount">
+        <field name="finAccountTransTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="FINACCT_TX_TYPPAR" title="Parent" related-entity-name="FinAccountTransType">
+            <key-map field-name="parentTypeId" related-field-name="finAccountTransTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FinAccountTransTypeAttr" package-name="org.ofbiz.accounting.finaccount">
+        <field name="finAccountTransTypeId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <relationship type="one" fk-name="FINACCT_TX_TYPATR" related-entity-name="FinAccountTransType">
+            <key-map field-name="finAccountTransTypeId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="FinAccountTransAttribute">
+            <key-map field-name="attrName"/>
+        </relationship>
+        <relationship type="many" related-entity-name="FinAccountTrans">
+            <key-map field-name="finAccountTransTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FinAccountType" package-name="org.ofbiz.accounting.finaccount">
+        <field name="finAccountTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="replenishEnumId" type="id"/>
+        <field name="isRefundable" type="text-indicator"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="FINACCT_TYPE_PAR" title="Parent" related-entity-name="FinAccountType">
+            <key-map field-name="parentTypeId" related-field-name="finAccountTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="FINACCT_TYPE_RENUM" title="Replenish" related-entity-name="Enumeration">
+            <key-map field-name="replenishEnumId" related-field-name="enumId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FinAccountTypeAttr" package-name="org.ofbiz.accounting.finaccount">
+        <field name="finAccountTypeId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <field name="attrValue" type="text-long"/>
+        <relationship type="one" fk-name="FINACCT_TYPE_ATTR" related-entity-name="FinAccountType">
+            <key-map field-name="finAccountTypeId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="FinAccountAttribute">
+            <key-map field-name="attrName"/>
+        </relationship>
+        <relationship type="many" related-entity-name="FinAccount">
+            <key-map field-name="finAccountTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FinAccountTypeGlAccount" package-name="org.ofbiz.accounting.finaccount">
+        <field name="finAccountTypeId" type="id" is-pk="true"/>
+        <field name="organizationPartyId" type="id" is-pk="true"/>
+        <field name="glAccountId" type="id"/>
+        <relationship type="one" fk-name="FINACCT_TGA_PMT" related-entity-name="FinAccountType">
+            <key-map field-name="finAccountTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="FINACCT_TGA_OPTY" title="Organization" related-entity-name="Party">
+            <key-map field-name="organizationPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="FINACCT_TGA_GLAC" related-entity-name="GlAccount">
+            <key-map field-name="glAccountId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="FinAccountTransSum" package-name="org.ofbiz.accounting.finaccount">
+        <description>View entity to help calculate total of financial account transactions by doing a query for the sum of all amounts
+            on a range of transactionDates for a given finAccountId, finAccountTransTypeId</description>
+        <member-entity entity-alias="FAT" entity-name="FinAccountTrans" join-from-alias="FA">
+            <key-map field-name="finAccountId"/>
+        </member-entity>
+        <alias entity-alias="FAT" name="finAccountId">
+        </alias>
+        <alias entity-alias="FAT" name="finAccountTransTypeId">
+        </alias>
+        <alias entity-alias="FAT" name="transactionDate">
+        </alias>
+        <alias entity-alias="FAT" name="amount" function="sum">
+        </alias>
+    </view-entity> -->
+    <!-- <view-entity entity-name="FinAccountAuthSum" package-name="org.ofbiz.accounting.finaccount">
+        <description>View entity to help calculate total of financial account authorizations by doing a query for the sum of all amounts
+            on a range of transactionDates for a given finAccountId.  Note there is no auth type to consider here, but authorizations do
+            have from and thru dates</description>
+        <member-entity entity-alias="FAA" entity-name="FinAccountAuth" join-from-alias="FA">
+            <key-map field-name="finAccountId"/>
+        </member-entity>
+        <alias entity-alias="FAA" name="finAccountId">
+        </alias>
+        <alias entity-alias="FAA" name="authorizationDate">
+        </alias>
+        <alias entity-alias="FAA" name="fromDate">
+        </alias>
+        <alias entity-alias="FAA" name="thruDate">
+        </alias>
+        <alias entity-alias="FAA" name="amount" function="sum">
+        </alias>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="FixedAsset" package-name="org.ofbiz.accounting.fixedasset">
+        <field name="fixedAssetId" type="id" is-pk="true"/>
+        <field name="fixedAssetTypeId" type="id"/>
+        <field name="parentFixedAssetId" type="id"/>
+        <field name="instanceOfProductId" type="id"/>
+        <field name="classEnumId" type="id"/>
+        <field name="partyId" type="id"/>
+        <field name="roleTypeId" type="id"/>
+        <field name="fixedAssetName" type="text-medium"/>
+        <field name="acquireOrderId" type="id"/>
+        <field name="acquireOrderItemSeqId" type="id"/>
+        <field name="dateAcquired" type="date-time"/>
+        <field name="dateLastServiced" type="date-time"/>
+        <field name="dateNextService" type="date-time"/>
+        <field name="expectedEndOfLife" type="date"/>
+        <field name="actualEndOfLife" type="date"/>
+        <field name="productionCapacity" type="number-decimal"/>
+        <field name="uomId" type="id"/>
+        <field name="calendarId" type="id"/>
+        <field name="serialNumber" type="text-long"/>
+        <field name="locatedAtFacilityId" type="id"/>
+        <field name="locatedAtLocationSeqId" type="id"/>
+        <field name="salvageValue" type="currency-amount"/>
+        <field name="depreciation" type="currency-amount"/>
+        <field name="purchaseCost" type="currency-amount"/>
+        <field name="purchaseCostUomId" type="id"/>
+        <relationship type="one" fk-name="FIXEDAST_TYPE" related-entity-name="FixedAssetType">
+            <key-map field-name="fixedAssetTypeId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="FixedAssetTypeAttr">
+            <key-map field-name="fixedAssetTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIXEDAST_PAR" title="Parent" related-entity-name="FixedAsset">
+            <key-map field-name="parentFixedAssetId" related-field-name="fixedAssetId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIXEDAST_IOPROD" title="InstanceOf" related-entity-name="Product">
+            <key-map field-name="instanceOfProductId" related-field-name="productId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIXEDAST_CLSENM" title="Class" related-entity-name="Enumeration">
+            <key-map field-name="classEnumId" related-field-name="enumId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIXEDAST_PARTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIXEDAST_ROLETYP" related-entity-name="RoleType">
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="PartyRole">
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="FIXEDAST_ORDHDR" title="Acquire" related-entity-name="OrderHeader">
+            <key-map field-name="acquireOrderId" related-field-name="orderId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIXEDAST_ORDITM" title="Acquire" related-entity-name="OrderItem">
+            <key-map field-name="acquireOrderId" related-field-name="orderId"/>
+            <key-map field-name="acquireOrderItemSeqId" related-field-name="orderItemSeqId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIXEDAST_UOM" related-entity-name="OfbizUom">
+            <key-map field-name="uomId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIXEDAST_CALENDAR" related-entity-name="TechDataCalendar">
+            <key-map field-name="calendarId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIXEDAST_FAC" title="LocatedAt" related-entity-name="Facility">
+            <key-map field-name="locatedAtFacilityId" related-field-name="facilityId"/>
+        </relationship>
+        <relationship type="one-nofk" title="LocatedAt" related-entity-name="FacilityLocation">
+            <key-map field-name="locatedAtFacilityId" related-field-name="facilityId"/>
+            <key-map field-name="locatedAtLocationSeqId" related-field-name="locationSeqId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FixedAssetAttribute" package-name="org.ofbiz.accounting.fixedasset">
+        <field name="fixedAssetId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <field name="attrValue" type="text-long"/>
+        <relationship type="one" fk-name="FIXEDAST_ATTR" related-entity-name="FixedAsset">
+            <key-map field-name="fixedAssetId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="FixedAssetTypeAttr">
+            <key-map field-name="attrName"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FixedAssetDepMethod" package-name="org.ofbiz.accounting.fixedasset">
+        <field name="depreciationCustomMethodId" type="id" is-pk="true"/>
+        <field name="fixedAssetId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time"/>
+        <field name="thruDate" type="date-time"/>
+        <relationship type="one" fk-name="FIXDAST_DM_CMET" related-entity-name="CustomMethod">
+            <key-map field-name="depreciationCustomMethodId" related-field-name="customMethodId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIXDAST_DM_FXAST" related-entity-name="FixedAsset">
+            <key-map field-name="fixedAssetId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FixedAssetGeoPoint" package-name="org.ofbiz.accounting.fixedasset">
+        <field name="fixedAssetId" type="id" is-pk="true"/>
+        <field name="geoPointId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <relationship type="one" fk-name="FXDASTGEOPT_FXDAST" related-entity-name="FixedAsset">
+            <key-map field-name="fixedAssetId"/>
+        </relationship>
+        <relationship type="one" fk-name="FXDASTGEOPT_GEOPT" related-entity-name="OfbizGeoPoint">
+            <key-map field-name="geoPointId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="FixedAssetAndGeoPoint" package-name="org.ofbiz.accounting.fixedasset">
+        <member-entity entity-alias="FA" entity-name="FixedAsset" join-from-alias="FA">
+            <key-map field-name="finAccountId"/>
+        </member-entity>
+        <member-entity entity-alias="FAGPT" entity-name="FixedAssetGeoPoint" join-from-alias="FA">
+            <key-map field-name="fixedAssetId"/>
+        </member-entity>
+        <member-entity entity-alias="GPT" entity-name="OfbizGeoPoint" join-from-alias="FAGPT">
+            <key-map field-name="geoPointId"/>
+        </member-entity>
+        <alias-all entity-alias="GPT">
+        </alias-all>
+        <alias entity-alias="FA" name="fixedAssetId">
+        </alias>
+        <alias entity-alias="FAGPT" name="fromDate">
+        </alias>
+        <alias entity-alias="FAGPT" name="thruDate">
+        </alias>
+        <relationship type="many" related-entity-name="FixedAssetGeoPoint">
+            <key-map field-name="fixedAssetId"/>
+            <key-map field-name="geoPointId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="FixedAsset">
+            <key-map field-name="fixedAssetId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="OfbizGeoPoint">
+            <key-map field-name="geoPointId"/>
+        </relationship>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="FixedAssetIdent" package-name="org.ofbiz.accounting.fixedasset">
+        <field name="fixedAssetId" type="id" is-pk="true"/>
+        <field name="fixedAssetIdentTypeId" type="id" is-pk="true"/>
+        <field name="idValue" type="text-long"/>
+        <relationship type="one" fk-name="FIXDASTID_FXAST" related-entity-name="FixedAsset">
+            <key-map field-name="fixedAssetId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIXDASTID_IDTYP" related-entity-name="FixedAssetIdentType">
+            <key-map field-name="fixedAssetIdentTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FixedAssetIdentType" package-name="org.ofbiz.accounting.fixedasset">
+        <field name="fixedAssetIdentTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FixedAssetMaint" package-name="org.ofbiz.accounting.fixedasset">
+        <field name="fixedAssetId" type="id" is-pk="true"/>
+        <field name="maintHistSeqId" type="id" is-pk="true"/>
+        <field name="statusId" type="id"/>
+        <field name="productMaintTypeId" type="id"/>
+        <field name="productMaintSeqId" type="id"/>
+        <field name="scheduleWorkEffortId" type="id"/>
+        <field name="intervalQuantity" type="number-decimal"/>
+        <field name="intervalUomId" type="id"/>
+        <field name="intervalMeterTypeId" type="id"/>
+        <field name="purchaseOrderId" type="id"/>
+        <relationship type="one" fk-name="FXDASTMNT_FXAST" related-entity-name="FixedAsset">
+            <key-map field-name="fixedAssetId"/>
+        </relationship>
+        <relationship type="one" fk-name="FXDASTMNT_PMNTP" related-entity-name="ProductMaintType">
+            <key-map field-name="productMaintTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="FXDASTMNT_SCHWE" title="Schedule" related-entity-name="WorkEffort">
+            <key-map field-name="scheduleWorkEffortId" related-field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one" fk-name="FXDASTMNT_INTUOM" title="Interval" related-entity-name="OfbizUom">
+            <key-map field-name="intervalUomId" related-field-name="uomId"/>
+        </relationship>
+        <relationship type="one" fk-name="FXDASTMNT_PDMTTYP" title="Interval" related-entity-name="ProductMeterType">
+            <key-map field-name="intervalMeterTypeId" related-field-name="productMeterTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="FXDASTMNT_PURORD" title="Purchase" related-entity-name="OrderHeader">
+            <key-map field-name="purchaseOrderId" related-field-name="orderId"/>
+        </relationship>
+        <relationship type="one" fk-name="FXDASTMNT_SI" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FixedAssetMaintMeter" package-name="org.ofbiz.accounting.fixedasset">
+        <field name="fixedAssetId" type="id" is-pk="true"/>
+        <field name="maintHistSeqId" type="id" is-pk="true"/>
+        <field name="productMeterTypeId" type="id" is-pk="true"/>
+        <field name="meterValue" type="number-decimal"/>
+        <relationship type="one" fk-name="FXDASTMNMT_FAMNT" related-entity-name="FixedAssetMaint">
+            <key-map field-name="fixedAssetId"/>
+            <key-map field-name="maintHistSeqId"/>
+        </relationship>
+        <relationship type="one" fk-name="FXDASTMNMT_PMTYP" related-entity-name="ProductMeterType">
+            <key-map field-name="productMeterTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FixedAssetMeter" package-name="org.ofbiz.accounting.fixedasset">
+        <field name="fixedAssetId" type="id" is-pk="true"/>
+        <field name="productMeterTypeId" type="id" is-pk="true"/>
+        <field name="readingDate" type="date-time" is-pk="true"/>
+        <field name="meterValue" type="number-decimal"/>
+        <field name="readingReasonEnumId" type="id"/>
+        <field name="maintHistSeqId" type="id"/>
+        <field name="workEffortId" type="id"/>
+        <relationship type="one" fk-name="FXDASTMTR_FAMNT" related-entity-name="FixedAssetMaint">
+            <key-map field-name="fixedAssetId"/>
+            <key-map field-name="maintHistSeqId"/>
+        </relationship>
+        <relationship type="one" fk-name="FXDASTMTR_PMTYP" related-entity-name="ProductMeterType">
+            <key-map field-name="productMeterTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FixedAssetProduct" package-name="org.ofbiz.accounting.fixedasset">
+        <field name="fixedAssetId" type="id" is-pk="true"/>
+        <field name="productId" type="id" is-pk="true"/>
+        <field name="fixedAssetProductTypeId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="comments" type="text-long"/>
+        <field name="sequenceNum" type="number-integer"/>
+        <field name="quantity" type="number-decimal"/>
+        <field name="quantityUomId" type="id"/>
+        <relationship type="one" fk-name="FIXDASTPRD_PRD" related-entity-name="Product">
+            <key-map field-name="productId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIXDASTPRD_FA" related-entity-name="FixedAsset">
+            <key-map field-name="fixedAssetId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIXDASTPRD_FAPT" related-entity-name="FixedAssetProductType">
+            <key-map field-name="fixedAssetProductTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIXDASTPRD_UOM" related-entity-name="OfbizUom">
+            <key-map field-name="quantityUomId" related-field-name="uomId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FixedAssetProductType" package-name="org.ofbiz.accounting.fixedasset">
+        <field name="fixedAssetProductTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FixedAssetTypeGlAccount" package-name="org.ofbiz.accounting.fixedasset">
+        <field name="fixedAssetTypeId" type="id" is-pk="true"/>
+        <field name="fixedAssetId" type="id" is-pk="true"/>
+        <field name="organizationPartyId" type="id" is-pk="true"/>
+        <field name="assetGlAccountId" type="id"/>
+        <field name="accDepGlAccountId" type="id"/>
+        <field name="depGlAccountId" type="id"/>
+        <field name="profitGlAccountId" type="id"/>
+        <field name="lossGlAccountId" type="id"/>
+        <relationship type="one-nofk" related-entity-name="FixedAssetType">
+            <key-map field-name="fixedAssetTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="FixedAsset">
+            <key-map field-name="fixedAssetId"/>
+        </relationship>
+        <relationship type="one" fk-name="FATGL_OP" related-entity-name="Party">
+            <key-map field-name="organizationPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="FATGL_AGL" title="Asset" related-entity-name="GlAccount">
+            <key-map field-name="assetGlAccountId" related-field-name="glAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="FATGL_ACCDGL" title="AccumulatedDepreciation" related-entity-name="GlAccount">
+            <key-map field-name="accDepGlAccountId" related-field-name="glAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="FATGL_DGL" title="Depreciation" related-entity-name="GlAccount">
+            <key-map field-name="depGlAccountId" related-field-name="glAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="FATGL_PGL" title="Profit" related-entity-name="GlAccount">
+            <key-map field-name="profitGlAccountId" related-field-name="glAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="FATGL_LGL" title="Loss" related-entity-name="GlAccount">
+            <key-map field-name="lossGlAccountId" related-field-name="glAccountId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FixedAssetRegistration" package-name="org.ofbiz.accounting.fixedasset">
+        <field name="fixedAssetId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="registrationDate" type="date-time"/>
+        <field name="govAgencyPartyId" type="id"/>
+        <field name="registrationNumber" type="text-long"/>
+        <field name="licenseNumber" type="text-long"/>
+        <relationship type="one" fk-name="FIXDASTREG_FXAST" related-entity-name="FixedAsset">
+            <key-map field-name="fixedAssetId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIXDASTREG_GVAPTY" title="GovAgency" related-entity-name="Party">
+            <key-map field-name="govAgencyPartyId" related-field-name="partyId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FixedAssetStdCost" package-name="org.ofbiz.accounting.fixedasset">
+        <field name="fixedAssetId" type="id" is-pk="true"/>
+        <field name="fixedAssetStdCostTypeId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="amountUomId" type="id"/>
+        <field name="amount" type="currency-amount"/>
+        <relationship type="one" fk-name="FIXASTCO_FIXAST" related-entity-name="FixedAsset">
+            <key-map field-name="fixedAssetId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIXASTCO_TYPCOS" related-entity-name="FixedAssetStdCostType">
+            <key-map field-name="fixedAssetStdCostTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="FIXASTCO_AMCURR" related-entity-name="OfbizUom">
+            <key-map field-name="amountUomId" related-field-name="uomId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FixedAssetStdCostType" package-name="org.ofbiz.accounting.fixedasset">
+        <field name="fixedAssetStdCostTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="FIXASTCO_TYPPAR" title="Parent" related-entity-name="FixedAssetStdCostType">
+            <key-map field-name="parentTypeId" related-field-name="fixedAssetStdCostTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FixedAssetType" package-name="org.ofbiz.accounting.fixedasset">
+        <field name="fixedAssetTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="FIXEDAST_TYPPAR" title="Parent" related-entity-name="FixedAssetType">
+            <key-map field-name="parentTypeId" related-field-name="fixedAssetTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="FixedAssetTypeAttr" package-name="org.ofbiz.accounting.fixedasset">
+        <field name="fixedAssetTypeId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <relationship type="one" fk-name="FIXEDAST_TYPATTR" related-entity-name="FixedAssetType">
+            <key-map field-name="fixedAssetTypeId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="FixedAssetAttribute">
+            <key-map field-name="attrName"/>
+        </relationship>
+        <relationship type="many" related-entity-name="FixedAsset">
+            <key-map field-name="fixedAssetTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PartyFixedAssetAssignment" package-name="org.ofbiz.accounting.fixedasset">
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="roleTypeId" type="id" is-pk="true"/>
+        <field name="fixedAssetId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="allocatedDate" type="date-time"/>
+        <field name="statusId" type="id"/>
+        <field name="comments" type="text-long"/>
+        <relationship type="one-nofk" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="RoleType">
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="PTY_FASTAS_PTRL" related-entity-name="PartyRole">
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="PTY_FASTAS_FA" related-entity-name="FixedAsset">
+            <key-map field-name="fixedAssetId"/>
+        </relationship>
+        <relationship type="one" fk-name="PTY_FASTAS_SI" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="PartyFixedAssetAssignAndRole" package-name="org.ofbiz.accounting.fixedasset">
+        <member-entity entity-alias="PFA" entity-name="PartyFixedAssetAssignment" join-from-alias="FAGPT">
+            <key-map field-name="geoPointId"/>
+        </member-entity>
+        <member-entity entity-alias="RT" entity-name="RoleType" join-from-alias="PFA">
+            <key-map field-name="roleTypeId"/>
+        </member-entity>
+        <alias-all entity-alias="PFA">
+        </alias-all>
+        <alias-all entity-alias="RT">
+        </alias-all>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="FixedAssetMaintOrder" package-name="org.ofbiz.accounting.fixedasset">
+        <field name="fixedAssetId" type="id" is-pk="true"/>
+        <field name="maintHistSeqId" type="id" is-pk="true"/>
+        <field name="orderId" type="id" is-pk="true"/>
+        <field name="orderItemSeqId" type="id" is-pk="true"/>
+        <relationship type="one" fk-name="FXDASTMNT_ORD_FXAS" related-entity-name="FixedAsset">
+            <key-map field-name="fixedAssetId"/>
+        </relationship>
+        <relationship type="one" fk-name="FXDASTMNT_ORD" related-entity-name="OrderHeader">
+            <key-map field-name="orderId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="OrderItem">
+            <key-map field-name="orderId"/>
+            <key-map field-name="orderItemSeqId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="AccommodationClass" package-name="org.ofbiz.accounting.fixedasset">
+        <field name="accommodationClassId" type="id" is-pk="true"/>
+        <field name="parentClassId" type="id"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="ACCOMM_CLASS_PAR" title="Parent" related-entity-name="AccommodationClass">
+            <key-map field-name="parentClassId" related-field-name="accommodationClassId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="AccommodationSpot" package-name="org.ofbiz.order.reservations">
+        <field name="accommodationSpotId" type="id" is-pk="true"/>
+        <field name="accommodationClassId" type="id"/>
+        <field name="fixedAssetId" type="id"/>
+        <field name="numberOfSpaces" type="number-integer"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="ACCOM_CLASS" related-entity-name="AccommodationClass">
+            <key-map field-name="accommodationClassId"/>
+        </relationship>
+        <relationship type="one" fk-name="SPOT_FA" related-entity-name="FixedAsset">
+            <key-map field-name="fixedAssetId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="AccommodationMap" package-name="org.ofbiz.accounting.fixedasset">
+        <field name="accommodationMapId" type="id" is-pk="true"/>
+        <field name="accommodationClassId" type="id"/>
+        <field name="fixedAssetId" type="id"/>
+        <field name="accommodationMapTypeId" type="id"/>
+        <field name="numberOfSpaces" type="number-integer"/>
+        <relationship type="one" fk-name="ACMD_MAP_CLASS" related-entity-name="AccommodationClass">
+            <key-map field-name="accommodationClassId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACMD_MAP_FA" related-entity-name="FixedAsset">
+            <key-map field-name="fixedAssetId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACMD_MAP_TYPE" related-entity-name="AccommodationMapType">
+            <key-map field-name="accommodationMapTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="AccommodationMapType" package-name="org.ofbiz.accounting.fixedasset">
+        <field name="accommodationMapTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="Invoice" package-name="org.ofbiz.accounting.invoice">
+        <field name="invoiceId" type="id" is-pk="true"/>
+        <field name="invoiceTypeId" type="id"/>
+        <field name="partyIdFrom" type="id"/>
+        <field name="partyId" type="id"/>
+        <field name="roleTypeId" type="id"/>
+        <field name="statusId" type="id"/>
+        <field name="billingAccountId" type="id"/>
+        <field name="contactMechId" type="id"/>
+        <field name="invoiceDate" type="date-time"/>
+        <field name="dueDate" type="date-time"/>
+        <field name="paidDate" type="date-time"/>
+        <field name="invoiceMessage" type="text-long"/>
+        <field name="referenceNumber" type="text-medium"/>
+        <field name="description" type="text-long"/>
+        <field name="currencyUomId" type="id"/>
+        <field name="recurrenceInfoId" type="id"/>
+        <relationship type="one" fk-name="INVOICE_INVTYP" related-entity-name="InvoiceType">
+            <key-map field-name="invoiceTypeId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="InvoiceTypeAttr">
+            <key-map field-name="invoiceTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVOICE_PARTY_FRM" title="From" related-entity-name="Party">
+            <key-map field-name="partyIdFrom" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVOICE_PARTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVOICE_ROLETYP" related-entity-name="RoleType">
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="PartyRole">
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVOICE_STTSITM" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVOICE_BILLACCT" related-entity-name="BillingAccount">
+            <key-map field-name="billingAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVOICE_CMECH" related-entity-name="ContactMech">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVOICE_CUOM" title="Currency" related-entity-name="OfbizUom">
+            <key-map field-name="currencyUomId" related-field-name="uomId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVOICE_RECINFO" related-entity-name="RecurrenceInfo">
+            <key-map field-name="recurrenceInfoId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="InvoiceAttribute" package-name="org.ofbiz.accounting.invoice">
+        <field name="invoiceId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <field name="attrValue" type="text-long"/>
+        <relationship type="one" fk-name="INVOICE_ATTR" related-entity-name="Invoice">
+            <key-map field-name="invoiceId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="InvoiceTypeAttr">
+            <key-map field-name="attrName"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="InvoiceContactMech" package-name="org.ofbiz.accounting.invoice" cache="never">
+        <field name="invoiceId" type="id" is-pk="true"/>
+        <field name="contactMechPurposeTypeId" type="id" is-pk="true"/>
+        <field name="contactMechId" type="id" is-pk="true"/>
+        <relationship type="one" fk-name="INVOICE_CMECH_HDR" related-entity-name="Invoice">
+            <key-map field-name="invoiceId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVOICE_CMECH_CM" related-entity-name="ContactMech">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVOICE_CMECH_CMPT" related-entity-name="ContactMechPurposeType">
+            <key-map field-name="contactMechPurposeTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="InvoiceItem" package-name="org.ofbiz.accounting.invoice">
+        <field name="invoiceId" type="id" is-pk="true"/>
+        <field name="invoiceItemSeqId" type="id" is-pk="true"/>
+        <field name="invoiceItemTypeId" type="id"/>
+        <field name="overrideGlAccountId" type="id"/>
+        <field name="overrideOrgPartyId" type="id"/>
+        <field name="inventoryItemId" type="id"/>
+        <field name="productId" type="id"/>
+        <field name="productFeatureId" type="id"/>
+        <field name="parentInvoiceId" type="id"/>
+        <field name="parentInvoiceItemSeqId" type="id"/>
+        <field name="uomId" type="id"/>
+        <field name="taxableFlag" type="text-indicator"/>
+        <field name="quantity" type="number-decimal"/>
+        <field name="amount" type="currency-precise"/>
+        <field name="description" type="text-long"/>
+        <field name="taxAuthPartyId" type="id"/>
+        <field name="taxAuthGeoId" type="id"/>
+        <field name="taxAuthorityRateSeqId" type="id"/>
+        <field name="salesOpportunityId" type="id"/>
+        <relationship type="one" fk-name="INVOICE_ITMITYP" related-entity-name="InvoiceItemType">
+            <key-map field-name="invoiceItemTypeId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="InvoiceItemTypeAttr">
+            <key-map field-name="invoiceItemTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVCE_ITM_INVCE" related-entity-name="Invoice">
+            <key-map field-name="invoiceId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVCE_ITM_INVITM" related-entity-name="InventoryItem">
+            <key-map field-name="inventoryItemId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVCE_ITM_PROD" related-entity-name="Product">
+            <key-map field-name="productId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVCE_ITM_PRDFT" related-entity-name="ProductFeature">
+            <key-map field-name="productFeatureId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVCE_ITM_PINVIT" related-entity-name="InvoiceItem">
+            <key-map field-name="parentInvoiceId" related-field-name="invoiceId"/>
+            <key-map field-name="parentInvoiceItemSeqId" related-field-name="invoiceItemSeqId"/>
+        </relationship>
+        <relationship type="many" fk-name="INVCE_ITM_CINVIT" title="Children" related-entity-name="InvoiceItem">
+            <key-map field-name="invoiceId" related-field-name="parentInvoiceId"/>
+            <key-map field-name="invoiceItemSeqId" related-field-name="parentInvoiceItemSeqId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVCE_ITM_UOM" related-entity-name="OfbizUom">
+            <key-map field-name="uomId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVCE_ITM_ORGLA" title="Override" related-entity-name="GlAccount">
+            <key-map field-name="overrideGlAccountId" related-field-name="glAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVCE_ITM_TAXPTY" title="TaxAuthority" related-entity-name="Party">
+            <key-map field-name="taxAuthPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVCE_ITM_TAXGEO" title="Tax" related-entity-name="OfbizGeo">
+            <key-map field-name="taxAuthGeoId" related-field-name="geoId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVOICE_ITM_TARP" related-entity-name="TaxAuthorityRateProduct">
+            <key-map field-name="taxAuthorityRateSeqId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVCE_ITM_OVRPTY" title="OverrideOrg" related-entity-name="Party">
+            <key-map field-name="overrideOrgPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVCE_ITM_SLSOPP" related-entity-name="SalesOpportunity">
+            <key-map field-name="salesOpportunityId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="InvoiceItemAssoc" package-name="org.ofbiz.accounting.invoice">
+        <field name="invoiceIdFrom" type="id" is-pk="true"/>
+        <field name="invoiceItemSeqIdFrom" type="id" is-pk="true"/>
+        <field name="invoiceIdTo" type="id" is-pk="true"/>
+        <field name="invoiceItemSeqIdTo" type="id" is-pk="true"/>
+        <field name="invoiceItemAssocTypeId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="partyIdFrom" type="id"/>
+        <field name="partyIdTo" type="id"/>
+        <field name="quantity" type="number-decimal"/>
+        <field name="amount" type="currency-amount"/>
+        <relationship type="one" fk-name="INITMASCTYP_IIASC" related-entity-name="InvoiceItemAssocType">
+            <key-map field-name="invoiceItemAssocTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="INITMASC_FIITM" title="From" related-entity-name="InvoiceItem">
+            <key-map field-name="invoiceIdFrom" related-field-name="invoiceId"/>
+            <key-map field-name="invoiceItemSeqIdFrom" related-field-name="invoiceItemSeqId"/>
+        </relationship>
+        <relationship type="one" fk-name="INITMASC_TIITM" title="To" related-entity-name="InvoiceItem">
+            <key-map field-name="invoiceIdTo" related-field-name="invoiceId"/>
+            <key-map field-name="invoiceItemSeqIdTo" related-field-name="invoiceItemSeqId"/>
+        </relationship>
+        <relationship type="one-nofk" title="From" related-entity-name="Party">
+            <key-map field-name="partyIdFrom" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" title="To" related-entity-name="Party">
+            <key-map field-name="partyIdTo" related-field-name="partyId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="InvoiceItemAssocType" package-name="org.ofbiz.accounting.invoice">
+        <field name="invoiceItemAssocTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="INITMASCTYP_PRNT" title="Parent" related-entity-name="InvoiceItemAssocType">
+            <key-map field-name="parentTypeId" related-field-name="invoiceItemAssocTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="InvoiceItemAttribute" package-name="org.ofbiz.accounting.invoice">
+        <field name="invoiceId" type="id" is-pk="true"/>
+        <field name="invoiceItemSeqId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <field name="attrValue" type="text-long"/>
+        <relationship type="one" fk-name="INVOICE_IMAT_ITM" related-entity-name="InvoiceItem">
+            <key-map field-name="invoiceId"/>
+            <key-map field-name="invoiceItemSeqId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="InvoiceItemTypeAttr">
+            <key-map field-name="attrName"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="InvoiceItemType" package-name="org.ofbiz.accounting.invoice">
+        <field name="invoiceItemTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <field name="defaultGlAccountId" type="id"/>
+        <relationship type="one" fk-name="INVOICE_ITEM_TPAR" title="Parent" related-entity-name="InvoiceItemType">
+            <key-map field-name="parentTypeId" related-field-name="invoiceItemTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVOICE_ITM_DGLAC" title="Default" related-entity-name="GlAccount">
+            <key-map field-name="defaultGlAccountId" related-field-name="glAccountId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="InvoiceItemTypeAttr" package-name="org.ofbiz.accounting.invoice">
+        <field name="invoiceItemTypeId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <relationship type="one" fk-name="INVOICE_ITEM_TATR" related-entity-name="InvoiceItemType">
+            <key-map field-name="invoiceItemTypeId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="InvoiceItemAttribute">
+            <key-map field-name="attrName"/>
+        </relationship>
+        <relationship type="many" related-entity-name="InvoiceItem">
+            <key-map field-name="invoiceItemTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="InvoiceItemTypeGlAccount" package-name="org.ofbiz.accounting.invoice">
+        <field name="invoiceItemTypeId" type="id" is-pk="true"/>
+        <field name="organizationPartyId" type="id" is-pk="true"/>
+        <field name="glAccountId" type="id"/>
+        <relationship type="one" fk-name="INVOICE_ITGA_IIT" related-entity-name="InvoiceItemType">
+            <key-map field-name="invoiceItemTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVOICE_ITGA_OPTY" title="Organization" related-entity-name="Party">
+            <key-map field-name="organizationPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVOICE_ITGA_GLAC" related-entity-name="GlAccount">
+            <key-map field-name="glAccountId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="InvoiceItemTypeMap" package-name="org.ofbiz.accounting.invoice">
+        <field name="invoiceItemMapKey" type="id" is-pk="true"/>
+        <field name="invoiceTypeId" type="id" is-pk="true"/>
+        <field name="invoiceItemTypeId" type="id"/>
+        <relationship type="one" fk-name="INVOICE_ITEM_MAP" related-entity-name="InvoiceItemType">
+            <key-map field-name="invoiceItemTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVITMMAP_INVTYP" related-entity-name="InvoiceType">
+            <key-map field-name="invoiceTypeId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="InvoiceItem">
+            <key-map field-name="invoiceItemTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="InvoiceRole" package-name="org.ofbiz.accounting.invoice">
+        <field name="invoiceId" type="id" is-pk="true"/>
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="roleTypeId" type="id" is-pk="true"/>
+        <field name="datetimePerformed" type="date-time"/>
+        <field name="percentage" type="number-decimal"/>
+        <relationship type="one" fk-name="INVCE_RLE_INVCE" related-entity-name="Invoice">
+            <key-map field-name="invoiceId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVCE_RLE_PARTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="RoleType">
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVCE_RLE_PTRL" related-entity-name="PartyRole">
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="InvoiceStatus" package-name="org.ofbiz.accounting.invoice">
+        <field name="statusId" type="id" is-pk="true"/>
+        <field name="invoiceId" type="id" is-pk="true"/>
+        <field name="statusDate" type="date-time" is-pk="true"/>
+        <relationship type="one" fk-name="INVCE_STS_STSITM" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVCE_STS_INVCE" related-entity-name="Invoice">
+            <key-map field-name="invoiceId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="InvoiceTerm" package-name="org.ofbiz.accounting.invoice">
+        <field name="invoiceTermId" type="id" is-pk="true"/>
+        <field name="termTypeId" type="id"/>
+        <field name="invoiceId" type="id"/>
+        <field name="invoiceItemSeqId" type="id"/>
+        <field name="termValue" type="currency-amount"/>
+        <field name="termDays" type="number-integer"/>
+        <field name="textValue" type="text-long"/>
+        <field name="description" type="text-long"/>
+        <field name="uomId" type="id"/>
+        <relationship type="one" fk-name="INVCE_TRM_TRM" related-entity-name="TermType">
+            <key-map field-name="termTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="INVCE_TRM_INVCE" related-entity-name="Invoice">
+            <key-map field-name="invoiceId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="InvoiceItem">
+            <key-map field-name="invoiceId"/>
+            <key-map field-name="invoiceItemSeqId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="InvoiceTermAttribute" package-name="org.ofbiz.accounting.invoice">
+        <field name="invoiceTermId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <field name="attrValue" type="text-long"/>
+        <relationship type="one" fk-name="INVOICE_TRM_ATTR" related-entity-name="InvoiceTerm">
+            <key-map field-name="invoiceTermId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="TermTypeAttr">
+            <key-map field-name="attrName"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="InvoiceType" package-name="org.ofbiz.accounting.invoice">
+        <field name="invoiceTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="INVOICE_TYPE_PAR" title="Parent" related-entity-name="InvoiceType">
+            <key-map field-name="parentTypeId" related-field-name="invoiceTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="InvoiceTypeAttr" package-name="org.ofbiz.accounting.invoice">
+        <field name="invoiceTypeId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <relationship type="one" fk-name="INVOICE_TPAT_TYP" related-entity-name="InvoiceType">
+            <key-map field-name="invoiceTypeId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="InvoiceAttribute">
+            <key-map field-name="attrName"/>
+        </relationship>
+        <relationship type="many" related-entity-name="Invoice">
+            <key-map field-name="invoiceTypeId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="InvoiceAndApplAndPayment" package-name="org.ofbiz.accounting.invoice">
+        <member-entity entity-alias="INV" entity-name="Invoice" join-from-alias="PFA">
+            <key-map field-name="roleTypeId"/>
+        </member-entity>
+        <member-entity entity-alias="PAP" entity-name="PaymentApplication" join-from-alias="INV">
+            <key-map field-name="invoiceId"/>
+        </member-entity>
+        <member-entity entity-alias="PAM" entity-name="Payment" join-from-alias="PAP">
+            <key-map field-name="paymentId"/>
+        </member-entity>
+        <alias-all entity-alias="INV">
+        </alias-all>
+        <alias-all entity-alias="PAP">
+            <exclude field="billingAccountId"/>
+        </alias-all>
+        <alias-all entity-alias="PAM" prefix="pm">
+        </alias-all>
+    </view-entity> -->
+    <!-- <view-entity entity-name="InvoiceAndType" package-name="org.ofbiz.accounting.invoice">
+        <member-entity entity-alias="INV" entity-name="Invoice" join-from-alias="PAP">
+            <key-map field-name="paymentId"/>
+        </member-entity>
+        <member-entity entity-alias="IVT" entity-name="InvoiceType" join-from-alias="INV">
+            <key-map field-name="invoiceTypeId"/>
+        </member-entity>
+        <alias-all entity-alias="INV">
+        </alias-all>
+        <alias entity-alias="IVT" name="parentTypeId">
+        </alias>
+        <alias entity-alias="IVT" name="invoiceTypeDesc" field="description">
+        </alias>
+        <relationship type="many" related-entity-name="InvoiceItem">
+            <key-map field-name="invoiceId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="PaymentApplication">
+            <key-map field-name="invoiceId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="AcctgTrans">
+            <key-map field-name="invoiceId"/>
+        </relationship>
+    </view-entity> -->
+    <!-- <view-entity entity-name="InvoiceAndRole" package-name="org.ofbiz.accounting.invoice">
+        <member-entity entity-alias="INV" entity-name="Invoice" join-from-alias="INV">
+            <key-map field-name="invoiceTypeId"/>
+        </member-entity>
+        <member-entity entity-alias="INR" entity-name="InvoiceRole" join-from-alias="INV" join-optional="true">
+            <key-map field-name="invoiceId"/>
+        </member-entity>
+        <alias-all entity-alias="INV">
+        </alias-all>
+        <alias entity-alias="INR" name="invoiceRolePartyId" field="partyId">
+        </alias>
+        <alias entity-alias="INR" name="invoiceRoleTypeId" field="roleTypeId">
+        </alias>
+    </view-entity> -->
+    <!-- <view-entity entity-name="InvoiceItemAndAssocProduct" package-name="org.ofbiz.accounting.invoice">
+        <member-entity entity-alias="INTM" entity-name="InvoiceItem" join-from-alias="INV" join-optional="true">
+            <key-map field-name="invoiceId"/>
+        </member-entity>
+        <member-entity entity-alias="IIA" entity-name="InvoiceItemAssoc" join-from-alias="INTM">
+            <key-map field-name="invoiceId" related-field-name="invoiceIdFrom"/>
+            <key-map field-name="invoiceItemSeqId" related-field-name="invoiceItemSeqIdFrom"/>
+        </member-entity>
+        <member-entity entity-alias="PROD" entity-name="Product" join-from-alias="INTM">
+            <key-map field-name="productId"/>
+        </member-entity>
+        <alias-all entity-alias="IIA">
+            <exclude field="amount"/>
+        </alias-all>
+        <alias entity-alias="IIA" name="termAmount" field="amount">
+        </alias>
+        <alias entity-alias="PROD" name="productId">
+        </alias>
+        <alias entity-alias="PROD" name="productName">
+        </alias>
+        <alias entity-alias="INTM" name="amount">
+        </alias>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="AcctgTrans" package-name="org.ofbiz.accounting.ledger">
+        <field name="acctgTransId" type="id" is-pk="true"/>
+        <field name="acctgTransTypeId" type="id"/>
+        <field name="description" type="text-long"/>
+        <field name="transactionDate" type="date-time"/>
+        <field name="isPosted" type="text-indicator"/>
+        <field name="postedDate" type="date-time"/>
+        <field name="scheduledPostingDate" type="date-time"/>
+        <field name="glJournalId" type="id"/>
+        <field name="glFiscalTypeId" type="id"/>
+        <field name="voucherRef" type="text-medium"/>
+        <field name="voucherDate" type="date-time"/>
+        <field name="groupStatusId" type="id"/>
+        <field name="fixedAssetId" type="id"/>
+        <field name="inventoryItemId" type="id"/>
+        <field name="physicalInventoryId" type="id"/>
+        <field name="partyId" type="id"/>
+        <field name="roleTypeId" type="id"/>
+        <field name="invoiceId" type="id"/>
+        <field name="paymentId" type="id"/>
+        <field name="finAccountTransId" type="id"/>
+        <field name="shipmentId" type="id"/>
+        <field name="receiptId" type="id"/>
+        <field name="workEffortId" type="id"/>
+        <field name="theirAcctgTransId" type="id-long"/>
+        <field name="createdByUserLogin" type="id-very-long"/>
+        <field name="lastModifiedByUserLogin" type="id-very-long"/>
+        <relationship type="one" fk-name="ACCTTX_TYPE" related-entity-name="AcctgTransType">
+            <key-map field-name="acctgTransTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTX_GLJRNL" related-entity-name="GlJournal">
+            <key-map field-name="glJournalId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTX_GLFST" related-entity-name="GlFiscalType">
+            <key-map field-name="glFiscalTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTX_GRPSTTS" related-entity-name="OfbizStatusItem">
+            <key-map field-name="groupStatusId" related-field-name="statusId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTX_FASSET" related-entity-name="FixedAsset">
+            <key-map field-name="fixedAssetId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTX_PHS_INV" related-entity-name="PhysicalInventory">
+            <key-map field-name="physicalInventoryId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTX_INVITEM" related-entity-name="InventoryItem">
+            <key-map field-name="inventoryItemId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTX_INVITEMVAR" related-entity-name="InventoryItemVariance">
+            <key-map field-name="inventoryItemId"/>
+            <key-map field-name="physicalInventoryId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTX_PARTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTX_ROLETYP" related-entity-name="RoleType">
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="PartyRole">
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTX_INVOICE" related-entity-name="Invoice">
+            <key-map field-name="invoiceId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTX_PAYMENT" related-entity-name="Payment">
+            <key-map field-name="paymentId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTX_FNACTTR" related-entity-name="FinAccountTrans">
+            <key-map field-name="finAccountTransId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTX_SHIPMENT" related-entity-name="Shipment">
+            <key-map field-name="shipmentId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTX_SHIPRCPT" related-entity-name="ShipmentReceipt">
+            <key-map field-name="receiptId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTX_WEFF" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="AcctgTransTypeAttr">
+            <key-map field-name="acctgTransTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="AcctgTransAttribute" package-name="org.ofbiz.accounting.ledger">
+        <field name="acctgTransId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <field name="attrValue" type="text-long"/>
+        <relationship type="one" fk-name="ACCTTX_ATTR" related-entity-name="AcctgTrans">
+            <key-map field-name="acctgTransId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="AcctgTransTypeAttr">
+            <key-map field-name="attrName"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="AcctgTransEntry" package-name="org.ofbiz.accounting.ledger">
+        <field name="acctgTransId" type="id" is-pk="true"/>
+        <field name="acctgTransEntrySeqId" type="id" is-pk="true"/>
+        <field name="acctgTransEntryTypeId" type="id"/>
+        <field name="description" type="text-long"/>
+        <field name="voucherRef" type="text-medium"/>
+        <field name="partyId" type="id"/>
+        <field name="roleTypeId" type="id"/>
+        <field name="theirPartyId" type="id"/>
+        <field name="productId" type="id"/>
+        <field name="theirProductId" type="id"/>
+        <field name="inventoryItemId" type="id"/>
+        <field name="glAccountTypeId" type="id"/>
+        <field name="glAccountId" type="id"/>
+        <field name="organizationPartyId" type="id"/>
+        <field name="amount" type="currency-amount"/>
+        <field name="currencyUomId" type="id"/>
+        <field name="origAmount" type="currency-amount"/>
+        <field name="origCurrencyUomId" type="id"/>
+        <field name="debitCreditFlag" type="text-indicator"/>
+        <field name="dueDate" type="date"/>
+        <field name="groupId" type="id"/>
+        <field name="taxId" type="id"/>
+        <field name="reconcileStatusId" type="id"/>
+        <field name="settlementTermId" type="id"/>
+        <field name="isSummary" type="text-indicator"/>
+        <relationship type="one" fk-name="ACCTTXENT_ATET" related-entity-name="AcctgTransEntryType">
+            <key-map field-name="acctgTransEntryTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTXENT_CURNCY" title="Currency" related-entity-name="OfbizUom">
+            <key-map field-name="currencyUomId" related-field-name="uomId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTXENT_OCURNCY" title="OrigCurrency" related-entity-name="OfbizUom">
+            <key-map field-name="origCurrencyUomId" related-field-name="uomId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTXENT_ACTX" related-entity-name="AcctgTrans">
+            <key-map field-name="acctgTransId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTXENT_INVITEM" related-entity-name="InventoryItem">
+            <key-map field-name="inventoryItemId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTXENT_PARTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTXENT_RLTYP" related-entity-name="RoleType">
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="PartyRole">
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTXENT_GLACTT" related-entity-name="GlAccountType">
+            <key-map field-name="glAccountTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTXENT_GLACT" related-entity-name="GlAccount">
+            <key-map field-name="glAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTXENT_GLACOG" related-entity-name="GlAccountOrganization">
+            <key-map field-name="glAccountId"/>
+            <key-map field-name="organizationPartyId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTXENT_RCSTS" related-entity-name="OfbizStatusItem">
+            <key-map field-name="reconcileStatusId" related-field-name="statusId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTTXENT_STLEN" related-entity-name="SettlementTerm">
+            <key-map field-name="settlementTermId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="AcctgTransAndEntries" package-name="org.ofbiz.accounting.ledger">
+        <member-entity entity-alias="ATR" entity-name="AcctgTrans" join-from-alias="INTM">
+            <key-map field-name="productId"/>
+        </member-entity>
+        <member-entity entity-alias="ATT" entity-name="AcctgTransType" join-from-alias="ATR">
+            <key-map field-name="acctgTransTypeId"/>
+        </member-entity>
+        <member-entity entity-alias="ATE" entity-name="AcctgTransEntry" join-from-alias="ATR">
+            <key-map field-name="acctgTransId"/>
+        </member-entity>
+        <member-entity entity-alias="GLA" entity-name="GlAccount" join-from-alias="ATE" join-optional="true">
+            <key-map field-name="glAccountId"/>
+        </member-entity>
+        <member-entity entity-alias="GLAC" entity-name="GlAccountClass" join-from-alias="GLA" join-optional="true">
+            <key-map field-name="glAccountClassId"/>
+        </member-entity>
+        <alias entity-alias="ATR" name="isPosted">
+        </alias>
+        <alias entity-alias="ATR" name="glFiscalTypeId">
+        </alias>
+        <alias entity-alias="ATR" name="acctgTransTypeId">
+        </alias>
+        <alias entity-alias="ATR" name="transactionDate">
+        </alias>
+        <alias entity-alias="ATR" name="postedDate">
+        </alias>
+        <alias entity-alias="ATR" name="transDescription" field="description">
+        </alias>
+        <alias entity-alias="ATR" name="glJournalId">
+        </alias>
+        <alias entity-alias="ATT" name="transTypeDescription" field="description">
+        </alias>
+        <alias entity-alias="ATR" name="invoiceId">
+        </alias>
+        <alias entity-alias="ATR" name="paymentId">
+        </alias>
+        <alias entity-alias="ATR" name="shipmentId">
+        </alias>
+        <alias entity-alias="ATR" name="receiptId">
+        </alias>
+        <alias entity-alias="ATR" name="inventoryItemId">
+        </alias>
+        <alias entity-alias="ATR" name="workEffortId">
+        </alias>
+        <alias entity-alias="ATR" name="fixedAssetId">
+        </alias>
+        <alias entity-alias="ATR" name="physicalInventoryId">
+        </alias>
+        <alias entity-alias="ATE" name="acctgTransId">
+        </alias>
+        <alias entity-alias="ATE" name="acctgTransEntrySeqId">
+        </alias>
+        <alias entity-alias="ATE" name="glAccountId">
+        </alias>
+        <alias entity-alias="ATE" name="productId">
+        </alias>
+        <alias entity-alias="ATE" name="debitCreditFlag">
+        </alias>
+        <alias entity-alias="ATE" name="amount">
+        </alias>
+        <alias entity-alias="ATE" name="currencyUomId">
+        </alias>
+        <alias entity-alias="ATE" name="origAmount">
+        </alias>
+        <alias entity-alias="ATE" name="origCurrencyUomId">
+        </alias>
+        <alias entity-alias="ATE" name="organizationPartyId">
+        </alias>
+        <alias entity-alias="GLA" name="glAccountTypeId">
+        </alias>
+        <alias entity-alias="GLA" name="accountCode">
+        </alias>
+        <alias entity-alias="GLA" name="accountName">
+        </alias>
+        <alias entity-alias="GLAC" name="glAccountClassId">
+        </alias>
+        <alias entity-alias="ATE" name="partyId">
+        </alias>
+        <alias entity-alias="ATE" name="reconcileStatusId">
+        </alias>
+        <alias entity-alias="ATE" name="acctgTransEntryTypeId">
+        </alias>
+        <relationship type="one" fk-name="ATAE_GLACT" related-entity-name="GlAccount">
+            <key-map field-name="glAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="ATAE_GLACTCLS" related-entity-name="GlAccountClass">
+            <key-map field-name="glAccountClassId"/>
+        </relationship>
+        <relationship type="one" fk-name="ATAE_ATTYPE" related-entity-name="AcctgTransType">
+            <key-map field-name="acctgTransTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="ATAE_INVOICE" related-entity-name="Invoice">
+            <key-map field-name="invoiceId"/>
+        </relationship>
+        <relationship type="one" fk-name="ATAE_PAYMENT" related-entity-name="Payment">
+            <key-map field-name="paymentId"/>
+        </relationship>
+        <relationship type="one" fk-name="ATAE_GLJOURNAL" related-entity-name="GlJournal">
+            <key-map field-name="glJournalId"/>
+        </relationship>
+    </view-entity> -->
+    <!-- <view-entity entity-name="AcctgTransEntrySums" package-name="org.ofbiz.accounting.ledger">
+        <member-entity entity-alias="ATE" entity-name="AcctgTransEntry" join-from-alias="GLA" join-optional="true">
+            <key-map field-name="glAccountClassId"/>
+        </member-entity>
+        <member-entity entity-alias="ACT" entity-name="AcctgTrans" join-from-alias="ATE">
+            <key-map field-name="acctgTransId"/>
+        </member-entity>
+        <member-entity entity-alias="GLA" entity-name="GlAccount" join-from-alias="ATE">
+            <key-map field-name="glAccountId"/>
+        </member-entity>
+        <alias entity-alias="ATE" name="glAccountId">
+        </alias>
+        <alias entity-alias="GLA" name="glAccountTypeId">
+        </alias>
+        <alias entity-alias="GLA" name="glAccountClassId">
+        </alias>
+        <alias entity-alias="GLA" name="accountName">
+        </alias>
+        <alias entity-alias="GLA" name="accountCode">
+        </alias>
+        <alias entity-alias="ACT" name="glFiscalTypeId">
+        </alias>
+        <alias entity-alias="ACT" name="acctgTransTypeId">
+        </alias>
+        <alias entity-alias="ATE" name="debitCreditFlag">
+        </alias>
+        <alias entity-alias="ATE" name="amount" function="sum">
+        </alias>
+        <alias entity-alias="ATE" name="organizationPartyId">
+        </alias>
+        <alias entity-alias="ACT" name="isPosted">
+        </alias>
+        <alias entity-alias="ACT" name="transactionDate">
+        </alias>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="AcctgTransEntryType" package-name="org.ofbiz.accounting.ledger">
+        <field name="acctgTransEntryTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="ACCTTXE_TYPE_PAR" title="Parent" related-entity-name="AcctgTransEntryType">
+            <key-map field-name="parentTypeId" related-field-name="acctgTransEntryTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="AcctgTransType" package-name="org.ofbiz.accounting.ledger">
+        <field name="acctgTransTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="ACCTTX_TYPE_PAR" title="Parent" related-entity-name="AcctgTransType">
+            <key-map field-name="parentTypeId" related-field-name="acctgTransTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="AcctgTransTypeAttr" package-name="org.ofbiz.accounting.ledger">
+        <field name="acctgTransTypeId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <relationship type="one" fk-name="ACCTTX_TYPE_ATTR" related-entity-name="AcctgTransType">
+            <key-map field-name="acctgTransTypeId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="AcctgTransAttribute">
+            <key-map field-name="attrName"/>
+        </relationship>
+        <relationship type="many" related-entity-name="AcctgTrans">
+            <key-map field-name="acctgTransTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="GlAccount" package-name="org.ofbiz.accounting.ledger">
+        <field name="glAccountId" type="id" is-pk="true"/>
+        <field name="glAccountTypeId" type="id"/>
+        <field name="glAccountClassId" type="id"/>
+        <field name="glResourceTypeId" type="id"/>
+        <field name="glXbrlClassId" type="id"/>
+        <field name="parentGlAccountId" type="id"/>
+        <field name="accountCode" type="text-medium"/>
+        <field name="accountName" type="text-medium"/>
+        <field name="description" type="text-long"/>
+        <field name="productId" type="id"/>
+        <field name="externalId" type="id"/>
+        <field name="postedBalance" type="currency-amount"/>
+        <relationship type="one" fk-name="GLACCT_TYPE" related-entity-name="GlAccountType">
+            <key-map field-name="glAccountTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="GLACCT_CLSS" related-entity-name="GlAccountClass">
+            <key-map field-name="glAccountClassId"/>
+        </relationship>
+        <relationship type="one" fk-name="GLACCT_REC" related-entity-name="GlResourceType">
+            <key-map field-name="glResourceTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="GLACCT_XBRLCLS" related-entity-name="GlXbrlClass">
+            <key-map field-name="glXbrlClassId"/>
+        </relationship>
+        <relationship type="one" fk-name="GLACCT_PAR" title="Parent" related-entity-name="GlAccount">
+            <key-map field-name="parentGlAccountId" related-field-name="glAccountId"/>
+        </relationship>
+    <index name="GLACCT_UNQCD" unique="true">
+    <index-field name="accountCode"/>
+    </index>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="GlAccountClass" package-name="org.ofbiz.accounting.ledger">
+        <field name="glAccountClassId" type="id" is-pk="true"/>
+        <field name="parentClassId" type="id"/>
+        <field name="description" type="text-long"/>
+        <field name="isAssetClass" type="text-indicator"/>
+        <relationship type="one" fk-name="GLACTCLS_PAR" title="Parent" related-entity-name="GlAccountClass">
+            <key-map field-name="parentClassId" related-field-name="glAccountClassId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="GlAccountGroup" package-name="org.ofbiz.accounting.ledger">
+        <field name="glAccountGroupId" type="id" is-pk="true"/>
+        <field name="glAccountGroupTypeId" type="id"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="GLACT_GRP_TP" related-entity-name="GlAccountGroupType">
+            <key-map field-name="glAccountGroupTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="GlAccountGroupMember" package-name="org.ofbiz.accounting.ledger">
+        <field name="glAccountId" type="id" is-pk="true"/>
+        <field name="glAccountGroupTypeId" type="id" is-pk="true"/>
+        <field name="glAccountGroupId" type="id"/>
+        <relationship type="one" fk-name="GLACT_GPMBR_AC" related-entity-name="GlAccount">
+            <key-map field-name="glAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="GLACT_GPMBR_GP" related-entity-name="GlAccountGroup">
+            <key-map field-name="glAccountGroupId"/>
+        </relationship>
+        <relationship type="one" fk-name="GLACT_GPMBR_TP" related-entity-name="GlAccountGroupType">
+            <key-map field-name="glAccountGroupTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="GlAccountGroupType" package-name="org.ofbiz.accounting.ledger">
+        <field name="glAccountGroupTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="GlAccountHistory" package-name="org.ofbiz.accounting.ledger">
+        <field name="glAccountId" type="id" is-pk="true"/>
+        <field name="organizationPartyId" type="id" is-pk="true"/>
+        <field name="customTimePeriodId" type="id" is-pk="true"/>
+        <field name="postedDebits" type="currency-amount"/>
+        <field name="postedCredits" type="currency-amount"/>
+        <field name="endingBalance" type="currency-amount"/>
+        <relationship type="one" fk-name="GLACCT_HST_GLA" related-entity-name="GlAccount">
+            <key-map field-name="glAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="GLACCT_HST_PARTY" related-entity-name="Party">
+            <key-map field-name="organizationPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="GLACCT_HST_CTP" related-entity-name="CustomTimePeriod">
+            <key-map field-name="customTimePeriodId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="GlAccountAndHistory" package-name="org.ofbiz.accounting.ledger">
+        <member-entity entity-alias="GLA" entity-name="GlAccount" join-from-alias="ATE">
+            <key-map field-name="glAccountId"/>
+        </member-entity>
+        <member-entity entity-alias="GLAH" entity-name="GlAccountHistory" join-from-alias="GLA">
+            <key-map field-name="glAccountId"/>
+        </member-entity>
+        <member-entity entity-alias="GLAC" entity-name="GlAccountClass" join-from-alias="GLA">
+            <key-map field-name="glAccountClassId"/>
+        </member-entity>
+        <alias-all entity-alias="GLA">
+        </alias-all>
+        <alias-all entity-alias="GLAH">
+        </alias-all>
+        <alias entity-alias="GLAC" name="glAccountClassId">
+        </alias>
+        <relationship type="one" fk-name="GLAAH_GLACT" related-entity-name="GlAccount">
+            <key-map field-name="glAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="GLAAH_GLACTCLS" related-entity-name="GlAccountClass">
+            <key-map field-name="glAccountClassId"/>
+        </relationship>
+        <relationship type="one" fk-name="GLAAH_GLAH" related-entity-name="GlAccountHistory">
+            <key-map field-name="glAccountId"/>
+            <key-map field-name="organizationPartyId"/>
+            <key-map field-name="customTimePeriodId"/>
+        </relationship>
+    </view-entity> -->
+    <!-- <view-entity entity-name="GlAccountAndHistoryTotals" package-name="org.ofbiz.accounting.ledger">
+        <member-entity entity-alias="GLA" entity-name="GlAccount" join-from-alias="GLA">
+            <key-map field-name="glAccountClassId"/>
+        </member-entity>
+        <member-entity entity-alias="GLAH" entity-name="GlAccountHistory" join-from-alias="GLA">
+            <key-map field-name="glAccountId"/>
+        </member-entity>
+        <alias-all entity-alias="GLA">
+        </alias-all>
+        <alias-all entity-alias="GLAH">
+        </alias-all>
+        <alias entity-alias="GLAH" name="totalPostedDebits" field="postedDebits" function="sum">
+        </alias>
+        <alias entity-alias="GLAH" name="totalPostedCredits" field="postedCredits" function="sum">
+        </alias>
+        <alias entity-alias="GLAH" name="totalEndingBalance" field="endingBalance" function="sum">
+        </alias>
+        <relationship type="one" fk-name="GLAAHT_GLACT" related-entity-name="GlAccount">
+            <key-map field-name="glAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="GLAAHT_GLAH" related-entity-name="GlAccountHistory">
+            <key-map field-name="glAccountId"/>
+            <key-map field-name="organizationPartyId"/>
+            <key-map field-name="customTimePeriodId"/>
+        </relationship>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="GlAccountOrganization" package-name="org.ofbiz.accounting.ledger">
+        <field name="glAccountId" type="id" is-pk="true"/>
+        <field name="organizationPartyId" type="id" is-pk="true"/>
+        <field name="roleTypeId" type="id"/>
+        <field name="fromDate" type="date-time"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="postedBalance" type="currency-amount"/>
+        <relationship type="one" fk-name="GLACCT_ORG_GLA" related-entity-name="GlAccount">
+            <key-map field-name="glAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="GLACCT_ORG_PARTY" related-entity-name="Party">
+            <key-map field-name="organizationPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="RoleType">
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="PartyRole">
+            <key-map field-name="organizationPartyId" related-field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="GlAccountOrganizationAndClass" package-name="org.ofbiz.accounting.ledger">
+        <member-entity entity-alias="GLAO" entity-name="GlAccountOrganization" join-from-alias="GLA">
+            <key-map field-name="glAccountId"/>
+        </member-entity>
+        <member-entity entity-alias="GLA" entity-name="GlAccount" join-from-alias="GLAO">
+            <key-map field-name="glAccountId"/>
+        </member-entity>
+        <alias-all entity-alias="GLAO">
+        </alias-all>
+        <alias-all entity-alias="GLA">
+            <exclude field="postedBalance"/>
+        </alias-all>
+        <alias entity-alias="GLA" name="accountPostedBalance" field="postedBalance">
+        </alias>
+        <relationship type="one" fk-name="GLAOC_GLA" related-entity-name="GlAccount">
+            <key-map field-name="glAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="GLAOC_GLAO" related-entity-name="GlAccountOrganization">
+            <key-map field-name="glAccountId"/>
+            <key-map field-name="organizationPartyId"/>
+        </relationship>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="GlAccountRole" package-name="org.ofbiz.accounting.ledger">
+        <field name="glAccountId" type="id" is-pk="true"/>
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="roleTypeId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <relationship type="one" fk-name="GLACCT_RL_GLA" related-entity-name="GlAccount">
+            <key-map field-name="glAccountId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="RoleType">
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="GLACCT_RL_PTRLE" related-entity-name="PartyRole">
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="GlAccountType" package-name="org.ofbiz.accounting.ledger">
+        <field name="glAccountTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="GLACTTY_PAR" title="Parent" related-entity-name="GlAccountType">
+            <key-map field-name="parentTypeId" related-field-name="glAccountTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="GlAccountTypeDefault" package-name="org.ofbiz.accounting.ledger">
+        <field name="glAccountTypeId" type="id" is-pk="true"/>
+        <field name="organizationPartyId" type="id" is-pk="true"/>
+        <field name="glAccountId" type="id"/>
+        <relationship type="one" fk-name="GLACCT_TPDF_GLAT" related-entity-name="GlAccountType">
+            <key-map field-name="glAccountTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="GLACCT_TPDF_OPTY" title="Organization" related-entity-name="Party">
+            <key-map field-name="organizationPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="GLACCT_TPDF_GLA" related-entity-name="GlAccount">
+            <key-map field-name="glAccountId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="GlBudgetXref" package-name="org.ofbiz.accounting.ledger">
+        <field name="glAccountId" type="id" is-pk="true"/>
+        <field name="budgetItemTypeId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="allocationPercentage" type="number-decimal"/>
+        <relationship type="one" fk-name="GL_BDGT_XRF_GLA" related-entity-name="GlAccount">
+            <key-map field-name="glAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="GL_BDGT_XRF_BIT" related-entity-name="BudgetItemType">
+            <key-map field-name="budgetItemTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="GlFiscalType" package-name="org.ofbiz.accounting.ledger">
+        <field name="glFiscalTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="GlJournal" package-name="org.ofbiz.accounting.ledger">
+        <field name="glJournalId" type="id" is-pk="true"/>
+        <field name="glJournalName" type="text-medium"/>
+        <field name="organizationPartyId" type="id"/>
+        <field name="isPosted" type="text-indicator"/>
+        <field name="postedDate" type="date-time"/>
+        <relationship type="one" fk-name="GLJOURN_PARTY" related-entity-name="Party">
+            <key-map field-name="organizationPartyId" related-field-name="partyId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="GlReconciliation" package-name="org.ofbiz.accounting.ledger">
+        <field name="glReconciliationId" type="id" is-pk="true"/>
+        <field name="glReconciliationName" type="text-medium"/>
+        <field name="description" type="text-long"/>
+        <field name="createdByUserLogin" type="id-very-long"/>
+        <field name="lastModifiedByUserLogin" type="id-very-long"/>
+        <field name="glAccountId" type="id"/>
+        <field name="statusId" type="id"/>
+        <field name="organizationPartyId" type="id"/>
+        <field name="reconciledBalance" type="currency-amount"/>
+        <field name="openingBalance" type="currency-amount"/>
+        <field name="reconciledDate" type="date-time"/>
+        <relationship type="one" fk-name="GLREC_GLACCT" related-entity-name="GlAccount">
+            <key-map field-name="glAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="GLREC_GLPARTY" related-entity-name="Party">
+            <key-map field-name="organizationPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="GLREC_STI" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="GlReconciliationEntry" package-name="org.ofbiz.accounting.ledger">
+        <field name="glReconciliationId" type="id" is-pk="true"/>
+        <field name="acctgTransId" type="id" is-pk="true"/>
+        <field name="acctgTransEntrySeqId" type="id" is-pk="true"/>
+        <field name="reconciledAmount" type="currency-amount"/>
+        <relationship type="one" fk-name="GL_RECENT_GLREC" related-entity-name="GlReconciliation">
+            <key-map field-name="glReconciliationId"/>
+        </relationship>
+        <relationship type="one" fk-name="GL_RECENT_ACTTXE" related-entity-name="AcctgTransEntry">
+            <key-map field-name="acctgTransId"/>
+            <key-map field-name="acctgTransEntrySeqId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="AcctgTrans">
+            <key-map field-name="acctgTransId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="GlResourceType" package-name="org.ofbiz.accounting.ledger">
+        <field name="glResourceTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="GlXbrlClass" package-name="org.ofbiz.accounting.ledger">
+        <field name="glXbrlClassId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PartyAcctgPreference" package-name="org.ofbiz.accounting.ledger">
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="fiscalYearStartMonth" type="number-integer"/>
+        <field name="fiscalYearStartDay" type="number-integer"/>
+        <field name="taxFormId" type="id"/>
+        <field name="cogsMethodId" type="id"/>
+        <field name="baseCurrencyUomId" type="id"/>
+        <field name="invoiceSequenceEnumId" type="id"/>
+        <field name="invoiceIdPrefix" type="text-short"/>
+        <field name="lastInvoiceNumber" type="number-integer"/>
+        <field name="lastInvoiceRestartDate" type="date-time"/>
+        <field name="useInvoiceIdForReturns" type="text-indicator"/>
+        <field name="quoteSequenceEnumId" type="id"/>
+        <field name="quoteIdPrefix" type="text-short"/>
+        <field name="lastQuoteNumber" type="number-integer"/>
+        <field name="orderSequenceEnumId" type="id"/>
+        <field name="orderIdPrefix" type="text-short"/>
+        <field name="lastOrderNumber" type="number-integer"/>
+        <field name="refundPaymentMethodId" type="id"/>
+        <field name="errorGlJournalId" type="id"/>
+        <relationship type="one" fk-name="ACTG_PREF_PTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACTGPREF_TAXFORM" title="TaxForm" related-entity-name="Enumeration">
+            <key-map field-name="taxFormId" related-field-name="enumId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACTGPREF_COGS" title="Cogs" related-entity-name="Enumeration">
+            <key-map field-name="cogsMethodId" related-field-name="enumId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACCTGPREF_CURNCY" related-entity-name="OfbizUom">
+            <key-map field-name="baseCurrencyUomId" related-field-name="uomId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACTGPREF_INVSQ" title="InvoiceSequence" related-entity-name="Enumeration">
+            <key-map field-name="invoiceSequenceEnumId" related-field-name="enumId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACTGPREF_QTESQ" title="QuoteSequence" related-entity-name="Enumeration">
+            <key-map field-name="quoteSequenceEnumId" related-field-name="enumId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACTGPREF_ODRSQ" title="OrderSequence" related-entity-name="Enumeration">
+            <key-map field-name="orderSequenceEnumId" related-field-name="enumId"/>
+        </relationship>
+        <relationship type="one" related-entity-name="PaymentMethod">
+            <key-map field-name="refundPaymentMethodId" related-field-name="paymentMethodId"/>
+        </relationship>
+        <relationship type="one" fk-name="ACTGPREF_GLJRNL" related-entity-name="GlJournal">
+            <key-map field-name="errorGlJournalId" related-field-name="glJournalId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ProductAverageCost" package-name="org.ofbiz.accounting.ledger">
+    <description>Running tally of a product's average cost in a particular company and facility</description>
+        <field name="productAverageCostTypeId" type="id" is-pk="true"/>
+        <field name="organizationPartyId" type="id" is-pk="true"/>
+        <field name="productId" type="id" is-pk="true"/>
+        <field name="facilityId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="averageCost" type="number-decimal"/>
+        <relationship type="one" fk-name="AVG_COST_TYPE" related-entity-name="ProductAverageCostType">
+            <key-map field-name="productAverageCostTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="AVG_COST_PARTY" related-entity-name="Party">
+            <key-map field-name="organizationPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="AVG_COST_PROD" related-entity-name="Product">
+            <key-map field-name="productId"/>
+        </relationship>
+        <relationship type="one" fk-name="AVG_COST_FACI" related-entity-name="Facility">
+            <key-map field-name="facilityId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ProductAverageCostType" package-name="org.ofbiz.accounting.ledger">
+        <field name="productAverageCostTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="AVGCOST_TYPE_PAR" title="Parent" related-entity-name="ProductAverageCostType">
+            <key-map field-name="parentTypeId" related-field-name="productAverageCostTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="SettlementTerm" package-name="org.ofbiz.accounting.ledger">
+        <field name="settlementTermId" type="id" is-pk="true"/>
+        <field name="termName" type="text-medium"/>
+        <field name="termValue" type="number-integer"/>
+        <field name="uomId" type="id"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="VarianceReasonGlAccount" package-name="org.ofbiz.accounting.ledger">
+        <field name="varianceReasonId" type="id" is-pk="true"/>
+        <field name="organizationPartyId" type="id" is-pk="true"/>
+        <field name="glAccountId" type="id"/>
+        <relationship type="one" fk-name="VRGL_VREAS" related-entity-name="VarianceReason">
+            <key-map field-name="varianceReasonId"/>
+        </relationship>
+        <relationship type="one" fk-name="VRGL_PARTY" title="Organization" related-entity-name="Party">
+            <key-map field-name="organizationPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="VRGL_GLACCT" related-entity-name="GlAccount">
+            <key-map field-name="glAccountId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="BillingAccount" package-name="org.ofbiz.accounting.payment">
+    <description>A BillingAccount Payment Method</description>
+        <field name="billingAccountId" type="id" is-pk="true"/>
+        <field name="accountLimit" type="currency-amount"/>
+        <field name="accountCurrencyUomId" type="id"/>
+        <field name="contactMechId" type="id"/>
+        <field name="fromDate" type="date-time"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="description" type="text-long"/>
+        <field name="externalAccountId" type="id"/>
+        <relationship type="one" fk-name="BILLACCT_CMECH" related-entity-name="ContactMech">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one" fk-name="BILLACCT_CUOM" related-entity-name="OfbizUom">
+            <key-map field-name="accountCurrencyUomId" related-field-name="uomId"/>
+        </relationship>
+        <relationship type="one" fk-name="BILLACCT_PADDR" related-entity-name="PostalAddress">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="BillingAccountAndRole" package-name="org.ofbiz.accounting.payment" cache="never">
+        <member-entity entity-alias="BA" entity-name="BillingAccount" join-from-alias="GLAO">
+            <key-map field-name="glAccountId"/>
+        </member-entity>
+        <member-entity entity-alias="BR" entity-name="BillingAccountRole" join-from-alias="BA">
+            <key-map field-name="billingAccountId"/>
+        </member-entity>
+        <alias-all entity-alias="BR">
+        </alias-all>
+        <alias entity-alias="BA" name="billingAccountId">
+        </alias>
+        <alias entity-alias="BA" name="accountLimit">
+        </alias>
+        <alias entity-alias="BA" name="accountCurrencyUomId">
+        </alias>
+        <alias entity-alias="BA" name="contactMechId">
+        </alias>
+        <alias entity-alias="BA" name="accountFromDate" field="fromDate">
+        </alias>
+        <alias entity-alias="BA" name="accountThruDate" field="thruDate">
+        </alias>
+        <alias entity-alias="BA" name="description">
+        </alias>
+        <relationship type="many" related-entity-name="OrderHeader">
+            <key-map field-name="billingAccountId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="BillingAccountRole">
+            <key-map field-name="billingAccountId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="Invoice">
+            <key-map field-name="billingAccountId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="PaymentApplication">
+            <key-map field-name="billingAccountId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="ContactMech">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="PostalAddress">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="RoleType">
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="PartyRole">
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="BillingAccountRole" package-name="org.ofbiz.accounting.payment">
+        <field name="billingAccountId" type="id" is-pk="true"/>
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="roleTypeId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <relationship type="one" fk-name="BILLACCT_ROLE" related-entity-name="BillingAccount">
+            <key-map field-name="billingAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="BILLACCT_RL_PARTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="RoleType">
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="BILLACCT_RL_PTRL" related-entity-name="PartyRole">
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="BillingAccountRoleAndAddress" package-name="org.ofbiz.accounting.payment">
+        <description>Note that the ContactMech is not linked into this view and the PADDR is not optional, this way we naturally only get postal address entries</description>
+        <member-entity entity-alias="BAR" entity-name="BillingAccountRole" join-from-alias="BA">
+            <key-map field-name="billingAccountId"/>
+        </member-entity>
+        <member-entity entity-alias="PCM" entity-name="PartyContactMech" join-from-alias="BAR">
+            <key-map field-name="partyId"/>
+        </member-entity>
+        <member-entity entity-alias="PADDR" entity-name="PostalAddress" join-from-alias="PCM">
+            <key-map field-name="contactMechId"/>
+        </member-entity>
+        <alias-all entity-alias="BAR">
+        </alias-all>
+        <alias-all entity-alias="PADDR">
+        </alias-all>
+        <alias entity-alias="PCM" name="pcmFromDate" field="fromDate">
+        </alias>
+        <alias entity-alias="PCM" name="pcmThruDate" field="thruDate">
+        </alias>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="BillingAccountTerm" package-name="org.ofbiz.accounting.payment">
+        <field name="billingAccountTermId" type="id" is-pk="true"/>
+        <field name="billingAccountId" type="id"/>
+        <field name="termTypeId" type="id"/>
+        <field name="termValue" type="currency-amount"/>
+        <field name="termDays" type="number-integer"/>
+        <field name="uomId" type="id"/>
+        <relationship type="one" fk-name="BILLACCT_TRM_UOM" related-entity-name="OfbizUom">
+            <key-map field-name="uomId"/>
+        </relationship>
+        <relationship type="one" fk-name="BILLACCT_TRM_TRM" related-entity-name="TermType">
+            <key-map field-name="termTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="BILLACCT_TRM_BACT" related-entity-name="BillingAccount">
+            <key-map field-name="billingAccountId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="BillingAccountTermAttr" package-name="org.ofbiz.accounting.payment">
+        <field name="billingAccountTermId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <field name="attrValue" type="text-long"/>
+        <relationship type="one" fk-name="BILLACCT_TRM_ATTR" related-entity-name="BillingAccountTerm">
+            <key-map field-name="billingAccountTermId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="TermTypeAttr">
+            <key-map field-name="attrName"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="CreditCard" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentMethodId" type="id" is-pk="true"/>
+        <field name="cardType" type="text-medium"/>
+        <field name="cardNumber" type="text-long" encrypt="true"/>
+        <field name="validFromDate" type="text-short"/>
+        <field name="expireDate" type="text-short"/>
+        <field name="issueNumber" type="text-short"/>
+        <field name="companyNameOnCard" type="text-medium"/>
+        <field name="titleOnCard" type="text-medium"/>
+        <field name="firstNameOnCard" type="text-medium"/>
+        <field name="middleNameOnCard" type="text-medium"/>
+        <field name="lastNameOnCard" type="text-medium"/>
+        <field name="suffixOnCard" type="text-medium"/>
+        <field name="contactMechId" type="id"/>
+        <field name="consecutiveFailedAuths" type="number-integer"/>
+        <field name="lastFailedAuthDate" type="date-time"/>
+        <field name="consecutiveFailedNsf" type="number-integer"/>
+        <field name="lastFailedNsfDate" type="date-time"/>
+        <relationship type="one" fk-name="CREDCARD_PMNTMETH" related-entity-name="PaymentMethod">
+            <key-map field-name="paymentMethodId"/>
+        </relationship>
+        <relationship type="one" fk-name="CREDCARD_CMECH" related-entity-name="ContactMech">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one" fk-name="CREDCARD_PADDR" related-entity-name="PostalAddress">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="CreditCardTypeGlAccount" package-name="org.ofbiz.accounting.payment">
+        <field name="cardType" type="text-medium" is-pk="true"/>
+        <field name="organizationPartyId" type="id" is-pk="true"/>
+        <field name="glAccountId" type="id"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="Deduction" package-name="org.ofbiz.accounting.payment">
+        <field name="deductionId" type="id" is-pk="true"/>
+        <field name="deductionTypeId" type="id"/>
+        <field name="paymentId" type="id"/>
+        <field name="amount" type="currency-amount"/>
+        <relationship type="one" fk-name="DEDCTN_DEDTYP" related-entity-name="DeductionType">
+            <key-map field-name="deductionTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="DEDCTN_PMNT" related-entity-name="Payment">
+            <key-map field-name="paymentId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="DeductionType" package-name="org.ofbiz.accounting.payment">
+        <field name="deductionTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="EftAccount" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentMethodId" type="id" is-pk="true"/>
+        <field name="bankName" type="text-medium"/>
+        <field name="routingNumber" type="text-medium"/>
+        <field name="accountType" type="text-medium"/>
+        <field name="accountNumber" type="text-long"/>
+        <field name="nameOnAccount" type="text-medium"/>
+        <field name="companyNameOnAccount" type="text-medium"/>
+        <field name="contactMechId" type="id"/>
+        <field name="yearsAtBank" type="number-integer"/>
+        <relationship type="one" fk-name="EFTACCT_PMETH" related-entity-name="PaymentMethod">
+            <key-map field-name="paymentMethodId"/>
+        </relationship>
+        <relationship type="one" fk-name="EFTACCT_CMECH" related-entity-name="ContactMech">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one" fk-name="EFTACCT_PADDR" related-entity-name="PostalAddress">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="GiftCard" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentMethodId" type="id" is-pk="true"/>
+        <field name="cardNumber" type="text-long" encrypt="true"/>
+        <field name="pinNumber" type="text-long" encrypt="true"/>
+        <field name="expireDate" type="text-short"/>
+        <field name="contactMechId" type="id"/>
+        <relationship type="one" fk-name="GIFTCARD_PMNTMETH" related-entity-name="PaymentMethod">
+            <key-map field-name="paymentMethodId"/>
+        </relationship>
+        <relationship type="one" fk-name="GIFTCARD_CMECH" related-entity-name="ContactMech">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one" fk-name="GIFTCARD_PADDR" related-entity-name="PostalAddress">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="GiftCardFulfillment" package-name="org.ofbiz.accounting.payment">
+        <field name="fulfillmentId" type="id" is-pk="true"/>
+        <field name="typeEnumId" type="id"/>
+        <field name="merchantId" type="id-very-long"/>
+        <field name="partyId" type="id"/>
+        <field name="orderId" type="id"/>
+        <field name="orderItemSeqId" type="id"/>
+        <field name="surveyResponseId" type="id"/>
+        <field name="cardNumber" type="text-long" encrypt="true"/>
+        <field name="pinNumber" type="text-long" encrypt="true"/>
+        <field name="amount" type="currency-amount"/>
+        <field name="responseCode" type="text-medium"/>
+        <field name="referenceNum" type="text-medium"/>
+        <field name="authCode" type="text-medium"/>
+        <field name="fulfillmentDate" type="date-time"/>
+        <relationship type="one" fk-name="GC_FILL_ENUM" related-entity-name="Enumeration">
+            <key-map field-name="typeEnumId" related-field-name="enumId"/>
+        </relationship>
+        <relationship type="one" fk-name="GC_FILL_PARTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="GC_FILL_ODRH" related-entity-name="OrderHeader">
+            <key-map field-name="orderId"/>
+        </relationship>
+        <relationship type="one" fk-name="GC_FILL_ODRI" related-entity-name="OrderItem">
+            <key-map field-name="orderId"/>
+            <key-map field-name="orderItemSeqId"/>
+        </relationship>
+        <relationship type="one" fk-name="GC_FILL_SURVY" related-entity-name="SurveyResponse">
+            <key-map field-name="surveyResponseId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="Payment" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentId" type="id" is-pk="true"/>
+        <field name="paymentTypeId" type="id"/>
+        <field name="paymentMethodTypeId" type="id"/>
+        <field name="paymentMethodId" type="id"/>
+        <field name="paymentGatewayResponseId" type="id"/>
+        <field name="paymentPreferenceId" type="id"/>
+        <field name="partyIdFrom" type="id"/>
+        <field name="partyIdTo" type="id"/>
+        <field name="roleTypeIdTo" type="id"/>
+        <field name="statusId" type="id"/>
+        <field name="effectiveDate" type="date-time"/>
+        <field name="paymentRefNum" type="text-medium"/>
+        <field name="amount" type="currency-amount"/>
+        <field name="currencyUomId" type="id"/>
+        <field name="comments" type="text-long"/>
+        <field name="finAccountTransId" type="id"/>
+        <field name="overrideGlAccountId" type="id"/>
+        <field name="actualCurrencyAmount" type="currency-amount"/>
+        <field name="actualCurrencyUomId" type="id"/>
+        <relationship type="one" fk-name="PAYMENT_PMTYP" related-entity-name="PaymentType">
+            <key-map field-name="paymentTypeId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="PaymentTypeAttr">
+            <key-map field-name="paymentTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMENT_PMETH_TP" related-entity-name="PaymentMethodType">
+            <key-map field-name="paymentMethodTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMENT_PMETH" related-entity-name="PaymentMethod">
+            <key-map field-name="paymentMethodId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMENT_CUOM" title="Currency" related-entity-name="OfbizUom">
+            <key-map field-name="currencyUomId" related-field-name="uomId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMENT_ACUOM" title="ActualCurrency" related-entity-name="OfbizUom">
+            <key-map field-name="actualCurrencyUomId" related-field-name="uomId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="CreditCard">
+            <key-map field-name="paymentMethodId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="EftAccount">
+            <key-map field-name="paymentMethodId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="GiftCard">
+            <key-map field-name="paymentMethodId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMENT_ORDPMPRF" related-entity-name="OrderPaymentPreference">
+            <key-map field-name="paymentPreferenceId" related-field-name="orderPaymentPreferenceId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMENT_PAYGATR" related-entity-name="PaymentGatewayResponse">
+            <key-map field-name="paymentGatewayResponseId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMENT_FPTY" title="From" related-entity-name="Party">
+            <key-map field-name="partyIdFrom" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMENT_TPTY" title="To" related-entity-name="Party">
+            <key-map field-name="partyIdTo" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMENT_TRTP" title="To" related-entity-name="RoleType">
+            <key-map field-name="roleTypeIdTo" related-field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" title="To" related-entity-name="PartyRole">
+            <key-map field-name="partyIdTo" related-field-name="partyId"/>
+            <key-map field-name="roleTypeIdTo" related-field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMENT_STTSITM" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMENT_FACTX" related-entity-name="FinAccountTrans">
+            <key-map field-name="finAccountTransId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMENT_ORGLA" related-entity-name="GlAccount">
+            <key-map field-name="overrideGlAccountId" related-field-name="glAccountId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="PaymentAndTypePartyNameView" package-name="org.ofbiz.accounting.payment">
+        <member-entity entity-alias="PY" entity-name="Payment" join-from-alias="PCM">
+            <key-map field-name="contactMechId"/>
+        </member-entity>
+        <member-entity entity-alias="FPNV" entity-name="PartyNameView" join-from-alias="PY">
+            <key-map field-name="partyIdFrom" related-field-name="partyId"/>
+        </member-entity>
+        <member-entity entity-alias="TPNV" entity-name="PartyNameView" join-from-alias="PY">
+            <key-map field-name="partyIdTo" related-field-name="partyId"/>
+        </member-entity>
+        <member-entity entity-alias="TY" entity-name="PaymentType" join-from-alias="PY">
+            <key-map field-name="paymentTypeId"/>
+        </member-entity>
+        <member-entity entity-alias="PMT" entity-name="PaymentMethodType" join-from-alias="PY">
+            <key-map field-name="paymentMethodTypeId"/>
+        </member-entity>
+        <member-entity entity-alias="SI" entity-name="OfbizStatusItem" join-from-alias="PY">
+            <key-map field-name="statusId"/>
+        </member-entity>
+        <alias-all entity-alias="PY">
+        </alias-all>
+        <alias entity-alias="FPNV" name="partyFromFirstName" field="firstName">
+        </alias>
+        <alias entity-alias="FPNV" name="partyFromLastName" field="lastName">
+        </alias>
+        <alias entity-alias="FPNV" name="partyFromGroupName" field="groupName">
+        </alias>
+        <alias entity-alias="TPNV" name="partyToFirstName" field="firstName">
+        </alias>
+        <alias entity-alias="TPNV" name="partyToLastName" field="lastName">
+        </alias>
+        <alias entity-alias="TPNV" name="partyToGroupName" field="groupName">
+        </alias>
+        <alias entity-alias="TY" name="paymentTypeDesc" field="description">
+        </alias>
+        <alias entity-alias="TY" name="parentPaymentTypeId" field="parentTypeId">
+        </alias>
+        <alias entity-alias="SI" name="statusDesc" field="description">
+        </alias>
+        <alias entity-alias="PMT" name="paymentMethodTypeDesc" field="description">
+        </alias>
+        <relationship type="one-nofk" related-entity-name="PaymentType">
+            <key-map field-name="paymentTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="PaymentMethodType">
+            <key-map field-name="paymentMethodTypeId"/>
+        </relationship>
+    </view-entity> -->
+    <!-- <view-entity entity-name="PaymentAndType" package-name="org.ofbiz.accounting.payment" cache="never">
+        <member-entity entity-alias="PY" entity-name="Payment" join-from-alias="PY">
+            <key-map field-name="statusId"/>
+        </member-entity>
+        <member-entity entity-alias="TY" entity-name="PaymentType" join-from-alias="PY">
+            <key-map field-name="paymentTypeId"/>
+        </member-entity>
+        <alias-all entity-alias="PY">
+        </alias-all>
+        <alias-all entity-alias="TY">
+            <exclude field="paymentTypeId"/>
+        </alias-all>
+        <relationship type="many" fk-name="PAYTYPE_PAY" related-entity-name="PaymentApplication">
+            <key-map field-name="paymentId"/>
+        </relationship>
+        <relationship type="many" fk-name="PAYTYPE_TOPAY" title="to" related-entity-name="PaymentApplication">
+            <key-map field-name="paymentId" related-field-name="toPaymentId"/>
+        </relationship>
+    </view-entity> -->
+    <!-- <view-entity entity-name="PaymentAndTypeAndCreditCard" package-name="org.ofbiz.accounting.payment" cache="never">
+        <member-entity entity-alias="PAT" entity-name="PaymentAndType" join-from-alias="PY">
+            <key-map field-name="paymentTypeId"/>
+        </member-entity>
+        <member-entity entity-alias="CC" entity-name="CreditCard" join-from-alias="PAT" join-optional="true">
+            <key-map field-name="paymentMethodId" related-field-name="paymentMethodId"/>
+        </member-entity>
+        <alias-all entity-alias="PAT">
+        </alias-all>
+        <alias-all entity-alias="CC">
+        </alias-all>
+    </view-entity> -->
+    <!-- <view-entity entity-name="PaymentAndApplication" package-name="org.ofbiz.accounting.payment" cache="never">
+        <member-entity entity-alias="PY" entity-name="Payment" join-from-alias="PAT" join-optional="true">
+            <key-map field-name="paymentMethodId" related-field-name="paymentMethodId"/>
+        </member-entity>
+        <member-entity entity-alias="PA" entity-name="PaymentApplication" join-from-alias="PY">
+            <key-map field-name="paymentId"/>
+        </member-entity>
+        <alias-all entity-alias="PY">
+            <exclude field="overrideGlAccountId"/>
+        </alias-all>
+        <alias-all entity-alias="PA">
+        </alias-all>
+        <relationship type="one-nofk" related-entity-name="Payment">
+            <key-map field-name="paymentId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="PaymentApplication">
+            <key-map field-name="paymentApplicationId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="PaymentType">
+            <key-map field-name="paymentTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="PaymentMethodType">
+            <key-map field-name="paymentMethodTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="PaymentGatewayResponse">
+            <key-map field-name="paymentGatewayResponseId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="OfbizGeo">
+            <key-map field-name="taxAuthGeoId" related-field-name="geoId"/>
+        </relationship>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="PaymentApplication" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentApplicationId" type="id" is-pk="true"/>
+        <field name="paymentId" type="id"/>
+        <field name="invoiceId" type="id"/>
+        <field name="invoiceItemSeqId" type="id"/>
+        <field name="billingAccountId" type="id"/>
+        <field name="overrideGlAccountId" type="id"/>
+        <field name="toPaymentId" type="id"/>
+        <field name="taxAuthGeoId" type="id"/>
+        <field name="amountApplied" type="currency-amount"/>
+        <relationship type="one" fk-name="PAYMENT_APP_PMT" related-entity-name="Payment">
+            <key-map field-name="paymentId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMENT_APP_INV" related-entity-name="Invoice">
+            <key-map field-name="invoiceId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="InvoiceItem">
+            <key-map field-name="invoiceId"/>
+            <key-map field-name="invoiceItemSeqId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMENT_APP_BACT" related-entity-name="BillingAccount">
+            <key-map field-name="billingAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMENT_APP_TPMT" title="To" related-entity-name="Payment">
+            <key-map field-name="toPaymentId" related-field-name="paymentId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMENT_APP_GEO" related-entity-name="OfbizGeo">
+            <key-map field-name="taxAuthGeoId" related-field-name="geoId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMENT_APP_ORGLA" related-entity-name="GlAccount">
+            <key-map field-name="overrideGlAccountId" related-field-name="glAccountId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PaymentAttribute" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <field name="attrValue" type="text-long"/>
+        <relationship type="one" fk-name="PAYMENT_ATTR" related-entity-name="Payment">
+            <key-map field-name="paymentId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="PaymentTypeAttr">
+            <key-map field-name="attrName"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PaymentBudgetAllocation" package-name="org.ofbiz.accounting.payment">
+        <field name="budgetId" type="id" is-pk="true"/>
+        <field name="budgetItemSeqId" type="id" is-pk="true"/>
+        <field name="paymentId" type="id" is-pk="true"/>
+        <field name="amount" type="currency-amount"/>
+        <relationship type="one" fk-name="PAYMENT_BA_BDGT" related-entity-name="Budget">
+            <key-map field-name="budgetId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="BudgetItem">
+            <key-map field-name="budgetId"/>
+            <key-map field-name="budgetItemSeqId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMENT_BA_PMT" related-entity-name="Payment">
+            <key-map field-name="paymentId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PaymentMethod" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentMethodId" type="id" is-pk="true"/>
+        <field name="paymentMethodTypeId" type="id"/>
+        <field name="partyId" type="id"/>
+        <field name="glAccountId" type="id"/>
+        <field name="finAccountId" type="id"/>
+        <field name="description" type="text-long"/>
+        <field name="fromDate" type="date-time"/>
+        <field name="thruDate" type="date-time"/>
+        <relationship type="one" fk-name="PAYMETH_TYPE" related-entity-name="PaymentMethodType">
+            <key-map field-name="paymentMethodTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMETH_PARTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMETH_GLACCT" related-entity-name="GlAccount">
+            <key-map field-name="glAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMETH_FINACCT" related-entity-name="FinAccount">
+            <key-map field-name="finAccountId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="PaymentMethodAndCreditCard" package-name="org.ofbiz.accounting.payment" cache="never">
+        <member-entity entity-alias="PM" entity-name="PaymentMethod" join-from-alias="PY">
+            <key-map field-name="paymentId"/>
+        </member-entity>
+        <member-entity entity-alias="CC" entity-name="CreditCard" join-from-alias="PM">
+            <key-map field-name="paymentMethodId"/>
+        </member-entity>
+        <alias entity-alias="PM" name="paymentMethodId">
+        </alias>
+        <alias entity-alias="PM" name="paymentMethodTypeId">
+        </alias>
+        <alias entity-alias="PM" name="partyId">
+        </alias>
+        <alias entity-alias="PM" name="glAccountId">
+        </alias>
+        <alias entity-alias="PM" name="fromDate">
+        </alias>
+        <alias entity-alias="PM" name="thruDate">
+        </alias>
+        <alias entity-alias="PM" name="description">
+        </alias>
+        <alias entity-alias="CC" name="cardType">
+        </alias>
+        <alias entity-alias="CC" name="cardNumber">
+        </alias>
+        <alias entity-alias="CC" name="expireDate">
+        </alias>
+        <alias entity-alias="CC" name="companyNameOnCard">
+        </alias>
+        <alias entity-alias="CC" name="titleOnCard">
+        </alias>
+        <alias entity-alias="CC" name="firstNameOnCard">
+        </alias>
+        <alias entity-alias="CC" name="lastNameOnCard">
+        </alias>
+        <alias entity-alias="CC" name="suffixOnCard">
+        </alias>
+        <alias entity-alias="CC" name="contactMechId">
+        </alias>
+        <relationship type="one-nofk" related-entity-name="PaymentMethod">
+            <key-map field-name="paymentMethodId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="PaymentMethodType">
+            <key-map field-name="paymentMethodTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="CreditCard">
+            <key-map field-name="paymentMethodId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="PostalAddress">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+    </view-entity> -->
+    <!-- <view-entity entity-name="PaymentMethodAndEftAccount" package-name="org.ofbiz.accounting.payment" cache="never">
+        <member-entity entity-alias="PM" entity-name="PaymentMethod" join-from-alias="PM">
+            <key-map field-name="paymentMethodId"/>
+        </member-entity>
+        <member-entity entity-alias="EA" entity-name="EftAccount" join-from-alias="PM">
+            <key-map field-name="paymentMethodId"/>
+        </member-entity>
+        <alias entity-alias="PM" name="paymentMethodId">
+        </alias>
+        <alias entity-alias="PM" name="paymentMethodTypeId">
+        </alias>
+        <alias entity-alias="PM" name="partyId">
+        </alias>
+        <alias entity-alias="PM" name="glAccountId">
+        </alias>
+        <alias entity-alias="PM" name="fromDate">
+        </alias>
+        <alias entity-alias="PM" name="thruDate">
+        </alias>
+        <alias entity-alias="EA" name="bankName">
+        </alias>
+        <alias entity-alias="EA" name="routingNumber">
+        </alias>
+        <alias entity-alias="EA" name="accountType">
+        </alias>
+        <alias entity-alias="EA" name="accountNumber">
+        </alias>
+        <alias entity-alias="EA" name="nameOnAccount">
+        </alias>
+        <alias entity-alias="EA" name="companyNameOnAccount">
+        </alias>
+        <alias entity-alias="EA" name="contactMechId">
+        </alias>
+        <alias entity-alias="EA" name="yearsAtBank">
+        </alias>
+        <relationship type="one-nofk" related-entity-name="PaymentMethod">
+            <key-map field-name="paymentMethodId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="PaymentMethodType">
+            <key-map field-name="paymentMethodTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="EftAccount">
+            <key-map field-name="paymentMethodId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="PostalAddress">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+    </view-entity> -->
+    <!-- <view-entity entity-name="PaymentMethodAndGiftCard" package-name="org.ofbiz.accounting.payment" cache="never">
+        <member-entity entity-alias="PM" entity-name="PaymentMethod" join-from-alias="PM">
+            <key-map field-name="paymentMethodId"/>
+        </member-entity>
+        <member-entity entity-alias="GC" entity-name="GiftCard" join-from-alias="PM">
+            <key-map field-name="paymentMethodId"/>
+        </member-entity>
+        <alias entity-alias="PM" name="paymentMethodId">
+        </alias>
+        <alias entity-alias="PM" name="paymentMethodTypeId">
+        </alias>
+        <alias entity-alias="PM" name="partyId">
+        </alias>
+        <alias entity-alias="PM" name="glAccountId">
+        </alias>
+        <alias entity-alias="PM" name="fromDate">
+        </alias>
+        <alias entity-alias="PM" name="thruDate">
+        </alias>
+        <alias entity-alias="GC" name="cardNumber">
+        </alias>
+        <alias entity-alias="GC" name="pinNumber">
+        </alias>
+        <alias entity-alias="GC" name="expireDate">
+        </alias>
+        <alias entity-alias="GC" name="contactMechId">
+        </alias>
+        <relationship type="one-nofk" related-entity-name="PaymentMethod">
+            <key-map field-name="paymentMethodId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="PaymentMethodType">
+            <key-map field-name="paymentMethodTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="GiftCard">
+            <key-map field-name="paymentMethodId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="PostalAddress">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="PaymentMethodType" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentMethodTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+        <field name="defaultGlAccountId" type="id"/>
+        <relationship type="one" fk-name="PAYMENT_MTP_DGLAC" title="Default" related-entity-name="GlAccount">
+            <key-map field-name="defaultGlAccountId" related-field-name="glAccountId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PaymentMethodTypeGlAccount" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentMethodTypeId" type="id" is-pk="true"/>
+        <field name="organizationPartyId" type="id" is-pk="true"/>
+        <field name="debitCreditFlag" type="id" is-pk="true"/>
+        <field name="glAccountId" type="id"/>
+        <field name="apGlAccountId" type="id"/>
+        <relationship type="one" fk-name="PAYMENT_MTGA_PMT" related-entity-name="PaymentMethodType">
+            <key-map field-name="paymentMethodTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMENT_MTGA_OPTY" title="Organization" related-entity-name="Party">
+            <key-map field-name="organizationPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMENT_MTGA_GLAC" related-entity-name="GlAccount">
+            <key-map field-name="glAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYMENT_MTGA_APAC" title="Ap" related-entity-name="GlAccount">
+            <key-map field-name="apGlAccountId" related-field-name="glAccountId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PaymentType" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="PAYMENT_TYPE_PAR" title="Parent" related-entity-name="PaymentType">
+            <key-map field-name="parentTypeId" related-field-name="paymentTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PaymentTypeAttr" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentTypeId" type="id" is-pk="true"/>
+        <field name="attrName" type="id-long" is-pk="true"/>
+        <relationship type="one" fk-name="PAYMETH_TYPE_ATTR" related-entity-name="PaymentType">
+            <key-map field-name="paymentTypeId"/>
+        </relationship>
+        <relationship type="many" related-entity-name="PaymentAttribute">
+            <key-map field-name="attrName"/>
+        </relationship>
+        <relationship type="many" related-entity-name="Payment">
+            <key-map field-name="paymentTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PaymentGlAccountTypeMap" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentTypeId" type="id" is-pk="true"/>
+        <field name="organizationPartyId" type="id" is-pk="true"/>
+        <field name="glAccountTypeId" type="id"/>
+        <relationship type="one" fk-name="PMTGLACCT_PMTTYPE" related-entity-name="PaymentType">
+            <key-map field-name="paymentTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="PMTGLACCT_PARTY" related-entity-name="Party">
+            <key-map field-name="organizationPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="PMTGLACCT_GLACCT" related-entity-name="GlAccountType">
+            <key-map field-name="glAccountTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PaymentGatewayConfigType" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentGatewayConfigTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="PGCT_PAR" title="Parent" related-entity-name="PaymentGatewayConfigType">
+            <key-map field-name="parentTypeId" related-field-name="paymentGatewayConfigTypeId"/>
+        </relationship>
+        <relationship type="many" title="Sibling" related-entity-name="PaymentGatewayConfigType">
+            <key-map field-name="parentTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PaymentGatewayConfig" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentGatewayConfigId" type="id" is-pk="true"/>
+        <field name="paymentGatewayConfigTypeId" type="id"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="PGC_PGCT" related-entity-name="PaymentGatewayConfigType">
+            <key-map field-name="paymentGatewayConfigTypeId" related-field-name="paymentGatewayConfigTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PaymentGatewaySagePay" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentGatewayConfigId" type="id" is-pk="true"/>
+        <field name="vendor" type="text-medium"/>
+        <field name="productionHost" type="text-medium"/>
+        <field name="testingHost" type="text-medium"/>
+        <field name="sagePayMode" type="text-medium"/>
+        <field name="protocolVersion" type="text-short"/>
+        <field name="authenticationTransType" type="text-medium"/>
+        <field name="authenticationUrl" type="text-long"/>
+        <field name="authoriseTransType" type="text-medium"/>
+        <field name="authoriseUrl" type="text-long"/>
+        <field name="releaseTransType" type="text-medium"/>
+        <field name="releaseUrl" type="text-long"/>
+        <field name="voidUrl" type="text-long"/>
+        <field name="refundUrl" type="text-long"/>
+        <relationship type="one" fk-name="PGSP_PGC" related-entity-name="PaymentGatewayConfig">
+            <key-map field-name="paymentGatewayConfigId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PaymentGatewayAuthorizeNet" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentGatewayConfigId" type="id" is-pk="true"/>
+        <field name="transactionUrl" type="text-long"/>
+        <field name="certificateAlias" type="text-long"/>
+        <field name="apiVersion" type="text-medium"/>
+        <field name="delimitedData" type="text-medium"/>
+        <field name="delimiterChar" type="text-medium"/>
+        <field name="method" type="text-medium"/>
+        <field name="emailCustomer" type="text-medium"/>
+        <field name="emailMerchant" type="text-medium"/>
+        <field name="testMode" type="text-medium"/>
+        <field name="relayResponse" type="text-medium"/>
+        <field name="tranKey" type="text-long" encrypt="true"/>
+        <field name="userId" type="text-long"/>
+        <field name="pwd" type="text-long" encrypt="true"/>
+        <field name="transDescription" type="text-long"/>
+        <field name="duplicateWindow" type="number-integer"/>
+        <relationship type="one" fk-name="PGAN_PGC" related-entity-name="PaymentGatewayConfig">
+            <key-map field-name="paymentGatewayConfigId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PaymentGatewayCyberSource" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentGatewayConfigId" type="id" is-pk="true"/>
+        <field name="merchantId" type="text-long"/>
+        <field name="apiVersion" type="text-medium"/>
+        <field name="production" type="text-medium"/>
+        <field name="keysDir" type="text-long"/>
+        <field name="keysFile" type="text-long"/>
+        <field name="logEnabled" type="text-medium"/>
+        <field name="logDir" type="text-long"/>
+        <field name="logFile" type="text-long"/>
+        <field name="logSize" type="number-integer"/>
+        <field name="merchantDescr" type="text-long"/>
+        <field name="merchantContact" type="text-long"/>
+        <field name="autoBill" type="text-medium"/>
+        <field name="enableDav" type="text-indicator"/>
+        <field name="fraudScore" type="text-indicator"/>
+        <field name="ignoreAvs" type="text-medium"/>
+        <field name="disableBillAvs" type="text-indicator"/>
+        <field name="avsDeclineCodes" type="text-long"/>
+        <relationship type="one" fk-name="PGCS_PGC" related-entity-name="PaymentGatewayConfig">
+            <key-map field-name="paymentGatewayConfigId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PaymentGatewayPayflowPro" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentGatewayConfigId" type="id" is-pk="true"/>
+        <field name="certsPath" type="text-long"/>
+        <field name="hostAddress" type="text-long"/>
+        <field name="hostPort" type="number-integer"/>
+        <field name="timeout" type="number-integer"/>
+        <field name="proxyAddress" type="text-long"/>
+        <field name="proxyPort" type="number-integer"/>
+        <field name="proxyLogon" type="text-long"/>
+        <field name="proxyPassword" type="text-long" encrypt="true"/>
+        <field name="vendor" type="text-medium"/>
+        <field name="userId" type="text-medium"/>
+        <field name="pwd" type="text-long" encrypt="true"/>
+        <field name="partner" type="text-medium"/>
+        <field name="checkAvs" type="text-indicator"/>
+        <field name="checkCvv2" type="text-indicator"/>
+        <field name="preAuth" type="text-indicator"/>
+        <field name="enableTransmit" type="text-long"/>
+        <field name="logFileName" type="text-long"/>
+        <field name="loggingLevel" type="number-integer"/>
+        <field name="maxLogFileSize" type="number-integer"/>
+        <field name="stackTraceOn" type="text-indicator"/>
+        <field name="redirectUrl" type="text-long"/>
+        <field name="returnUrl" type="text-long"/>
+        <field name="cancelReturnUrl" type="text-long"/>
+        <relationship type="one" fk-name="PGPF_PGC" related-entity-name="PaymentGatewayConfig">
+            <key-map field-name="paymentGatewayConfigId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PaymentGatewayPayPal" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentGatewayConfigId" type="id" is-pk="true"/>
+        <field name="businessEmail" type="text-long"/>
+        <field name="apiUserName" type="text-medium"/>
+        <field name="apiPassword" type="text-medium"/>
+        <field name="apiSignature" type="text-medium"/>
+        <field name="apiEnvironment" type="text-medium"/>
+        <field name="notifyUrl" type="text-long"/>
+        <field name="returnUrl" type="text-long"/>
+        <field name="cancelReturnUrl" type="text-long"/>
+        <field name="imageUrl" type="text-long"/>
+        <field name="confirmTemplate" type="text-long"/>
+        <field name="redirectUrl" type="text-long"/>
+        <field name="confirmUrl" type="text-long"/>
+        <field name="shippingCallbackUrl" type="text-long"/>
+        <field name="requireConfirmedShipping" type="text-indicator"/>
+        <relationship type="one" fk-name="PGPP_PGC" related-entity-name="PaymentGatewayConfig">
+            <key-map field-name="paymentGatewayConfigId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PaymentGatewayClearCommerce" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentGatewayConfigId" type="id" is-pk="true"/>
+        <field name="sourceId" type="text-medium"/>
+        <field name="groupId" type="text-medium"/>
+        <field name="clientId" type="text-medium"/>
+        <field name="username" type="text-medium"/>
+        <field name="pwd" type="text-long" encrypt="true"/>
+        <field name="userAlias" type="text-medium"/>
+        <field name="effectiveAlias" type="text-medium"/>
+        <field name="processMode" type="text-indicator"/>
+        <field name="serverURL" type="text-long"/>
+        <field name="enableCVM" type="text-indicator"/>
+        <relationship type="one" fk-name="PGCC_PGC" related-entity-name="PaymentGatewayConfig">
+            <key-map field-name="paymentGatewayConfigId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PaymentGatewayWorldPay" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentGatewayConfigId" type="id" is-pk="true"/>
+        <field name="redirectUrl" type="text-long"/>
+        <field name="instId" type="text-long" encrypt="true"/>
+        <field name="authMode" type="text-indicator"/>
+        <field name="fixContact" type="text-indicator"/>
+        <field name="hideContact" type="text-indicator"/>
+        <field name="hideCurrency" type="text-indicator"/>
+        <field name="langId" type="text-medium"/>
+        <field name="noLanguageMenu" type="text-indicator"/>
+        <field name="withDelivery" type="text-indicator"/>
+        <field name="testMode" type="number-integer"/>
+        <relationship type="one" fk-name="PGWP_PGC" related-entity-name="PaymentGatewayConfig">
+            <key-map field-name="paymentGatewayConfigId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PaymentGatewayOrbital" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentGatewayConfigId" type="id" is-pk="true"/>
+        <field name="username" type="text-medium"/>
+        <field name="connectionPassword" type="text-long" encrypt="true"/>
+        <field name="merchantId" type="text-long"/>
+        <field name="engineClass" type="text-long"/>
+        <field name="hostName" type="text-long"/>
+        <field name="port" type="number-integer"/>
+        <field name="hostNameFailover" type="text-long"/>
+        <field name="portFailover" type="number-integer"/>
+        <field name="connectionTimeoutSeconds" type="number-integer"/>
+        <field name="readTimeoutSeconds" type="number-integer"/>
+        <field name="authorizationURI" type="text-long"/>
+        <field name="sdkVersion" type="text-medium"/>
+        <field name="sslSocketFactory" type="text-medium"/>
+        <field name="responseType" type="text-medium"/>
+        <relationship type="one" fk-name="PGORB_PGC" related-entity-name="PaymentGatewayConfig">
+            <key-map field-name="paymentGatewayConfigId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PaymentGatewayRespMsg" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentGatewayRespMsgId" type="id" is-pk="true"/>
+        <field name="paymentGatewayResponseId" type="id"/>
+        <field name="pgrMessage" type="text-very-long"/>
+        <relationship type="one" fk-name="PAYGATRM_PAYGR" related-entity-name="PaymentGatewayResponse">
+            <key-map field-name="paymentGatewayResponseId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PaymentGatewayResponse" package-name="org.ofbiz.accounting.payment">
+        <field name="paymentGatewayResponseId" type="id" is-pk="true"/>
+        <field name="paymentServiceTypeEnumId" type="id"/>
+        <field name="orderPaymentPreferenceId" type="id"/>
+        <field name="paymentMethodTypeId" type="id"/>
+        <field name="paymentMethodId" type="id"/>
+        <field name="transCodeEnumId" type="id"/>
+        <field name="amount" type="currency-amount"/>
+        <field name="currencyUomId" type="id"/>
+        <field name="referenceNum" type="text-medium"/>
+        <field name="altReference" type="text-medium"/>
+        <field name="subReference" type="text-medium"/>
+        <field name="gatewayCode" type="text-medium"/>
+        <field name="gatewayFlag" type="text-medium"/>
+        <field name="gatewayAvsResult" type="text-medium"/>
+        <field name="gatewayCvResult" type="text-medium"/>
+        <field name="gatewayScoreResult" type="text-medium"/>
+        <field name="gatewayMessage" type="text-long"/>
+        <field name="transactionDate" type="date-time"/>
+        <field name="resultDeclined" type="text-indicator"/>
+        <field name="resultNsf" type="text-indicator"/>
+        <field name="resultBadExpire" type="text-indicator"/>
+        <field name="resultBadCardNumber" type="text-indicator"/>
+        <relationship type="one" fk-name="PAYGATR_PSTENUM" title="ServiceType" related-entity-name="Enumeration">
+            <key-map field-name="paymentServiceTypeEnumId" related-field-name="enumId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYGATR_TXCODE" title="TranCode" related-entity-name="Enumeration">
+            <key-map field-name="transCodeEnumId" related-field-name="enumId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYGATR_CUOM" related-entity-name="OfbizUom">
+            <key-map field-name="currencyUomId" related-field-name="uomId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYGATR_ORDPMPRF" related-entity-name="OrderPaymentPreference">
+            <key-map field-name="orderPaymentPreferenceId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYGATR_PMTP" related-entity-name="PaymentMethodType">
+            <key-map field-name="paymentMethodTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYGATR_PMETH" related-entity-name="PaymentMethod">
+            <key-map field-name="paymentMethodId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PaymentGroup" package-name="org.ofbiz.accounting.payment">
+    <description>Payment Group</description>
+        <field name="paymentGroupId" type="id" is-pk="true"/>
+        <field name="paymentGroupTypeId" type="id"/>
+        <field name="paymentGroupName" type="text-medium"/>
+        <relationship type="one" fk-name="PAYMNTGP_PGTYPE" related-entity-name="PaymentGroupType">
+            <key-map field-name="paymentGroupTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PaymentGroupType" package-name="org.ofbiz.accounting.payment">
+    <description>Payment Group Type</description>
+        <field name="paymentGroupTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="PAYMNTGP_TYP_PAR" title="Parent" related-entity-name="PaymentGroupType">
+            <key-map field-name="parentTypeId" related-field-name="paymentGroupTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PaymentGroupMember" package-name="org.ofbiz.accounting.payment">
+    <description>Payment Group Member</description>
+        <field name="paymentGroupId" type="id" is-pk="true"/>
+        <field name="paymentId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="sequenceNum" type="number-integer"/>
+        <relationship type="one" fk-name="PAYGRPMMBR_PG" related-entity-name="PaymentGroup">
+            <key-map field-name="paymentGroupId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYGRPMMBR_PAYMNT" related-entity-name="Payment">
+            <key-map field-name="paymentId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PayPalPaymentMethod" package-name="org.ofbiz.accounting.payment">
+    <description>PayPal Payment Method Details</description>
+        <field name="paymentMethodId" type="id" is-pk="true"/>
+        <field name="payerId" type="id"/>
+        <field name="expressCheckoutToken" type="text-medium"/>
+        <field name="payerStatus" type="text-medium"/>
+        <field name="avsAddr" type="text-indicator"/>
+        <field name="avsZip" type="text-indicator"/>
+        <field name="correlationId" type="id"/>
+        <field name="contactMechId" type="id"/>
+        <field name="transactionId" type="text-medium"/>
+        <relationship type="one" fk-name="PAYPAL_PMNTMETH" related-entity-name="PaymentMethod">
+            <key-map field-name="paymentMethodId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYPAL_CMECH" related-entity-name="ContactMech">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAYPAL_PADDR" related-entity-name="PostalAddress">
+            <key-map field-name="contactMechId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ValueLinkKey" package-name="org.ofbiz.accounting.payment">
+        <field name="merchantId" type="id-very-long" is-pk="true"/>
+        <field name="publicKey" type="text-very-long"/>
+        <field name="privateKey" type="text-very-long"/>
+        <field name="exchangeKey" type="text-very-long"/>
+        <field name="workingKey" type="text-very-long"/>
+        <field name="workingKeyIndex" type="number-integer"/>
+        <field name="lastWorkingKey" type="text-very-long"/>
+        <field name="lastModifiedDate" type="date-time"/>
+        <field name="lastModifiedByTerminal" type="text-medium"/>
+        <field name="lastModifiedByUserLogin" type="id-very-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PartyTaxAuthInfo" package-name="org.ofbiz.accounting.tax">
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="taxAuthGeoId" type="id" is-pk="true"/>
+        <field name="taxAuthPartyId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="partyTaxId" type="id-long"/>
+        <field name="isExempt" type="text-indicator"/>
+        <field name="isNexus" type="text-indicator"/>
+        <relationship type="one" fk-name="PARTY_TXAI_PTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="PARTY_TXAI_TXA" related-entity-name="TaxAuthority">
+            <key-map field-name="taxAuthGeoId"/>
+            <key-map field-name="taxAuthPartyId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="PartyTaxAuthInfoAndDetail" package-name="org.ofbiz.accounting.tax">
+        <member-entity entity-alias="PTAI" entity-name="PartyTaxAuthInfo" join-from-alias="PM">
+            <key-map field-name="paymentMethodId"/>
+        </member-entity>
+        <member-entity entity-alias="PG" entity-name="PartyGroup" join-from-alias="PTAI">
+            <key-map field-name="taxAuthPartyId" related-field-name="partyId"/>
+        </member-entity>
+        <member-entity entity-alias="GEO" entity-name="OfbizGeo" join-from-alias="PTAI">
+            <key-map field-name="taxAuthGeoId" related-field-name="geoId"/>
+        </member-entity>
+        <alias-all entity-alias="PTAI">
+        </alias-all>
+        <alias-all entity-alias="PG">
+        </alias-all>
+        <alias-all entity-alias="GEO">
+        </alias-all>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="TaxAuthority" package-name="org.ofbiz.accounting.tax">
+        <field name="taxAuthGeoId" type="id" is-pk="true"/>
+        <field name="taxAuthPartyId" type="id" is-pk="true"/>
+        <field name="requireTaxIdForExemption" type="text-indicator"/>
+        <field name="taxIdFormatPattern" type="text-long"/>
+        <field name="includeTaxInPrice" type="text-indicator"/>
+        <relationship type="one" fk-name="TAXAUTH_TAGEO" title="TaxAuth" related-entity-name="OfbizGeo">
+            <key-map field-name="taxAuthGeoId" related-field-name="geoId"/>
+        </relationship>
+        <relationship type="one" fk-name="TAXAUTH_TAPARTY" title="TaxAuth" related-entity-name="Party">
+            <key-map field-name="taxAuthPartyId" related-field-name="partyId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="TaxAuthorityAndDetail" package-name="org.ofbiz.accounting.tax">
+        <member-entity entity-alias="TA" entity-name="TaxAuthority" join-from-alias="PTAI">
+            <key-map field-name="taxAuthGeoId" related-field-name="geoId"/>
+        </member-entity>
+        <member-entity entity-alias="PG" entity-name="PartyGroup" join-from-alias="TA">
+            <key-map field-name="taxAuthPartyId" related-field-name="partyId"/>
+        </member-entity>
+        <member-entity entity-alias="GEO" entity-name="OfbizGeo" join-from-alias="TA">
+            <key-map field-name="taxAuthGeoId" related-field-name="geoId"/>
+        </member-entity>
+        <alias-all entity-alias="TA">
+        </alias-all>
+        <alias-all entity-alias="PG">
+        </alias-all>
+        <alias-all entity-alias="GEO">
+        </alias-all>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="TaxAuthorityAssoc" package-name="org.ofbiz.accounting.tax">
+        <field name="taxAuthGeoId" type="id" is-pk="true"/>
+        <field name="taxAuthPartyId" type="id" is-pk="true"/>
+        <field name="toTaxAuthGeoId" type="id" is-pk="true"/>
+        <field name="toTaxAuthPartyId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="taxAuthorityAssocTypeId" type="id"/>
+        <relationship type="one" fk-name="TAXAUTHASC_TXA" related-entity-name="TaxAuthority">
+            <key-map field-name="taxAuthGeoId"/>
+            <key-map field-name="taxAuthPartyId"/>
+        </relationship>
+        <relationship type="one" fk-name="TAXAUTHASC_TOTXA" title="To" related-entity-name="TaxAuthority">
+            <key-map field-name="toTaxAuthGeoId" related-field-name="taxAuthGeoId"/>
+            <key-map field-name="toTaxAuthPartyId" related-field-name="taxAuthPartyId"/>
+        </relationship>
+        <relationship type="one" fk-name="TAXAUTHASC_ASTP" related-entity-name="TaxAuthorityAssocType">
+            <key-map field-name="taxAuthorityAssocTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="TaxAuthorityAssocType" package-name="org.ofbiz.accounting.tax">
+        <field name="taxAuthorityAssocTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="TaxAuthorityCategory" package-name="org.ofbiz.accounting.tax">
+        <field name="taxAuthGeoId" type="id" is-pk="true"/>
+        <field name="taxAuthPartyId" type="id" is-pk="true"/>
+        <field name="productCategoryId" type="id" is-pk="true"/>
+        <relationship type="one" fk-name="TAXAUTHCAT_TXA" related-entity-name="TaxAuthority">
+            <key-map field-name="taxAuthGeoId"/>
+            <key-map field-name="taxAuthPartyId"/>
+        </relationship>
+        <relationship type="one" fk-name="TAXAUTHCAT_CAT" related-entity-name="ProductCategory">
+            <key-map field-name="productCategoryId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="TaxAuthorityCategoryView" package-name="org.ofbiz.accounting.tax">
+        <member-entity entity-alias="TAC" entity-name="TaxAuthorityCategory" join-from-alias="TA">
+            <key-map field-name="taxAuthGeoId" related-field-name="geoId"/>
+        </member-entity>
+        <member-entity entity-alias="PC" entity-name="ProductCategory" join-from-alias="TAC">
+            <key-map field-name="productCategoryId"/>
+        </member-entity>
+        <alias-all entity-alias="TAC">
+        </alias-all>
+        <alias-all entity-alias="PC">
+        </alias-all>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="TaxAuthorityGlAccount" package-name="org.ofbiz.accounting.tax">
+        <field name="taxAuthGeoId" type="id" is-pk="true"/>
+        <field name="taxAuthPartyId" type="id" is-pk="true"/>
+        <field name="organizationPartyId" type="id" is-pk="true"/>
+        <field name="glAccountId" type="id"/>
+        <relationship type="one" fk-name="TAXAUTHGLA_TXA" related-entity-name="TaxAuthority">
+            <key-map field-name="taxAuthGeoId"/>
+            <key-map field-name="taxAuthPartyId"/>
+        </relationship>
+        <relationship type="one" fk-name="TAXAUTHGLA_OPTY" title="Organization" related-entity-name="Party">
+            <key-map field-name="organizationPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="TAXAUTHGLA_GLA" related-entity-name="GlAccount">
+            <key-map field-name="glAccountId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="TaxAuthorityGlAccountBalance" package-name="org.ofbiz.accounting.tax">
+        <member-entity entity-alias="TAGA" entity-name="TaxAuthorityGlAccount" join-from-alias="TAC">
+            <key-map field-name="productCategoryId"/>
+        </member-entity>
+        <member-entity entity-alias="GLAO" entity-name="GlAccountOrganization" join-from-alias="TAGA">
+            <key-map field-name="glAccountId"/>
+            <key-map field-name="organizationPartyId"/>
+        </member-entity>
+        <member-entity entity-alias="PAP" entity-name="PartyAcctgPreference" join-from-alias="TAGA">
+            <key-map field-name="organizationPartyId" related-field-name="partyId"/>
+        </member-entity>
+        <alias-all entity-alias="TAGA">
+        </alias-all>
+        <alias-all entity-alias="GLAO">
+        </alias-all>
+        <alias entity-alias="PAP" name="baseCurrencyUomId">
+        </alias>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="TaxAuthorityRateProduct" package-name="org.ofbiz.accounting.tax">
+        <field name="taxAuthorityRateSeqId" type="id" is-pk="true"/>
+        <field name="taxAuthGeoId" type="id"/>
+        <field name="taxAuthPartyId" type="id"/>
+        <field name="taxAuthorityRateTypeId" type="id"/>
+        <field name="productStoreId" type="id"/>
+        <field name="productCategoryId" type="id"/>
+        <field name="titleTransferEnumId" type="id"/>
+        <field name="minItemPrice" type="currency-amount"/>
+        <field name="minPurchase" type="currency-amount"/>
+        <field name="taxShipping" type="text-indicator"/>
+        <field name="taxPercentage" type="number-decimal"/>
+        <field name="taxPromotions" type="text-indicator"/>
+        <field name="fromDate" type="date-time"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="TAXAUTHRTEP_TXA" related-entity-name="TaxAuthority">
+            <key-map field-name="taxAuthGeoId"/>
+            <key-map field-name="taxAuthPartyId"/>
+        </relationship>
+        <relationship type="one" fk-name="TAXAUTHRTEP_RTTP" related-entity-name="TaxAuthorityRateType">
+            <key-map field-name="taxAuthorityRateTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="TAXAUTHRTEP_PSTR" related-entity-name="ProductStore">
+            <key-map field-name="productStoreId"/>
+        </relationship>
+        <relationship type="one" fk-name="TAXAUTHRTEP_PCAT" related-entity-name="ProductCategory">
+            <key-map field-name="productCategoryId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="TaxAuthorityRateType" package-name="org.ofbiz.accounting.tax">
+        <field name="taxAuthorityRateTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ZipSalesRuleLookup" package-name="org.ofbiz.accounting.tax">
+        <field name="stateCode" type="text-medium" is-pk="true"/>
+        <field name="city" type="text-medium" is-pk="true"/>
+        <field name="county" type="text-medium" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="idCode" type="text-medium"/>
+        <field name="taxable" type="text-medium"/>
+        <field name="shipCond" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ZipSalesTaxLookup" package-name="org.ofbiz.accounting.tax">
+        <field name="zipCode" type="text-medium" is-pk="true"/>
+        <field name="stateCode" type="text-medium" is-pk="true"/>
+        <field name="city" type="text-medium" is-pk="true"/>
+        <field name="county" type="text-medium" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="countyFips" type="text-medium"/>
+        <field name="countyDefault" type="text-indicator"/>
+        <field name="generalDefault" type="text-indicator"/>
+        <field name="insideCity" type="text-indicator"/>
+        <field name="geoCode" type="text-medium"/>
+        <field name="stateSalesTax" type="number-decimal"/>
+        <field name="citySalesTax" type="number-decimal"/>
+        <field name="cityLocalSalesTax" type="number-decimal"/>
+        <field name="countySalesTax" type="number-decimal"/>
+        <field name="countyLocalSalesTax" type="number-decimal"/>
+        <field name="comboSalesTax" type="number-decimal"/>
+        <field name="stateUseTax" type="number-decimal"/>
+        <field name="cityUseTax" type="number-decimal"/>
+        <field name="cityLocalUseTax" type="number-decimal"/>
+        <field name="countyUseTax" type="number-decimal"/>
+        <field name="countyLocalUseTax" type="number-decimal"/>
+        <field name="comboUseTax" type="number-decimal"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PartyGlAccount" package-name="org.ofbiz.accounting.ledger">
+        <field name="organizationPartyId" type="id" is-pk="true"/>
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="roleTypeId" type="id" is-pk="true"/>
+        <field name="glAccountTypeId" type="id" is-pk="true"/>
+        <field name="glAccountId" type="id"/>
+        <relationship type="one" fk-name="PRTYGLACCT_ORGPRTY" title="Organization" related-entity-name="Party">
+            <key-map field-name="organizationPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="PRTYGLACCT_PRTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" related-entity-name="RoleType">
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="PRTYGLACCT_PTRL" related-entity-name="PartyRole">
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="PRTYGLACCT_GLAT" related-entity-name="GlAccountType">
+            <key-map field-name="glAccountTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="PRTYGLACCT_GLACCT" related-entity-name="GlAccount">
+            <key-map field-name="glAccountId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="GlAccOrgAndAcctgTransAndEntry" package-name="org.ofbiz.accounting.ledger">
+        <member-entity entity-alias="GAO" entity-name="GlAccountOrganization" join-from-alias="TAGA">
+            <key-map field-name="organizationPartyId" related-field-name="partyId"/>
+        </member-entity>
+        <member-entity entity-alias="ATE" entity-name="AcctgTransEntry" join-from-alias="GAO">
+            <key-map field-name="glAccountId"/>
+            <key-map field-name="organizationPartyId"/>
+        </member-entity>
+        <member-entity entity-alias="ATR" entity-name="AcctgTrans" join-from-alias="ATE">
+            <key-map field-name="acctgTransId"/>
+        </member-entity>
+        <alias entity-alias="GAO" name="glAccountId">
+        </alias>
+        <alias entity-alias="ATE" name="debitCreditFlag">
+        </alias>
+        <alias entity-alias="ATR" name="isPosted">
+        </alias>
+        <alias entity-alias="ATR" name="transactionDate">
+        </alias>
+        <alias entity-alias="ATE" name="acctgTransId">
+        </alias>
+        <alias entity-alias="ATE" name="organizationPartyId">
+        </alias>
+        <alias entity-alias="ATE" name="totalAmount" field="amount" function="sum">
+        </alias>
+        <alias entity-alias="GAO" name="fromDate">
+        </alias>
+        <alias entity-alias="GAO" name="thruDate">
+        </alias>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="RateType" package-name="org.ofbiz.accounting.rate">
+        <field name="rateTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="RateAmount" package-name="org.ofbiz.accounting.rate">
+        <field name="rateTypeId" type="id" is-pk="true"/>
+        <field name="rateCurrencyUomId" type="id" is-pk="true"/>
+        <field name="periodTypeId" type="id" is-pk="true"/>
+        <field name="workEffortId" type="id" is-pk="true"/>
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="emplPositionTypeId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="rateAmount" type="currency-amount"/>
+        <relationship type="one" fk-name="RATE_AMOUNT_RT" related-entity-name="RateType">
+            <key-map field-name="rateTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="RATE_AMOUNT_RCT" related-entity-name="OfbizUom">
+            <key-map field-name="rateCurrencyUomId" related-field-name="uomId"/>
+        </relationship>
+        <relationship type="one" fk-name="RATE_AMOUNT_WE" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one" fk-name="RATE_AMOUNT_PTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="RATE_AMOUNT_EPT" related-entity-name="EmplPositionType">
+            <key-map field-name="emplPositionTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="RATE_AMOUNT_PT" related-entity-name="PeriodType">
+            <key-map field-name="periodTypeId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="RateAmountAndRelations" package-name="org.ofbiz.accounting.rate">
+        <member-entity entity-alias="RA" entity-name="RateAmount" join-from-alias="ATE">
+            <key-map field-name="acctgTransId"/>
+        </member-entity>
+        <member-entity entity-alias="RT" entity-name="RateType" join-from-alias="RA">
+            <key-map field-name="rateTypeId"/>
+        </member-entity>
+        <member-entity entity-alias="PT" entity-name="PeriodType" join-from-alias="RA">
+            <key-map field-name="periodTypeId"/>
+        </member-entity>
+        <member-entity entity-alias="PN" entity-name="PartyNameView" join-from-alias="RA" join-optional="true">
+            <key-map field-name="partyId"/>
+        </member-entity>
+        <member-entity entity-alias="WE" entity-name="WorkEffort" join-from-alias="RA" join-optional="true">
+            <key-map field-name="workEffortId"/>
+        </member-entity>
+        <member-entity entity-alias="EPT" entity-name="EmplPositionType" join-from-alias="RA" join-optional="true">
+            <key-map field-name="emplPositionTypeId"/>
+        </member-entity>
+        <alias-all entity-alias="RA">
+        </alias-all>
+        <alias entity-alias="RT" name="rateDescription" field="description">
+        </alias>
+        <alias entity-alias="PT" name="periodDescription" field="description">
+        </alias>
+        <alias entity-alias="PN" name="firstName">
+        </alias>
+        <alias entity-alias="PN" name="middleName">
+        </alias>
+        <alias entity-alias="PN" name="lastName">
+        </alias>
+        <alias entity-alias="PN" name="groupName">
+        </alias>
+        <alias entity-alias="EPT" name="employeePositionDescription" field="description">
+        </alias>
+        <alias entity-alias="WE" name="workEffortName">
+        </alias>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="PartyRate" package-name="org.ofbiz.accounting.rate" table-name="PARTY_RATE_NEW">
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="rateTypeId" type="id" is-pk="true"/>
+        <field name="defaultRate" type="text-indicator"/>
+        <field name="percentageUsed" type="number-float"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <relationship type="one" fk-name="PRTY_RATE_PRTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="PRTY_RATE_RTTP" related-entity-name="RateType">
+            <key-map field-name="rateTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="GlAccountCategory" package-name="org.ofbiz.accounting.ledger">
+        <field name="glAccountCategoryId" type="id" is-pk="true"/>
+        <field name="glAccountCategoryTypeId" type="id"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="GLACT_CAT_TP" related-entity-name="GlAccountCategoryType">
+            <key-map field-name="glAccountCategoryTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="GlAccountCategoryMember" package-name="org.ofbiz.accounting.ledger">
+        <field name="glAccountId" type="id" is-pk="true"/>
+        <field name="glAccountCategoryId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="amountPercentage" type="number-decimal"/>
+        <relationship type="one" fk-name="GLACT_CATMBR_AC" related-entity-name="GlAccount">
+            <key-map field-name="glAccountId"/>
+        </relationship>
+        <relationship type="one" fk-name="GLACT_CATMBR_CAT" related-entity-name="GlAccountCategory">
+            <key-map field-name="glAccountCategoryId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="GlAccountCategoryType" package-name="org.ofbiz.accounting.ledger">
+        <field name="glAccountCategoryTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <!-- <view-entity entity-name="PmtGrpMembrPaymentAndFinAcctTrans" package-name="org.ofbiz.accounting.finaccount">
+        <member-entity entity-alias="PGM" entity-name="PaymentGroupMember" join-from-alias="RA" join-optional="true">
+            <key-map field-name="emplPositionTypeId"/>
+        </member-entity>
+        <member-entity entity-alias="PY" entity-name="Payment" join-from-alias="PGM">
+            <key-map field-name="paymentId"/>
+        </member-entity>
+        <member-entity entity-alias="FAT" entity-name="FinAccountTrans" join-from-alias="PY">
+            <key-map field-name="finAccountTransId"/>
+        </member-entity>
+        <alias-all entity-alias="PGM">
+        </alias-all>
+        <alias-all entity-alias="PY">
+        </alias-all>
+        <alias entity-alias="FAT" name="finAccountId">
+        </alias>
+        <alias entity-alias="FAT" name="partyId">
+        </alias>
+        <alias entity-alias="FAT" name="finAccountTransStatusId" field="statusId">
+        </alias>
+        <alias entity-alias="FAT" name="finAccountTransAmount" field="amount">
+        </alias>
+        <alias entity-alias="FAT" name="glReconciliationId">
+        </alias>
+    </view-entity> -->
+    <!-- <view-entity entity-name="PaymentMethodAndFinAccount" package-name="org.ofbiz.accounting.finaccount">
+        <member-entity entity-alias="PM" entity-name="PaymentMethod" join-from-alias="FA">
+            <key-map field-name="finAccountId"/>
+        </member-entity>
+        <member-entity entity-alias="FA" entity-name="FinAccount" join-from-alias="FA">
+            <key-map field-name="finAccountId"/>
+        </member-entity>
+        <alias-all entity-alias="FA">
+        </alias-all>
+        <alias-all entity-alias="PM">
+            <exclude field="finAccountId"/>
+            <exclude field="fromDate"/>
+            <exclude field="thruDate"/>
+        </alias-all>
+    </view-entity> -->
+</entities>

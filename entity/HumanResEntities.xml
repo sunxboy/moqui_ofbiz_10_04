@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-definition-1.0.xsd">
+
+    <entity group-name="org.ofbiz" entity-name="PartyQual" package-name="org.ofbiz.humanres.ability">
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="partyQualTypeId" type="id" is-pk="true"/>
+        <field name="qualificationDesc" type="id-long"/>
+        <field name="title" type="id-long"/>
+        <field name="statusId" type="id"/>
+        <field name="verifStatusId" type="id"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <relationship type="one" fk-name="PARTY_QUAL_PRTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="PARTY_QUAL_PQTYP" related-entity-name="PartyQualType">
+            <key-map field-name="partyQualTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="PARTY_QUAL_STATUS" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+        <relationship type="one" fk-name="PARTY_QUAL_VERIF" title="Verification" related-entity-name="OfbizStatusItem">
+            <key-map field-name="verifStatusId" related-field-name="statusId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PartyQualType" package-name="org.ofbiz.humanres.ability">
+        <field name="partyQualTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="PARTY_QUAL_TPAR" title="Parent" related-entity-name="PartyQualType">
+            <key-map field-name="parentTypeId" related-field-name="partyQualTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PartyResume" package-name="org.ofbiz.humanres.ability">
+        <field name="resumeId" type="id" is-pk="true"/>
+        <field name="partyId" type="id"/>
+        <field name="contentId" type="id"/>
+        <field name="resumeDate" type="date-time"/>
+        <field name="resumeText" type="text-long"/>
+        <relationship type="one" fk-name="PARTY_RSME_PRTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="PARTY_RSME_CNT" related-entity-name="Content">
+            <key-map field-name="contentId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PartySkill" package-name="org.ofbiz.humanres.ability">
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="skillTypeId" type="id" is-pk="true"/>
+        <field name="yearsExperience" type="number-integer"/>
+        <field name="rating" type="number-integer"/>
+        <field name="skillLevel" type="number-integer"/>
+        <field name="startedUsingDate" type="date-time"/>
+        <relationship type="one" fk-name="PARTY_SKLL_PRTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="PARTY_SKLL_SKTP" related-entity-name="SkillType">
+            <key-map field-name="skillTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PerfRatingType" package-name="org.ofbiz.humanres.ability">
+        <field name="perfRatingTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="PERF_RATNG_TYP" title="Parent" related-entity-name="PerfRatingType">
+            <key-map field-name="parentTypeId" related-field-name="perfRatingTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PerfReview" package-name="org.ofbiz.humanres.ability">
+        <field name="employeePartyId" type="id" is-pk="true"/>
+        <field name="employeeRoleTypeId" type="id" is-pk="true"/>
+        <field name="perfReviewId" type="id" is-pk="true"/>
+        <field name="managerPartyId" type="id"/>
+        <field name="managerRoleTypeId" type="id"/>
+        <field name="paymentId" type="id"/>
+        <field name="emplPositionId" type="id"/>
+        <field name="fromDate" type="date-time"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="comments" type="text-long"/>
+        <relationship type="one" fk-name="PERF_REV_EPTY" title="Employee" related-entity-name="Party">
+            <key-map field-name="employeePartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="PERF_REV_EPTRL" title="Employee" related-entity-name="PartyRole">
+            <key-map field-name="employeePartyId" related-field-name="partyId"/>
+            <key-map field-name="employeeRoleTypeId" related-field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="PERF_REV_MPTY" title="Manager" related-entity-name="Party">
+            <key-map field-name="managerPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="PERF_REV_MPTRL" title="Manager" related-entity-name="PartyRole">
+            <key-map field-name="managerPartyId" related-field-name="partyId"/>
+            <key-map field-name="managerRoleTypeId" related-field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="PERF_REV_PMNT" related-entity-name="Payment">
+            <key-map field-name="paymentId"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="PERF_REV_PSTN" related-entity-name="EmplPosition">
+            <key-map field-name="emplPositionId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PerfReviewItem" package-name="org.ofbiz.humanres.ability">
+        <field name="employeePartyId" type="id" is-pk="true"/>
+        <field name="employeeRoleTypeId" type="id" is-pk="true"/>
+        <field name="perfReviewId" type="id" is-pk="true"/>
+        <field name="perfReviewItemSeqId" type="id" is-pk="true"/>
+        <field name="perfRatingTypeId" type="id"/>
+        <field name="perfReviewItemTypeId" type="id"/>
+        <field name="comments" type="text-long"/>
+        <relationship type="one" fk-name="PERF_RVITM_PFRV" related-entity-name="PerfReview">
+            <key-map field-name="employeePartyId"/>
+            <key-map field-name="employeeRoleTypeId"/>
+            <key-map field-name="perfReviewId"/>
+        </relationship>
+        <relationship type="one" fk-name="PERF_RVITM_EPTY" title="Employee" related-entity-name="Party">
+            <key-map field-name="employeePartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="PERF_RVITM_EPTRL" title="Employee" related-entity-name="PartyRole">
+            <key-map field-name="employeePartyId" related-field-name="partyId"/>
+            <key-map field-name="employeeRoleTypeId" related-field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="PERF_RVITM_PRTTP" related-entity-name="PerfRatingType">
+            <key-map field-name="perfRatingTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="PERF_RVITM_PRITTP" related-entity-name="PerfReviewItemType">
+            <key-map field-name="perfReviewItemTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PerfReviewItemType" package-name="org.ofbiz.humanres.ability">
+        <field name="perfReviewItemTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="PERF_REV_ITM_TYP" title="Parent" related-entity-name="PerfReviewItemType">
+            <key-map field-name="parentTypeId" related-field-name="perfReviewItemTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PerformanceNote" package-name="org.ofbiz.humanres.ability">
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="roleTypeId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="communicationDate" type="date-time"/>
+        <field name="comments" type="text-long"/>
+        <relationship type="one" fk-name="PERF_NOTE_PRTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="PERF_NOTE_PRLE" related-entity-name="PartyRole">
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PersonTraining" package-name="org.ofbiz.humanres.ability">
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="trainingRequestId" type="id"/>
+        <field name="trainingClassTypeId" type="id" is-pk="true"/>
+        <field name="workEffortId" type="id"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="approverId" type="id"/>
+        <field name="approvalStatus" type="text-medium"/>
+        <field name="reason" type="text-long"/>
+        <relationship type="one" fk-name="PERS_TRNG_PRTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="PERS_TRNG_APPR" title="Approver" related-entity-name="Person">
+            <key-map field-name="approverId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="PERS_TRNG_TCTP" related-entity-name="TrainingClassType">
+            <key-map field-name="trainingClassTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="PERS_TRNG_WREF" related-entity-name="WorkEffort">
+            <key-map field-name="workEffortId"/>
+        </relationship>
+        <relationship type="one" fk-name="PERS_TRNG_TRNRQ" title="Training Request" related-entity-name="TrainingRequest">
+            <key-map field-name="trainingRequestId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ResponsibilityType" package-name="org.ofbiz.humanres.ability">
+        <field name="responsibilityTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="RESPON_TYPE_PAR" title="Parent" related-entity-name="ResponsibilityType">
+            <key-map field-name="parentTypeId" related-field-name="responsibilityTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="SkillType" package-name="org.ofbiz.humanres.ability">
+        <field name="skillTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="PARNT_SKILL_TYPE" title="Parent" related-entity-name="SkillType">
+            <key-map field-name="parentTypeId" related-field-name="skillTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="TrainingClassType" package-name="org.ofbiz.humanres.ability">
+        <field name="trainingClassTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="TRAIN_TYPE_PAR" title="Parent" related-entity-name="TrainingClassType">
+            <key-map field-name="parentTypeId" related-field-name="trainingClassTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="BenefitType" package-name="org.ofbiz.humanres.employment">
+        <field name="benefitTypeId" type="id" is-pk="true"/>
+        <field name="benefitName" type="text-medium"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <field name="employerPaidPercentage" type="number-float"/>
+        <relationship type="one" fk-name="BEN_TYPE_PAR" title="Parent" related-entity-name="BenefitType">
+            <key-map field-name="parentTypeId" related-field-name="benefitTypeId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="BenefitTypeAndParty" package-name="org.ofbiz.humanres.employment">
+        <member-entity entity-alias="BT" entity-name="BenefitType">
+        </member-entity>
+        <member-entity entity-alias="PB" entity-name="PartyBenefit" join-from-alias="BT">
+            <key-map field-name="benefitTypeId"/>
+        </member-entity>
+        <alias-all entity-alias="BT">
+        </alias-all>
+        <alias-all entity-alias="PB">
+            <exclude field="benefitTypeId"/>
+        </alias-all>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="Employment" package-name="org.ofbiz.humanres.employment">
+        <field name="roleTypeIdFrom" type="id" is-pk="true"/>
+        <field name="roleTypeIdTo" type="id" is-pk="true"/>
+        <field name="partyIdFrom" type="id" is-pk="true"/>
+        <field name="partyIdTo" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="terminationReasonId" type="id"/>
+        <field name="terminationTypeId" type="id"/>
+        <relationship type="one" fk-name="EMPLMNT_TPTY" title="To" related-entity-name="Party">
+            <key-map field-name="partyIdTo" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="EMPLMNT_TPTRL" title="To" related-entity-name="PartyRole">
+            <key-map field-name="partyIdTo" related-field-name="partyId"/>
+            <key-map field-name="roleTypeIdTo" related-field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="EMPLMNT_FPTY" title="From" related-entity-name="Party">
+            <key-map field-name="partyIdFrom" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="EMPLMNT_FPTRL" title="From" related-entity-name="PartyRole">
+            <key-map field-name="partyIdFrom" related-field-name="partyId"/>
+            <key-map field-name="roleTypeIdFrom" related-field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="EMPLMNT_TNRN" related-entity-name="TerminationReason">
+            <key-map field-name="terminationReasonId"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="EMPLMNT_TNTP" related-entity-name="TerminationType">
+            <key-map field-name="terminationTypeId"/>
+        </relationship>
+        <relationship type="many" fk-name="EMPLMNT_AGR" related-entity-name="Agreement">
+            <key-map field-name="partyIdTo" related-field-name="agreementId"/>
+            <key-map field-name="partyIdFrom" related-field-name="agreementId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="EmploymentAndPerson" package-name="org.ofbiz.humanres.employment">
+        <member-entity entity-alias="EMPLMNT" entity-name="Employment" join-from-alias="BT">
+            <key-map field-name="benefitTypeId"/>
+        </member-entity>
+        <member-entity entity-alias="PERS" entity-name="Person" join-from-alias="EMPLMNT">
+            <key-map field-name="partyIdTo" related-field-name="partyId"/>
+        </member-entity>
+        <alias-all entity-alias="EMPLMNT">
+        </alias-all>
+        <alias-all entity-alias="PERS">
+        </alias-all>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="EmploymentApp" package-name="org.ofbiz.humanres.employment">
+        <field name="applicationId" type="id" is-pk="true"/>
+        <field name="emplPositionId" type="id"/>
+        <field name="statusId" type="id"/>
+        <field name="employmentAppSourceTypeId" type="id"/>
+        <field name="applyingPartyId" type="id"/>
+        <field name="referredByPartyId" type="id"/>
+        <field name="applicationDate" type="date-time"/>
+        <field name="approverPartyId" type="id"/>
+        <field name="jobRequisitionId" type="id"/>
+        <relationship type="one-nofk" fk-name="EMPLMNT_APP_POS" related-entity-name="EmplPosition">
+            <key-map field-name="emplPositionId"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="EMPLMNT_APP_STTS" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="EMPLMNT_APP_EAST" related-entity-name="EmploymentAppSourceType">
+            <key-map field-name="employmentAppSourceTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="EMPLMNT_APP_APTY" title="Applying" related-entity-name="Party">
+            <key-map field-name="applyingPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="EMPLMNT_APP_RBPTY" title="ReferredBy" related-entity-name="Party">
+            <key-map field-name="referredByPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="EMPLMNT_APP_APER" title="Approver" related-entity-name="Party">
+            <key-map field-name="approverPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="EMPLMNT_APP_JBRQ" related-entity-name="JobRequisition">
+            <key-map field-name="jobRequisitionId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="EmploymentAppSourceType" package-name="org.ofbiz.humanres.employment">
+        <field name="employmentAppSourceTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="EMPL_APP_SRC_TYP" title="Parent" related-entity-name="EmploymentAppSourceType">
+            <key-map field-name="parentTypeId" related-field-name="employmentAppSourceTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="EmplLeave" package-name="org.ofbiz.humanres.employment">
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="leaveTypeId" type="id" is-pk="true"/>
+        <field name="emplLeaveReasonTypeId" type="id"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="approverPartyId" type="id"/>
+        <field name="leaveStatus" type="text-medium"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="EMPL_LEAVE_PRTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="EMPL_LEAVE_ELETP" related-entity-name="EmplLeaveType">
+            <key-map field-name="leaveTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="EMP_LEAV_REAS_ELTP" related-entity-name="EmplLeaveReasonType">
+            <key-map field-name="emplLeaveReasonTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="EMPL_LEAVE_APPR" title="Approver" related-entity-name="Party">
+            <key-map field-name="approverPartyId" related-field-name="partyId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="EmplLeaveType" package-name="org.ofbiz.humanres.employment">
+        <field name="leaveTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="EMPL_LEAVE_TPAR" title="Parent" related-entity-name="EmplLeaveType">
+            <key-map field-name="parentTypeId" related-field-name="leaveTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PartyBenefit" package-name="org.ofbiz.humanres.employment">
+        <field name="roleTypeIdFrom" type="id" is-pk="true"/>
+        <field name="roleTypeIdTo" type="id" is-pk="true"/>
+        <field name="partyIdFrom" type="id" is-pk="true"/>
+        <field name="partyIdTo" type="id" is-pk="true"/>
+        <field name="benefitTypeId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="periodTypeId" type="id"/>
+        <field name="cost" type="currency-amount"/>
+        <field name="actualEmployerPaidPercent" type="number-float"/>
+        <field name="availableTime" type="number-integer"/>
+        <relationship type="one" fk-name="PTY_BNFT_TPTY" title="To" related-entity-name="Party">
+            <key-map field-name="partyIdTo" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="PTY_BNFT_TPTRL" title="To" related-entity-name="PartyRole">
+            <key-map field-name="partyIdTo" related-field-name="partyId"/>
+            <key-map field-name="roleTypeIdTo" related-field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="PTY_BNFT_FPTY" title="From" related-entity-name="Party">
+            <key-map field-name="partyIdFrom" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="PTY_BNFT_FPTRL" title="From" related-entity-name="PartyRole">
+            <key-map field-name="partyIdFrom" related-field-name="partyId"/>
+            <key-map field-name="roleTypeIdFrom" related-field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="PTY_BNFT_BNFTTP" related-entity-name="BenefitType">
+            <key-map field-name="benefitTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="PTY_BNFT_PRDTYP" related-entity-name="PeriodType">
+            <key-map field-name="periodTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PayGrade" package-name="org.ofbiz.humanres.employment">
+        <field name="payGradeId" type="id" is-pk="true"/>
+        <field name="payGradeName" type="text-medium"/>
+        <field name="comments" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PayHistory" package-name="org.ofbiz.humanres.employment">
+        <field name="roleTypeIdFrom" type="id" is-pk="true"/>
+        <field name="roleTypeIdTo" type="id" is-pk="true"/>
+        <field name="partyIdFrom" type="id" is-pk="true"/>
+        <field name="partyIdTo" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="salaryStepSeqId" type="id"/>
+        <field name="payGradeId" type="id"/>
+        <field name="periodTypeId" type="id"/>
+        <field name="amount" type="currency-amount"/>
+        <field name="comments" type="text-long"/>
+        <relationship type="one" fk-name="PAY_HIST_EMPLMNT" related-entity-name="Employment">
+            <key-map field-name="roleTypeIdFrom"/>
+            <key-map field-name="roleTypeIdTo"/>
+            <key-map field-name="partyIdFrom"/>
+            <key-map field-name="partyIdTo"/>
+            <key-map field-name="fromDate"/>
+        </relationship>
+        <relationship type="one" fk-name="PAY_HIST_PGRD" related-entity-name="PayGrade">
+            <key-map field-name="payGradeId"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="PAY_HIST_SSTP" related-entity-name="SalaryStep">
+            <key-map field-name="salaryStepSeqId"/>
+            <key-map field-name="payGradeId"/>
+        </relationship>
+        <relationship type="one" fk-name="PAY_HIST_PDTP" related-entity-name="PeriodType">
+            <key-map field-name="periodTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="PayrollPreference" package-name="org.ofbiz.humanres.employment">
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="roleTypeId" type="id" is-pk="true"/>
+        <field name="payrollPreferenceSeqId" type="id" is-pk="true"/>
+        <field name="deductionTypeId" type="id"/>
+        <field name="paymentMethodTypeId" type="id"/>
+        <field name="periodTypeId" type="id"/>
+        <field name="fromDate" type="date-time"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="percentage" type="number-float"/>
+        <field name="flatAmount" type="currency-amount"/>
+        <field name="routingNumber" type="text-medium"/>
+        <field name="accountNumber" type="text-medium"/>
+        <field name="bankName" type="text-medium"/>
+        <relationship type="one" fk-name="PRL_PREF_PRTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="PRL_PREF_PTRL" related-entity-name="PartyRole">
+            <key-map field-name="partyId"/>
+            <key-map field-name="roleTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="PRL_PREF_DNTP" related-entity-name="DeductionType">
+            <key-map field-name="deductionTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="PRL_PREF_PMTP" related-entity-name="PaymentMethodType">
+            <key-map field-name="paymentMethodTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="PRL_PREF_PDTP" related-entity-name="PeriodType">
+            <key-map field-name="periodTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="SalaryStep" package-name="org.ofbiz.humanres.employment">
+        <field name="salaryStepSeqId" type="id" is-pk="true"/>
+        <field name="payGradeId" type="id" is-pk="true"/>
+        <field name="dateModified" type="date-time"/>
+        <field name="amount" type="currency-amount"/>
+        <relationship type="one" fk-name="SLRY_STP_PGRD" related-entity-name="PayGrade">
+            <key-map field-name="payGradeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="TerminationReason" package-name="org.ofbiz.humanres.employment">
+        <field name="terminationReasonId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="TerminationType" package-name="org.ofbiz.humanres.employment">
+        <field name="terminationTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="TERM_TYP_PAR" title="Parent" related-entity-name="TerminationType">
+            <key-map field-name="parentTypeId" related-field-name="terminationTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="UnemploymentClaim" package-name="org.ofbiz.humanres.employment">
+        <field name="unemploymentClaimId" type="id" is-pk="true"/>
+        <field name="unemploymentClaimDate" type="date-time"/>
+        <field name="description" type="text-long"/>
+        <field name="statusId" type="id"/>
+        <field name="partyIdFrom" type="id"/>
+        <field name="partyIdTo" type="id"/>
+        <field name="roleTypeIdFrom" type="id"/>
+        <field name="roleTypeIdTo" type="id"/>
+        <field name="fromDate" type="date-time"/>
+        <field name="thruDate" type="date-time"/>
+        <relationship type="one-nofk" fk-name="UNMPL_CLM_EMPLMNT" related-entity-name="Employment">
+            <key-map field-name="roleTypeIdFrom"/>
+            <key-map field-name="roleTypeIdTo"/>
+            <key-map field-name="partyIdFrom"/>
+            <key-map field-name="partyIdTo"/>
+            <key-map field-name="fromDate"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="UNMPL_CLM_STTS" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="EmplPosition" package-name="org.ofbiz.humanres.position">
+        <field name="emplPositionId" type="id" is-pk="true"/>
+        <field name="statusId" type="id"/>
+        <field name="partyId" type="id"/>
+        <field name="budgetId" type="id"/>
+        <field name="budgetItemSeqId" type="id"/>
+        <field name="emplPositionTypeId" type="id"/>
+        <field name="estimatedFromDate" type="date-time"/>
+        <field name="estimatedThruDate" type="date-time"/>
+        <field name="salaryFlag" type="text-indicator"/>
+        <field name="exemptFlag" type="text-indicator"/>
+        <field name="fulltimeFlag" type="text-indicator"/>
+        <field name="temporaryFlag" type="text-indicator"/>
+        <field name="actualFromDate" type="date-time"/>
+        <field name="actualThruDate" type="date-time"/>
+        <relationship type="one" fk-name="EMPL_POS_STTS" related-entity-name="OfbizStatusItem">
+            <key-map field-name="statusId"/>
+        </relationship>
+        <relationship type="one" fk-name="EMPL_POS_PRTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="EMPL_POS_BGTITM" related-entity-name="BudgetItem">
+            <key-map field-name="budgetId"/>
+            <key-map field-name="budgetItemSeqId"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="EMPL_POS_EPSTP" related-entity-name="EmplPositionType">
+            <key-map field-name="emplPositionTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="EmplPositionClassType" package-name="org.ofbiz.humanres.position">
+        <field name="emplPositionClassTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="EMPL_CLS_TYP_PAR" title="Parent" related-entity-name="EmplPositionClassType">
+            <key-map field-name="parentTypeId" related-field-name="emplPositionClassTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="EmplPositionFulfillment" package-name="org.ofbiz.humanres.position">
+        <field name="emplPositionId" type="id" is-pk="true"/>
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="comments" type="text-long"/>
+        <relationship type="one" fk-name="EMPL_PSFLMT_EMPS" related-entity-name="EmplPosition">
+            <key-map field-name="emplPositionId"/>
+        </relationship>
+        <relationship type="one" fk-name="EMPL_PSFLMT_PRTY" related-entity-name="Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="EmplPositionAndFulfillment" package-name="org.ofbiz.humanres.position">
+        <member-entity entity-alias="EMPPOS" entity-name="EmplPosition" join-from-alias="EMPLMNT">
+            <key-map field-name="partyIdTo" related-field-name="partyId"/>
+        </member-entity>
+        <member-entity entity-alias="EPF" entity-name="EmplPositionFulfillment" join-from-alias="EMPPOS">
+            <key-map field-name="emplPositionId"/>
+        </member-entity>
+        <alias-all entity-alias="EMPPOS">
+        </alias-all>
+        <alias entity-alias="EPF" name="employeePartyId" field="partyId">
+        </alias>
+        <alias entity-alias="EPF" name="fromDate">
+        </alias>
+        <alias entity-alias="EPF" name="thruDate">
+        </alias>
+        <relationship type="one" related-entity-name="EmplPositionType">
+            <key-map field-name="emplPositionTypeId"/>
+        </relationship>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="EmplPositionReportingStruct" package-name="org.ofbiz.humanres.position">
+        <field name="emplPositionIdReportingTo" type="id" is-pk="true"/>
+        <field name="emplPositionIdManagedBy" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="comments" type="text-long"/>
+        <field name="primaryFlag" type="text-indicator"/>
+        <relationship type="one" fk-name="EMPL_PSRPS_EMPSR" title="ReportingTo" related-entity-name="EmplPosition">
+            <key-map field-name="emplPositionIdReportingTo" related-field-name="emplPositionId"/>
+        </relationship>
+        <relationship type="one" fk-name="EMPL_PSRPS_EMPSM" title="ManagedBy" related-entity-name="EmplPosition">
+            <key-map field-name="emplPositionIdManagedBy" related-field-name="emplPositionId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="EmplPositionResponsibility" package-name="org.ofbiz.humanres.position">
+        <field name="emplPositionId" type="id" is-pk="true"/>
+        <field name="responsibilityTypeId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="comments" type="text-long"/>
+        <relationship type="one" fk-name="EMPL_PSRTY_EMPS" related-entity-name="EmplPosition">
+            <key-map field-name="emplPositionId"/>
+        </relationship>
+        <relationship type="one" fk-name="EMPL_PSRTY_RYTP" related-entity-name="ResponsibilityType">
+            <key-map field-name="responsibilityTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="EmplPositionType" package-name="org.ofbiz.humanres.position">
+        <field name="emplPositionTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="EMPL_POSI_TYP_PAR" title="Parent" related-entity-name="EmplPositionType">
+            <key-map field-name="parentTypeId" related-field-name="emplPositionTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="EmplPositionTypeClass" package-name="org.ofbiz.humanres.position">
+        <field name="emplPositionTypeId" type="id" is-pk="true"/>
+        <field name="emplPositionClassTypeId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="standardHoursPerWeek" type="number-float"/>
+        <relationship type="one" fk-name="EMPL_PSTPCS_EPTP" related-entity-name="EmplPositionType">
+            <key-map field-name="emplPositionTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="EMPL_PSTPCS_EPCTP" related-entity-name="EmplPositionClassType">
+            <key-map field-name="emplPositionClassTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="ValidResponsibility" package-name="org.ofbiz.humanres.position">
+        <field name="emplPositionTypeId" type="id" is-pk="true"/>
+        <field name="responsibilityTypeId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="comments" type="text-long"/>
+        <relationship type="one" fk-name="VALID_RTY_EPSTP" related-entity-name="EmplPositionType">
+            <key-map field-name="emplPositionTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="VALID_RTY_RYTP" related-entity-name="ResponsibilityType">
+            <key-map field-name="responsibilityTypeId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="EmplPositionTypeRate" package-name="org.ofbiz.humanres.position" table-name="EMPL_POSITION_TYPE_RATE_NEW">
+        <field name="emplPositionTypeId" type="id" is-pk="true"/>
+        <field name="rateTypeId" type="id" is-pk="true"/>
+        <field name="payGradeId" type="id"/>
+        <field name="salaryStepSeqId" type="id"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <relationship type="one" fk-name="EMPL_PTPRT_EPTP" related-entity-name="EmplPositionType">
+            <key-map field-name="emplPositionTypeId"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="EMPL_PTPRT_SSTP" related-entity-name="SalaryStep">
+            <key-map field-name="salaryStepSeqId"/>
+            <key-map field-name="payGradeId"/>
+        </relationship>
+        <relationship type="one-nofk" fk-name="EMPL_PTPRT_RTTYP" related-entity-name="RateType">
+            <key-map field-name="rateTypeId"/>
+        </relationship>
+    </entity>
+    <!-- <view-entity entity-name="EmplPositionTypeRateAndAmount" package-name="org.ofbiz.humanres.position">
+        <member-entity entity-alias="EPTR" entity-name="EmplPositionTypeRate" join-from-alias="EMPPOS">
+            <key-map field-name="emplPositionId"/>
+        </member-entity>
+        <member-entity entity-alias="RA" entity-name="RateAmount" join-from-alias="EPTR">
+            <key-map field-name="emplPositionTypeId"/>
+            <key-map field-name="rateTypeId"/>
+        </member-entity>
+        <alias-all entity-alias="EPTR">
+        </alias-all>
+        <alias entity-alias="RA" name="rateAmount">
+        </alias>
+        <alias entity-alias="RA" name="periodTypeId">
+        </alias>
+        <alias entity-alias="RA" name="rateCurrencyUomId">
+        </alias>
+        <alias entity-alias="RA" name="rateAmountFromDate" field="fromDate">
+        </alias>
+        <alias entity-alias="RA" name="rateAmountThruDate" field="thruDate">
+        </alias>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="JobRequisition" package-name="org.ofbiz.humanres.recruitment">
+        <field name="jobRequisitionId" type="id" is-pk="true"/>
+        <field name="durationMonths" type="number-integer"/>
+        <field name="age" type="number-integer"/>
+        <field name="gender" type="text-indicator"/>
+        <field name="experienceMonths" type="number-integer"/>
+        <field name="experienceYears" type="number-integer"/>
+        <field name="qualification" type="id-long"/>
+        <field name="jobLocation" type="id"/>
+        <field name="skillTypeId" type="id"/>
+        <field name="noOfResources" type="number-integer"/>
+        <field name="jobPostingTypeEnumId" type="id"/>
+        <field name="jobRequisitionDate" type="date"/>
+        <field name="examTypeEnumId" type="id"/>
+        <field name="requiredOnDate" type="date"/>
+        <relationship type="one" fk-name="JOB_REQ_SKTYP" related-entity-name="SkillType">
+            <key-map field-name="skillTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="JOB_REQ_ENUMEXM" title="ExamType" related-entity-name="Enumeration">
+            <key-map field-name="examTypeEnumId" related-field-name="enumId"/>
+        </relationship>
+        <relationship type="one" fk-name="JOB_REQ_ENUMJBP" title="JobPostingType" related-entity-name="Enumeration">
+            <key-map field-name="jobPostingTypeEnumId" related-field-name="enumId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="JobInterview" package-name="org.ofbiz.humanres.recruitment">
+        <field name="jobInterviewId" type="id" is-pk="true"/>
+        <field name="jobIntervieweePartyId" type="id"/>
+        <field name="jobRequisitionId" type="id"/>
+        <field name="jobInterviewerPartyId" type="id"/>
+        <field name="jobInterviewTypeId" type="id"/>
+        <field name="gradeSecuredEnumId" type="id"/>
+        <field name="jobInterviewResult" type="id"/>
+        <field name="jobInterviewDate" type="date"/>
+        <relationship type="one" fk-name="JOB_INTW_IEPR" title="Interviewee" related-entity-name="Party">
+            <key-map field-name="jobIntervieweePartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="JOB_INTW_IRPR" title="Interviewer" related-entity-name="Party">
+            <key-map field-name="jobInterviewerPartyId" related-field-name="partyId"/>
+        </relationship>
+        <relationship type="one" fk-name="JOB_INTW_INTYP" related-entity-name="JobInterviewType">
+            <key-map field-name="jobInterviewTypeId"/>
+        </relationship>
+        <relationship type="one" fk-name="JOB_INTW_JBREQ" related-entity-name="JobRequisition">
+            <key-map field-name="jobRequisitionId"/>
+        </relationship>
+        <relationship type="one" fk-name="JOB_INTW_ENUM" related-entity-name="Enumeration">
+            <key-map field-name="gradeSecuredEnumId" related-field-name="enumId"/>
+        </relationship>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="JobInterviewType" package-name="org.ofbiz.humanres.recruitment">
+        <field name="jobInterviewTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-long"/>
+    </entity>
+    <!-- <view-entity entity-name="EmplPositionFulfillmentAndReportingStruct" package-name="org.ofbiz.humanres.recruitment">
+        <member-entity entity-alias="EMPPOS" entity-name="EmplPosition" join-from-alias="EPTR">
+            <key-map field-name="emplPositionTypeId"/>
+            <key-map field-name="rateTypeId"/>
+        </member-entity>
+        <member-entity entity-alias="EMPPOSFUL" entity-name="EmplPositionFulfillment" join-from-alias="EMPPOS">
+            <key-map field-name="emplPositionId"/>
+        </member-entity>
+        <member-entity entity-alias="EMPPOSREPST" entity-name="EmplPositionReportingStruct" join-from-alias="EMPPOSFUL">
+            <key-map field-name="emplPositionId" related-field-name="emplPositionIdManagedBy"/>
+        </member-entity>
+        <alias entity-alias="EMPPOSFUL" name="partyId">
+        </alias>
+        <alias entity-alias="EMPPOSFUL" name="emplPositionId">
+        </alias>
+        <alias entity-alias="EMPPOSREPST" name="emplPositionIdReportingTo">
+        </alias>
+        <alias entity-alias="EMPPOS" name="internalOrganisation" field="partyId">
+        </alias>
+        <alias entity-alias="EMPPOSREPST" name="reportingDate" field="fromDate">
+        </alias>
+    </view-entity> -->
+    <entity group-name="org.ofbiz" entity-name="TrainingRequest" package-name="org.ofbiz.humanres.trainings">
+        <field name="trainingRequestId" type="id" is-pk="true"/>
+    </entity>
+    <entity group-name="org.ofbiz" entity-name="EmplLeaveReasonType" package-name="org.ofbiz.humanres.employment">
+        <field name="emplLeaveReasonTypeId" type="id" is-pk="true"/>
+        <field name="parentTypeId" type="id"/>
+        <field name="hasTable" type="text-indicator"/>
+        <field name="description" type="text-long"/>
+        <relationship type="one" fk-name="EMPL_REASON_TPAR" title="Parent" related-entity-name="EmplLeaveReasonType">
+            <key-map field-name="parentTypeId" related-field-name="emplLeaveReasonTypeId"/>
+        </relationship>
+    </entity>
+</entities>
+
