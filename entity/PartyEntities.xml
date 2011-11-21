@@ -87,7 +87,7 @@
             <key-map field-name="agreementId"/>
             <key-map field-name="agreementItemSeqId"/>
         </relationship>
-        <relationship type="one" fk-name="AGRMNT_GEOAP_GEO" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="AGRMNT_GEOAP_GEO" related-entity-name="Geo">
             <key-map field-name="geoId"/>
         </relationship>
     </entity>
@@ -553,7 +553,7 @@
             <key-map field-name="partyIdFrom" related-field-name="partyId"/>
             <key-map field-name="roleTypeIdFrom" related-field-name="roleTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="COM_EVNT_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="COM_EVNT_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="COM_EVNT_CMTP" related-entity-name="ContactMechType">
@@ -656,7 +656,7 @@
             <key-map field-name="partyIdFrom" related-field-name="partyId"/>
             <key-map field-name="roleTypeIdFrom" related-field-name="roleTypeId"/>
         </relationship>
-        <relationship type="one-nofk" related-entity-name="OfbizStatusItem">
+        <relationship type="one-nofk" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one-nofk" related-entity-name="ContactMechType">
@@ -724,7 +724,7 @@
         <relationship type="one" fk-name="COM_EVRL_CMCH" related-entity-name="ContactMech">
             <key-map field-name="contactMechId"/>
         </relationship>
-        <relationship type="one" fk-name="COM_EVRL_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="COM_EVRL_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
     </entity>
@@ -850,13 +850,13 @@
         <member-entity entity-alias="TN" entity-name="TelecomNumber" join-from-alias="CM" join-optional="true">
             <key-map field-name="contactMechId"/>
         </member-entity>
-        <member-entity entity-alias="STTG" entity-name="OfbizGeo" join-from-alias="PA" join-optional="true">
+        <member-entity entity-alias="STTG" entity-name="Geo" join-from-alias="PA" join-optional="true">
             <key-map field-name="stateProvinceGeoId" related-field-name="geoId"/>
         </member-entity>
-        <member-entity entity-alias="CTYG" entity-name="OfbizGeo" join-from-alias="PA" join-optional="true">
+        <member-entity entity-alias="CTYG" entity-name="Geo" join-from-alias="PA" join-optional="true">
             <key-map field-name="countyGeoId" related-field-name="geoId"/>
         </member-entity>
-        <member-entity entity-alias="CTRYG" entity-name="OfbizGeo" join-from-alias="PA" join-optional="true">
+        <member-entity entity-alias="CTRYG" entity-name="Geo" join-from-alias="PA" join-optional="true">
             <key-map field-name="countryGeoId" related-field-name="geoId"/>
         </member-entity>
         <alias-all entity-alias="PCM">
@@ -974,19 +974,19 @@
         <relationship type="one" fk-name="POST_ADDR_CMECH" related-entity-name="ContactMech">
             <key-map field-name="contactMechId"/>
         </relationship>
-        <relationship type="one" fk-name="POST_ADDR_CGEO" title="Country" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="POST_ADDR_CGEO" title="Country" related-entity-name="Geo">
             <key-map field-name="countryGeoId" related-field-name="geoId"/>
         </relationship>
-        <relationship type="one" fk-name="POST_ADDR_SPGEO" title="StateProvince" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="POST_ADDR_SPGEO" title="StateProvince" related-entity-name="Geo">
             <key-map field-name="stateProvinceGeoId" related-field-name="geoId"/>
         </relationship>
-        <relationship type="one" fk-name="POST_ADDR_CNTG" title="County" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="POST_ADDR_CNTG" title="County" related-entity-name="Geo">
             <key-map field-name="countyGeoId" related-field-name="geoId"/>
         </relationship>
-        <relationship type="one" fk-name="POST_ADDR_PCGEO" title="PostalCode" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="POST_ADDR_PCGEO" title="PostalCode" related-entity-name="Geo">
             <key-map field-name="postalCodeGeoId" related-field-name="geoId"/>
         </relationship>
-        <relationship type="one" fk-name="POST_ADDR_GEOPT" related-entity-name="OfbizGeoPoint">
+        <relationship type="one" fk-name="POST_ADDR_GEOPT" related-entity-name="GeoPoint">
             <key-map field-name="geoPointId"/>
         </relationship>
     <index name="ADDRESS1_IDX">
@@ -1008,7 +1008,7 @@
         <relationship type="one" fk-name="POST_ADDR_BNDRY" related-entity-name="PostalAddress">
             <key-map field-name="contactMechId"/>
         </relationship>
-        <relationship type="one" fk-name="POST_ADDR_BNDRYGEO" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="POST_ADDR_BNDRYGEO" related-entity-name="Geo">
             <key-map field-name="geoId"/>
         </relationship>
     </entity>
@@ -1342,10 +1342,10 @@
         <relationship type="one" fk-name="PARTY_LMCUL" title="LastModifiedBy" related-entity-name="UserLogin">
             <key-map field-name="lastModifiedByUserLogin" related-field-name="userLoginId"/>
         </relationship>
-        <relationship type="one" fk-name="PARTY_PREF_CRNCY" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="PARTY_PREF_CRNCY" related-entity-name="Uom">
             <key-map field-name="preferredCurrencyUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="PARTY_STATUSITM" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="PARTY_STATUSITM" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="many" related-entity-name="PartyTypeAttr">
@@ -1558,7 +1558,7 @@
         <relationship type="one" fk-name="PARTYGEOPT_PARTY" related-entity-name="Party">
             <key-map field-name="partyId"/>
         </relationship>
-        <relationship type="one" fk-name="PARTYGEOPT_GEOPT" related-entity-name="OfbizGeoPoint">
+        <relationship type="one" fk-name="PARTYGEOPT_GEOPT" related-entity-name="GeoPoint">
             <key-map field-name="geoPointId"/>
         </relationship>
     </entity>
@@ -1569,7 +1569,7 @@
         <member-entity entity-alias="PGPT" entity-name="PartyGeoPoint" join-from-alias="PTY">
             <key-map field-name="partyId"/>
         </member-entity>
-        <member-entity entity-alias="GPT" entity-name="OfbizGeoPoint" join-from-alias="PGPT">
+        <member-entity entity-alias="GPT" entity-name="GeoPoint" join-from-alias="PGPT">
             <key-map field-name="geoPointId"/>
         </member-entity>
         <alias-all entity-alias="GPT">
@@ -1587,7 +1587,7 @@
         <relationship type="one-nofk" related-entity-name="Party">
             <key-map field-name="partyId"/>
         </relationship>
-        <relationship type="one-nofk" related-entity-name="OfbizGeoPoint">
+        <relationship type="one-nofk" related-entity-name="GeoPoint">
             <key-map field-name="geoPointId"/>
         </relationship>
     </view-entity> -->
@@ -1847,7 +1847,7 @@
         <relationship type="one" fk-name="PTYINV_PTY" related-entity-name="Party">
             <key-map field-name="partyIdFrom" related-field-name="partyId"/>
         </relationship>
-        <relationship type="one" related-entity-name="OfbizStatusItem">
+        <relationship type="one" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
     </entity>
@@ -2103,7 +2103,7 @@
             <key-map field-name="partyIdTo" related-field-name="partyId"/>
             <key-map field-name="roleTypeIdTo" related-field-name="roleTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="PARTY_REL_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="PARTY_REL_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="PARTY_REL_PRTYP" related-entity-name="PriorityType">
@@ -2470,7 +2470,7 @@
         <field name="statusId" type="id" is-pk="true"/>
         <field name="partyId" type="id" is-pk="true"/>
         <field name="statusDate" type="date-time" is-pk="true"/>
-        <relationship type="one" fk-name="PARTY_STS_STSITM" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="PARTY_STS_STSITM" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="PARTY_STS_PARTY" related-entity-name="Party">
@@ -2488,7 +2488,7 @@
         <relationship type="one" fk-name="PARTY_TXI_PTY" related-entity-name="Party">
             <key-map field-name="partyId"/>
         </relationship>
-        <relationship type="one" fk-name="PARTY_TXI_GEO" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="PARTY_TXI_GEO" related-entity-name="Geo">
             <key-map field-name="geoId"/>
         </relationship>
     </entity>
@@ -2650,19 +2650,19 @@
             <key-map field-name="partyId"/>
         </relationship>
     </entity>
-    <extend-entity entity-name="CustomTimePeriod">
+    <extend-entity entity-name="CustomTimePeriod" package-name="org.ofbiz.common.period">
         <field name="organizationPartyId" type="id"/>
         <relationship type="one" fk-name="ORG_PRD_PARTY" title="Organization" related-entity-name="Party">
             <key-map field-name="organizationPartyId" related-field-name="partyId"/>
         </relationship>
     </extend-entity>
-    <extend-entity entity-name="NoteData">
+    <extend-entity entity-name="NoteData" package-name="org.ofbiz.common.note">
         <field name="noteParty" type="id"/>
         <relationship type="one" fk-name="NOTE_DATA_PTY" title="Note" related-entity-name="Party">
             <key-map field-name="noteParty" related-field-name="partyId"/>
         </relationship>
     </extend-entity>
-    <extend-entity entity-name="ServerHit">
+    <extend-entity entity-name="ServerHit" package-name="org.ofbiz.webapp.visit">
         <field name="internalContentId" type="id"/>
         <field name="partyId" type="id"/>
         <field name="idByIpContactMechId" type="id"/>
@@ -2680,13 +2680,13 @@
             <key-map field-name="internalContentId" related-field-name="contentId"/>
         </relationship>
     </extend-entity>
-    <extend-entity entity-name="ServerHitBin">
+    <extend-entity entity-name="ServerHitBin" package-name="org.ofbiz.webapp.visit">
         <field name="internalContentId" type="id"/>
         <relationship type="one" fk-name="SERVER_HBIN_CNT" related-entity-name="Content">
             <key-map field-name="internalContentId" related-field-name="contentId"/>
         </relationship>
     </extend-entity>
-    <extend-entity entity-name="Visit">
+    <extend-entity entity-name="Visit" package-name="org.ofbiz.webapp.visit">
         <field name="contactMechId" type="id"/>
         <field name="partyId" type="id"/>
         <field name="roleTypeId" type="id"/>
@@ -2704,13 +2704,13 @@
             <key-map field-name="roleTypeId"/>
         </relationship>
     </extend-entity>
-    <extend-entity entity-name="Visitor">
+    <extend-entity entity-name="Visitor" package-name="org.ofbiz.webapp.visit">
         <field name="partyId" type="id"/>
         <relationship type="one" fk-name="VISITOR_PARTY" related-entity-name="Party">
             <key-map field-name="partyId"/>
         </relationship>
     </extend-entity>
-    <extend-entity entity-name="UserLogin">
+    <extend-entity entity-name="UserLogin" package-name="org.ofbiz.security.login">
         <field name="partyId" type="id"/>
         <relationship type="one" fk-name="USER_PARTY" related-entity-name="Party">
             <key-map field-name="partyId"/>
@@ -2722,7 +2722,7 @@
             <key-map field-name="partyId"/>
         </relationship>
     </extend-entity>
-    <extend-entity entity-name="UserLoginHistory">
+    <extend-entity entity-name="UserLoginHistory" package-name="org.ofbiz.security.login">
         <field name="partyId" type="id"/>
         <relationship type="one" fk-name="USER_LH_PARTY" related-entity-name="Party">
             <key-map field-name="partyId"/>

@@ -87,10 +87,10 @@
         <relationship type="one" fk-name="PICKLST_SMTP" related-entity-name="ShipmentMethodType">
             <key-map field-name="shipmentMethodTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="PICKLST_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="PICKLST_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
-        <relationship type="many" related-entity-name="OfbizStatusValidChangeToDetail">
+        <relationship type="many" related-entity-name="StatusValidChangeToDetail">
             <key-map field-name="statusId"/>
         </relationship>
     </entity>
@@ -150,7 +150,7 @@
         <relationship type="one-nofk" related-entity-name="OrderHeader">
             <key-map field-name="orderId"/>
         </relationship>
-        <relationship type="one" fk-name="PICKLST_ITM_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="PICKLST_ITM_STTS" related-entity-name="StatusItem">
             <key-map field-name="itemStatusId" related-field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="PCKLST_ITM_INV" related-entity-name="InventoryItem">
@@ -224,13 +224,13 @@
         <relationship type="one" fk-name="PCKLST_STHST_CUL" title="Change" related-entity-name="UserLogin">
             <key-map field-name="changeUserLoginId" related-field-name="userLoginId"/>
         </relationship>
-        <relationship type="one" fk-name="PCKLST_STHST_FSI" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="PCKLST_STHST_FSI" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
-        <relationship type="one" fk-name="PCKLST_STHST_TSI" title="To" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="PCKLST_STHST_TSI" title="To" related-entity-name="StatusItem">
             <key-map field-name="statusIdTo" related-field-name="statusId"/>
         </relationship>
-        <relationship type="one" fk-name="PCKLST_STHST_SVC" related-entity-name="OfbizStatusValidChange">
+        <relationship type="one" fk-name="PCKLST_STHST_SVC" related-entity-name="StatusValidChange">
             <key-map field-name="statusId"/>
             <key-map field-name="statusIdTo"/>
         </relationship>
@@ -467,7 +467,7 @@
         <relationship type="one" fk-name="SHPMNT_TYPE" related-entity-name="ShipmentType">
             <key-map field-name="shipmentTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="SHPMNT_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="SHPMNT_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="SHPMNT_ESHWEFF" title="EstimatedShip" related-entity-name="WorkEffort">
@@ -476,7 +476,7 @@
         <relationship type="one" fk-name="SHPMNT_EARRWEFF" title="EstimatedArrival" related-entity-name="WorkEffort">
             <key-map field-name="estimatedArrivalWorkEffId" related-field-name="workEffortId"/>
         </relationship>
-        <relationship type="one" fk-name="SHPMNT_CUOM" title="Currency" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="SHPMNT_CUOM" title="Currency" related-entity-name="Uom">
             <key-map field-name="currencyUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="SHPMNT_OFAC" title="Origin" related-entity-name="Facility">
@@ -617,10 +617,10 @@
         <field name="boxHeight" type="number-decimal"/>
         <field name="weightUomId" type="id"/>
         <field name="boxWeight" type="number-decimal"/>
-        <relationship type="one" fk-name="SHMT_BXTP_DUOM" title="Dimension" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="SHMT_BXTP_DUOM" title="Dimension" related-entity-name="Uom">
             <key-map field-name="dimensionUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="SHMT_BXTP_WUOM" title="Weight" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="SHMT_BXTP_WUOM" title="Weight" related-entity-name="Uom">
             <key-map field-name="weightUomId" related-field-name="uomId"/>
         </relationship>
     </entity>
@@ -686,19 +686,19 @@
             <key-map field-name="partyId"/>
             <key-map field-name="roleTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="SHPMNT_CE_WUOM" title="Weight" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="SHPMNT_CE_WUOM" title="Weight" related-entity-name="Uom">
             <key-map field-name="weightUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="SHPMNT_CE_QUOM" title="Quantity" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="SHPMNT_CE_QUOM" title="Quantity" related-entity-name="Uom">
             <key-map field-name="quantityUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="SHPMNT_CE_PUOM" title="Price" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="SHPMNT_CE_PUOM" title="Price" related-entity-name="Uom">
             <key-map field-name="priceUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="SHPMNT_CE_TGEO" title="To" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="SHPMNT_CE_TGEO" title="To" related-entity-name="Geo">
             <key-map field-name="geoIdTo" related-field-name="geoId"/>
         </relationship>
-        <relationship type="one" fk-name="SHPMNT_CE_FGEO" title="From" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="SHPMNT_CE_FGEO" title="From" related-entity-name="Geo">
             <key-map field-name="geoIdFrom" related-field-name="geoId"/>
         </relationship>
         <relationship type="one" fk-name="SHPMNT_CE_WHT_QB" title="Weight" related-entity-name="QuantityBreak">
@@ -869,7 +869,7 @@
             <key-map field-name="shipmentId"/>
             <key-map field-name="shipmentPackageSeqId"/>
         </member-entity>
-        <member-entity entity-alias="WTUOM" entity-name="OfbizUom" join-from-alias="SPKG" join-optional="true">
+        <member-entity entity-alias="WTUOM" entity-name="Uom" join-from-alias="SPKG" join-optional="true">
             <key-map field-name="weightUomId" related-field-name="uomId"/>
         </member-entity>
         <member-entity entity-alias="SPRS" entity-name="ShipmentPackageRouteSeg" join-from-alias="SPKG">
@@ -1070,10 +1070,10 @@
         <relationship type="many" related-entity-name="CarrierShipmentBoxType">
             <key-map field-name="shipmentBoxTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="SHPKG_DUOM" title="Dimension" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="SHPKG_DUOM" title="Dimension" related-entity-name="Uom">
             <key-map field-name="dimensionUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="SHPKG_WUOM" title="Weight" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="SHPKG_WUOM" title="Weight" related-entity-name="Uom">
             <key-map field-name="weightUomId" related-field-name="uomId"/>
         </relationship>
     </entity>
@@ -1127,7 +1127,7 @@
             <key-map field-name="shipmentId"/>
             <key-map field-name="shipmentRouteSegmentId"/>
         </relationship>
-        <relationship type="one" fk-name="SHPKRTSG_CUOM" title="Currency" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="SHPKRTSG_CUOM" title="Currency" related-entity-name="Uom">
             <key-map field-name="currencyUomId" related-field-name="uomId"/>
         </relationship>
     </entity>
@@ -1210,13 +1210,13 @@
         <relationship type="one" fk-name="SHPMT_RTSEG_DTCN" title="Dest" related-entity-name="TelecomNumber">
             <key-map field-name="destTelecomNumberId" related-field-name="contactMechId"/>
         </relationship>
-        <relationship type="one" fk-name="SHPKRTSG_CSSTS" title="CarrierService" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="SHPKRTSG_CSSTS" title="CarrierService" related-entity-name="StatusItem">
             <key-map field-name="carrierServiceStatusId" related-field-name="statusId"/>
         </relationship>
-        <relationship type="one" fk-name="SHPMT_RTSEG_CUOM" title="Currency" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="SHPMT_RTSEG_CUOM" title="Currency" related-entity-name="Uom">
             <key-map field-name="currencyUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="SHPKRTSG_BWUOM" title="BillingWeight" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="SHPKRTSG_BWUOM" title="BillingWeight" related-entity-name="Uom">
             <key-map field-name="billingWeightUomId" related-field-name="uomId"/>
         </relationship>
     </entity>
@@ -1284,7 +1284,7 @@
         <field name="statusId" type="id" is-pk="true"/>
         <field name="shipmentId" type="id" is-pk="true"/>
         <field name="statusDate" type="date-time"/>
-        <relationship type="one" fk-name="SHPMNT_STTS_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="SHPMNT_STTS_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="SHPMNT_STTS_SHMT" related-entity-name="Shipment">

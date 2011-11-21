@@ -145,7 +145,7 @@
         <relationship type="one" fk-name="CONTENT_TO_TMPDATA" title="Template" related-entity-name="DataResource">
             <key-map field-name="templateDataResourceId" related-field-name="dataResourceId"/>
         </relationship>
-        <relationship type="one" fk-name="CONTENT_STATUS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="CONTENT_STATUS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="CONTENT_PRIVENM" title="Privilege" related-entity-name="Enumeration">
@@ -229,7 +229,7 @@
         <relationship type="one" fk-name="CNTNTAPPR_RLTP" related-entity-name="RoleType">
             <key-map field-name="roleTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="CNTNTAPPR_APSI" title="Approval" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="CNTNTAPPR_APSI" title="Approval" related-entity-name="StatusItem">
             <key-map field-name="approvalStatusId" related-field-name="statusId"/>
         </relationship>
     </entity>
@@ -507,7 +507,7 @@
         <relationship type="one" fk-name="CONTENT_PRO_RLT" related-entity-name="RoleType">
             <key-map field-name="roleTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="CONTENT_PRO_STI" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="CONTENT_PRO_STI" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="CONTENT_PRO_PEI" related-entity-name="Enumeration">
@@ -667,7 +667,7 @@
         <field name="createdByUserLogin" type="id-very-long"/>
         <field name="lastModifiedDate" type="date-time"/>
         <field name="lastModifiedByUserLogin" type="id-very-long"/>
-        <relationship type="one" fk-name="DTRSRC_STATUS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="DTRSRC_STATUS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="DATA_REC_TO_TYPE" related-entity-name="DataResourceType">
@@ -1016,7 +1016,7 @@
         <relationship type="one" fk-name="SRVYQST_SRVYQTCT" related-entity-name="SurveyQuestionCategory">
             <key-map field-name="surveyQuestionCategoryId"/>
         </relationship>
-        <relationship type="one" fk-name="SRVYQST_GEO" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="SRVYQST_GEO" related-entity-name="Geo">
             <key-map field-name="geoId"/>
         </relationship>
         <relationship type="many" fk-name="SRVYQST_ENUM" related-entity-name="Enumeration">
@@ -1049,7 +1049,7 @@
         <relationship type="many" related-entity-name="Enumeration">
             <key-map field-name="enumTypeId"/>
         </relationship>
-        <relationship type="one-nofk" related-entity-name="OfbizGeo">
+        <relationship type="one-nofk" related-entity-name="Geo">
             <key-map field-name="geoId"/>
         </relationship>
         <relationship type="one-nofk" related-entity-name="SurveyPage">
@@ -1155,7 +1155,7 @@
         <relationship type="one" fk-name="SRVYRSP_SRVY" related-entity-name="Survey">
             <key-map field-name="surveyId"/>
         </relationship>
-        <relationship type="one" fk-name="SRVYRSP_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="SRVYRSP_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
     </entity>
@@ -1237,7 +1237,7 @@
             <key-map field-name="surveyApplTypeId"/>
         </relationship>
     </entity>
-    <extend-entity entity-name="WebPage">
+    <extend-entity entity-name="WebPage" package-name="org.ofbiz.webapp.website">
         <field name="contentId" type="id"/>
         <relationship type="one" fk-name="WEB_PAGE_CONTENT" related-entity-name="Content">
             <key-map field-name="contentId"/>

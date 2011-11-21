@@ -38,7 +38,7 @@
         <relationship type="one" fk-name="JOB_SNDBX_USRLGN" title="RunAs" related-entity-name="UserLogin">
             <key-map field-name="runAsUser" related-field-name="userLoginId"/>
         </relationship>
-        <relationship type="one" fk-name="JOB_SNDBX_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="JOB_SNDBX_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
     <index name="JOB_SNDBX_RUNSTAT">

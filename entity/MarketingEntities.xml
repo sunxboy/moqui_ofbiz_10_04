@@ -24,10 +24,10 @@
         <relationship type="one" fk-name="MKTGCPN_PRNT" title="Parent" related-entity-name="MarketingCampaign">
             <key-map field-name="parentCampaignId" related-field-name="marketingCampaignId"/>
         </relationship>
-        <relationship type="one" fk-name="MKTGCPN_STS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="MKTGCPN_STS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
-        <relationship type="one" fk-name="MKTGCPN_CUOM" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="MKTGCPN_CUOM" related-entity-name="Uom">
             <key-map field-name="currencyUomId" related-field-name="uomId"/>
         </relationship>
     </entity>
@@ -135,7 +135,7 @@
         <relationship type="one" fk-name="CNCT_LST_CST_PT" related-entity-name="Party">
             <key-map field-name="partyId"/>
         </relationship>
-        <relationship type="one" fk-name="CNCT_LST_CST_ST" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="CNCT_LST_CST_ST" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
     <index name="CNTLSTCST_MSG_ID" unique="true">
@@ -155,7 +155,7 @@
         <relationship type="one" fk-name="CNCT_LSTPTY_PTY" related-entity-name="Party">
             <key-map field-name="partyId"/>
         </relationship>
-        <relationship type="one" fk-name="CNCT_LSTPTY_STS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="CNCT_LSTPTY_STS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="CNCT_LSTPTY_PCM" title="Preferred" related-entity-name="ContactMech">
@@ -165,7 +165,7 @@
     <!-- <view-entity entity-name="ContactListPartyAndStatus" package-name="org.ofbiz.marketing.contact">
         <member-entity entity-alias="CLPS" entity-name="ContactListPartyStatus">
         </member-entity>
-        <member-entity entity-alias="SI" entity-name="OfbizStatusItem" join-from-alias="CLPS">
+        <member-entity entity-alias="SI" entity-name="StatusItem" join-from-alias="CLPS">
             <key-map field-name="statusId"/>
         </member-entity>
         <alias-all entity-alias="CLPS">
@@ -219,7 +219,7 @@
         <relationship type="one" fk-name="SGMTGRPGEO_SGGP" related-entity-name="SegmentGroup">
             <key-map field-name="segmentGroupId"/>
         </relationship>
-        <relationship type="one" fk-name="SGMTGRPGEO_GEO" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="SGMTGRPGEO_GEO" related-entity-name="Geo">
             <key-map field-name="geoId"/>
         </relationship>
     </entity>

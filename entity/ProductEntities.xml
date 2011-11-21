@@ -644,7 +644,7 @@
         <relationship type="one" fk-name="COST_COMP_PARTY" related-entity-name="Party">
             <key-map field-name="partyId"/>
         </relationship>
-        <relationship type="one" fk-name="COST_COMP_GEO" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="COST_COMP_GEO" related-entity-name="Geo">
             <key-map field-name="geoId"/>
         </relationship>
         <relationship type="one" fk-name="COST_COMP_WEFF" related-entity-name="WorkEffort">
@@ -656,7 +656,7 @@
         <relationship type="one" fk-name="COST_COMP_CALC" related-entity-name="CostComponentCalc">
             <key-map field-name="costComponentCalcId"/>
         </relationship>
-        <relationship type="one" fk-name="COST_COMP_CUOM" title="Currency" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="COST_COMP_CUOM" title="Currency" related-entity-name="Uom">
             <key-map field-name="costUomId" related-field-name="uomId"/>
         </relationship>
     </entity>
@@ -709,7 +709,7 @@
         <relationship type="one" fk-name="COST_COM_OGLAT" title="Offsetting" related-entity-name="GlAccountType">
             <key-map field-name="offsettingGlAccountTypeId" related-field-name="glAccountTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="COST_COM_CUOM" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="COST_COM_CUOM" related-entity-name="Uom">
             <key-map field-name="currencyUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="COST_COM_CMET" related-entity-name="CustomMethod">
@@ -757,7 +757,7 @@
         <relationship type="one" fk-name="CONTNRGEOPT_CONTNR" related-entity-name="Container">
             <key-map field-name="containerId"/>
         </relationship>
-        <relationship type="one" fk-name="CONTNRGEOPT_GEOPT" related-entity-name="OfbizGeoPoint">
+        <relationship type="one" fk-name="CONTNRGEOPT_GEOPT" related-entity-name="GeoPoint">
             <key-map field-name="geoPointId"/>
         </relationship>
     </entity>
@@ -768,7 +768,7 @@
         <member-entity entity-alias="CTGPT" entity-name="ContainerGeoPoint" join-from-alias="CT">
             <key-map field-name="containerId"/>
         </member-entity>
-        <member-entity entity-alias="GPT" entity-name="OfbizGeoPoint" join-from-alias="CTGPT">
+        <member-entity entity-alias="GPT" entity-name="GeoPoint" join-from-alias="CTGPT">
             <key-map field-name="geoPointId"/>
         </member-entity>
         <alias-all entity-alias="GPT">
@@ -786,7 +786,7 @@
         <relationship type="one-nofk" related-entity-name="Container">
             <key-map field-name="containerId"/>
         </relationship>
-        <relationship type="one-nofk" related-entity-name="OfbizGeoPoint">
+        <relationship type="one-nofk" related-entity-name="GeoPoint">
             <key-map field-name="geoPointId"/>
         </relationship>
     </view-entity> -->
@@ -824,10 +824,10 @@
         <relationship type="one" fk-name="FAC_INVITM_TYPE" title="Default" related-entity-name="InventoryItemType">
             <key-map field-name="defaultInventoryItemTypeId" related-field-name="inventoryItemTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="FAC_DEF_DUOM" title="Dimension" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="FAC_DEF_DUOM" title="Dimension" related-entity-name="Uom">
             <key-map field-name="defaultDimensionUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="FAC_DEF_WUOM" title="Weight" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="FAC_DEF_WUOM" title="Weight" related-entity-name="Uom">
             <key-map field-name="defaultWeightUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one-nofk" related-entity-name="ProductStore">
@@ -837,10 +837,10 @@
         <relationship type="many" related-entity-name="FacilityTypeAttr">
             <key-map field-name="facilityTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="FACILITY_GEOPT" related-entity-name="OfbizGeoPoint">
+        <relationship type="one" fk-name="FACILITY_GEOPT" related-entity-name="GeoPoint">
             <key-map field-name="geoPointId"/>
         </relationship>
-        <relationship type="one" fk-name="FACILITY_SUOM" title="FacilitySize" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="FACILITY_SUOM" title="FacilitySize" related-entity-name="Uom">
             <key-map field-name="facilitySizeUomId" related-field-name="uomId"/>
         </relationship>
     </entity>
@@ -1024,7 +1024,7 @@
             <key-map field-name="facilityId"/>
             <key-map field-name="locationSeqId"/>
         </relationship>
-        <relationship type="one" fk-name="FACLOCGEOPT_GEOPT" related-entity-name="OfbizGeoPoint">
+        <relationship type="one" fk-name="FACLOCGEOPT_GEOPT" related-entity-name="GeoPoint">
             <key-map field-name="geoPointId"/>
         </relationship>
     </entity>
@@ -1036,7 +1036,7 @@
             <key-map field-name="facilityId"/>
             <key-map field-name="locationSeqId"/>
         </member-entity>
-        <member-entity entity-alias="GPT" entity-name="OfbizGeoPoint" join-from-alias="FLGPT">
+        <member-entity entity-alias="GPT" entity-name="GeoPoint" join-from-alias="FLGPT">
             <key-map field-name="geoPointId"/>
         </member-entity>
         <alias-all entity-alias="GPT">
@@ -1058,7 +1058,7 @@
             <key-map field-name="facilityId"/>
             <key-map field-name="locationSeqId"/>
         </relationship>
-        <relationship type="one-nofk" related-entity-name="OfbizGeoPoint">
+        <relationship type="one-nofk" related-entity-name="GeoPoint">
             <key-map field-name="geoPointId"/>
         </relationship>
     </view-entity> -->
@@ -1525,7 +1525,7 @@
         <relationship type="one" fk-name="PROD_F_PRICE_TYPE" related-entity-name="ProductPriceType">
             <key-map field-name="productPriceTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_F_PRICE_CUOM" title="Currency" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="PROD_F_PRICE_CUOM" title="Currency" related-entity-name="Uom">
             <key-map field-name="currencyUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="PROD_F_PRICE_CBUL" title="CreatedBy" related-entity-name="UserLogin">
@@ -1618,7 +1618,7 @@
         <relationship type="one" fk-name="INV_ITEM_OWNPARTY" title="Owner" related-entity-name="Party">
             <key-map field-name="ownerPartyId" related-field-name="partyId"/>
         </relationship>
-        <relationship type="one" fk-name="INV_ITEM_STTSITM" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="INV_ITEM_STTSITM" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="INV_ITEM_FACILITY" related-entity-name="Facility">
@@ -1643,10 +1643,10 @@
             <key-map field-name="facilityId"/>
             <key-map field-name="locationSeqId"/>
         </relationship>
-        <relationship type="one" fk-name="INV_ITEM_UOM" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="INV_ITEM_UOM" related-entity-name="Uom">
             <key-map field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="INV_ITEM_CUOM" title="Currency" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="INV_ITEM_CUOM" title="Currency" related-entity-name="Uom">
             <key-map field-name="currencyUomId" related-field-name="uomId"/>
         </relationship>
     <index name="INV_ITEM_SN">
@@ -1834,7 +1834,7 @@
         <relationship type="one" fk-name="INV_ITEM_STTS_II" related-entity-name="InventoryItem">
             <key-map field-name="inventoryItemId"/>
         </relationship>
-        <relationship type="one" fk-name="INV_ITEM_STTS_SI" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="INV_ITEM_STTS_SI" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
     </entity>
@@ -1966,7 +1966,7 @@
         <relationship type="one" fk-name="INV_XFER_ITEM" related-entity-name="InventoryItem">
             <key-map field-name="inventoryItemId"/>
         </relationship>
-        <relationship type="one" fk-name="INV_XFER_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="INV_XFER_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="INV_XFER_FAC" related-entity-name="Facility">
@@ -2091,10 +2091,10 @@
         <relationship type="one" fk-name="PROD_PRICE_PURP" related-entity-name="ProductPricePurpose">
             <key-map field-name="productPricePurposeId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_PRICE_CUOM" title="Currency" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="PROD_PRICE_CUOM" title="Currency" related-entity-name="Uom">
             <key-map field-name="currencyUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_PRICE_TUOM" title="Term" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="PROD_PRICE_TUOM" title="Term" related-entity-name="Uom">
             <key-map field-name="termUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="PROD_PRICE_PSTG" related-entity-name="ProductStoreGroup">
@@ -2251,22 +2251,22 @@
         <relationship type="one-nofk" title="Manufacturer" related-entity-name="Party">
             <key-map field-name="manufacturerPartyId" related-field-name="partyId"/>
         </relationship>
-        <relationship type="one-nofk" title="Quantity" related-entity-name="OfbizUom">
+        <relationship type="one-nofk" title="Quantity" related-entity-name="Uom">
             <key-map field-name="quantityUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one-nofk" title="Amount" related-entity-name="OfbizUomType">
+        <relationship type="one-nofk" title="Amount" related-entity-name="UomType">
             <key-map field-name="amountUomTypeId" related-field-name="uomTypeId"/>
         </relationship>
-        <relationship type="one-nofk" title="Weight" related-entity-name="OfbizUom">
+        <relationship type="one-nofk" title="Weight" related-entity-name="Uom">
             <key-map field-name="weightUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one-nofk" title="Height" related-entity-name="OfbizUom">
+        <relationship type="one-nofk" title="Height" related-entity-name="Uom">
             <key-map field-name="heightUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one-nofk" title="Width" related-entity-name="OfbizUom">
+        <relationship type="one-nofk" title="Width" related-entity-name="Uom">
             <key-map field-name="widthUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one-nofk" title="Depth" related-entity-name="OfbizUom">
+        <relationship type="one-nofk" title="Depth" related-entity-name="Uom">
             <key-map field-name="depthUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one-nofk" related-entity-name="Enumeration">
@@ -2375,25 +2375,25 @@
         <relationship type="one" fk-name="PROD_MFG_PARTY" title="Manufacturer" related-entity-name="Party">
             <key-map field-name="manufacturerPartyId" related-field-name="partyId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_QUANT_UOM" title="Quantity" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="PROD_QUANT_UOM" title="Quantity" related-entity-name="Uom">
             <key-map field-name="quantityUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_AMOUNT_UOMT" title="Amount" related-entity-name="OfbizUomType">
+        <relationship type="one" fk-name="PROD_AMOUNT_UOMT" title="Amount" related-entity-name="UomType">
             <key-map field-name="amountUomTypeId" related-field-name="uomTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_WEIGHT_UOM" title="Weight" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="PROD_WEIGHT_UOM" title="Weight" related-entity-name="Uom">
             <key-map field-name="weightUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_HEIGHT_UOM" title="Height" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="PROD_HEIGHT_UOM" title="Height" related-entity-name="Uom">
             <key-map field-name="heightUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_WIDTH_UOM" title="Width" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="PROD_WIDTH_UOM" title="Width" related-entity-name="Uom">
             <key-map field-name="widthUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_DEPTH_UOM" title="Depth" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="PROD_DEPTH_UOM" title="Depth" related-entity-name="Uom">
             <key-map field-name="depthUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_DIAMTR_UOM" title="Diameter" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="PROD_DIAMTR_UOM" title="Diameter" related-entity-name="Uom">
             <key-map field-name="diameterUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="PROD_VVMETHOD_ENUM" title="VitualVariant Method" related-entity-name="Enumeration">
@@ -2405,7 +2405,7 @@
         <relationship type="one" fk-name="PROD_RQMT_ENUM" title="RequirementMethod" related-entity-name="Enumeration">
             <key-map field-name="requirementMethodEnumId" related-field-name="enumId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_ORG_GEO" title="Origin" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="PROD_ORG_GEO" title="Origin" related-entity-name="Geo">
             <key-map field-name="originGeoId" related-field-name="geoId"/>
         </relationship>
         <relationship type="one" fk-name="PROD_CB_USERLOGIN" title="CreatedBy" related-entity-name="UserLogin">
@@ -2550,7 +2550,7 @@
         <relationship type="one" fk-name="PROD_CNT_URT" title="Use" related-entity-name="RoleType">
             <key-map field-name="useRoleTypeId" related-field-name="roleTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_CNT_UTU" title="UseTime" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="PROD_CNT_UTU" title="UseTime" related-entity-name="Uom">
             <key-map field-name="useTimeUomId" related-field-name="uomId"/>
         </relationship>
     </entity>
@@ -2603,7 +2603,7 @@
         <relationship type="one" fk-name="PRDGEO_PRODUCT" related-entity-name="Product">
             <key-map field-name="productId"/>
         </relationship>
-        <relationship type="one" fk-name="PRDGEO_GEO" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="PRDGEO_GEO" related-entity-name="Geo">
             <key-map field-name="geoId"/>
         </relationship>
         <relationship type="one" fk-name="PRDGEO_ENUM" related-entity-name="Enumeration">
@@ -2685,7 +2685,7 @@
         <relationship type="one" fk-name="PRODMTR_MTRTYP" related-entity-name="ProductMeterType">
             <key-map field-name="productMeterTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="PRODMTR_MTRUOM" title="Meter" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="PRODMTR_MTRUOM" title="Meter" related-entity-name="Uom">
             <key-map field-name="meterUomId" related-field-name="uomId"/>
         </relationship>
     </entity>
@@ -2693,7 +2693,7 @@
         <field name="productMeterTypeId" type="id" is-pk="true"/>
         <field name="description" type="text-long"/>
         <field name="defaultUomId" type="id"/>
-        <relationship type="one" fk-name="PRODMTRTP_DUOM" title="Default" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="PRODMTRTP_DUOM" title="Default" related-entity-name="Uom">
             <key-map field-name="defaultUomId" related-field-name="uomId"/>
         </relationship>
     </entity>
@@ -2717,7 +2717,7 @@
         <relationship type="one" fk-name="PRODMNT_TPLHWE" title="MaintTemplate" related-entity-name="WorkEffort">
             <key-map field-name="maintTemplateWorkEffortId" related-field-name="workEffortId"/>
         </relationship>
-        <relationship type="one" fk-name="PRODMNT_INTUOM" title="Interval" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="PRODMNT_INTUOM" title="Interval" related-entity-name="Uom">
             <key-map field-name="intervalUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="PRODMNT_PDMTTYP" title="Interval" related-entity-name="ProductMeterType">
@@ -2757,7 +2757,7 @@
         <relationship type="one" fk-name="PROD_REVIEW_ULH" related-entity-name="UserLogin">
             <key-map field-name="userLoginId" related-field-name="userLoginId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_REVIEW_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="PROD_REVIEW_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
     </entity>
@@ -3299,31 +3299,31 @@
         <relationship type="one" fk-name="PROD_STR_PAYTOPTY" related-entity-name="Party">
             <key-map field-name="payToPartyId" related-field-name="partyId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_STR_CURUOM" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="PROD_STR_CURUOM" related-entity-name="Uom">
             <key-map field-name="defaultCurrencyUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="PROD_STR_SALECHN" title="DefaultSalesChannel" related-entity-name="Enumeration">
             <key-map field-name="defaultSalesChannelEnumId" related-field-name="enumId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_STR_HAPSTS" title="HeaderApproved" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="PROD_STR_HAPSTS" title="HeaderApproved" related-entity-name="StatusItem">
             <key-map field-name="headerApprovedStatus" related-field-name="statusId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_STR_IAPSTS" title="ItemApproved" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="PROD_STR_IAPSTS" title="ItemApproved" related-entity-name="StatusItem">
             <key-map field-name="itemApprovedStatus" related-field-name="statusId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_STR_DIAPSTS" title="DigitalItemApproved" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="PROD_STR_DIAPSTS" title="DigitalItemApproved" related-entity-name="StatusItem">
             <key-map field-name="digitalItemApprovedStatus" related-field-name="statusId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_STR_HDCSTS" title="HeaderDeclined" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="PROD_STR_HDCSTS" title="HeaderDeclined" related-entity-name="StatusItem">
             <key-map field-name="headerDeclinedStatus" related-field-name="statusId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_STR_IDCSTS" title="ItemDeclined" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="PROD_STR_IDCSTS" title="ItemDeclined" related-entity-name="StatusItem">
             <key-map field-name="itemDeclinedStatus" related-field-name="statusId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_STR_HCNSTS" title="HeaderCancel" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="PROD_STR_HCNSTS" title="HeaderCancel" related-entity-name="StatusItem">
             <key-map field-name="headerCancelStatus" related-field-name="statusId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_STR_ICNSTS" title="ItemCancel" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="PROD_STR_ICNSTS" title="ItemCancel" related-entity-name="StatusItem">
             <key-map field-name="itemCancelStatus" related-field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="PROD_STR_VATTXA" title="Vat" related-entity-name="TaxAuthority">
@@ -3632,10 +3632,10 @@
         <relationship type="one-nofk" related-entity-name="Party">
             <key-map field-name="companyPartyId" related-field-name="partyId"/>
         </relationship>
-        <relationship type="one-nofk" title="Include" related-entity-name="OfbizGeo">
+        <relationship type="one-nofk" title="Include" related-entity-name="Geo">
             <key-map field-name="includeGeoId" related-field-name="geoId"/>
         </relationship>
-        <relationship type="one-nofk" title="Exclude" related-entity-name="OfbizGeo">
+        <relationship type="one-nofk" title="Exclude" related-entity-name="Geo">
             <key-map field-name="excludeGeoId" related-field-name="geoId"/>
         </relationship>
         <relationship type="one" fk-name="PRDS_SM_SGC" related-entity-name="ShipmentGatewayConfig">
@@ -3709,10 +3709,10 @@
         <relationship type="one-nofk" related-entity-name="Party">
             <key-map field-name="companyPartyId" related-field-name="partyId"/>
         </relationship>
-        <relationship type="one-nofk" title="Include" related-entity-name="OfbizGeo">
+        <relationship type="one-nofk" title="Include" related-entity-name="Geo">
             <key-map field-name="includeGeoId" related-field-name="geoId"/>
         </relationship>
-        <relationship type="one-nofk" title="Exclude" related-entity-name="OfbizGeo">
+        <relationship type="one-nofk" title="Exclude" related-entity-name="Geo">
             <key-map field-name="excludeGeoId" related-field-name="geoId"/>
         </relationship>
         <relationship type="one-nofk" related-entity-name="PartyGroup">
@@ -3789,7 +3789,7 @@
             <key-map field-name="carrierPartyId" related-field-name="partyId"/>
         </relationship>
     </entity>
-    <extend-entity entity-name="WebSite">
+    <extend-entity entity-name="WebSite" package-name="org.ofbiz.webapp.website">
         <field name="productStoreId" type="id"/>
         <field name="allowProductStoreChange" type="text-indicator"/>
         <relationship type="one" fk-name="WEB_SITE_PRDS" related-entity-name="ProductStore">
@@ -3823,16 +3823,16 @@
         <relationship type="one" fk-name="PROD_SBRS_URT" title="Use" related-entity-name="RoleType">
             <key-map field-name="useRoleTypeId" related-field-name="roleTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_SBRS_UTU" title="UseTime" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="PROD_SBRS_UTU" title="UseTime" related-entity-name="Uom">
             <key-map field-name="useTimeUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_SBRS_CTU" title="CancelTime" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="PROD_SBRS_CTU" title="CancelTime" related-entity-name="Uom">
             <key-map field-name="canclAutmExtTimeUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_SBRS_ATU" title="AvailableTime" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="PROD_SBRS_ATU" title="AvailableTime" related-entity-name="Uom">
             <key-map field-name="availableTimeUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="PROD_SBRS_MTU" title="MaxLifeTime" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="PROD_SBRS_MTU" title="MaxLifeTime" related-entity-name="Uom">
             <key-map field-name="maxLifeTimeUomId" related-field-name="uomId"/>
         </relationship>
     </entity>
@@ -3878,16 +3878,16 @@
         <relationship type="one" fk-name="SUBSC_PARTY" related-entity-name="Party">
             <key-map field-name="partyId"/>
         </relationship>
-        <relationship type="one" fk-name="SUBSC_UTU" title="UseTime" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="SUBSC_UTU" title="UseTime" related-entity-name="Uom">
             <key-map field-name="useTimeUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="SUBSC_CTU" title="CancelTime" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="SUBSC_CTU" title="CancelTime" related-entity-name="Uom">
             <key-map field-name="canclAutmExtTimeUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="SUBSC_ATU" title="AvailableTime" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="SUBSC_ATU" title="AvailableTime" related-entity-name="Uom">
             <key-map field-name="availableTimeUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="SUBSC_MTU" title="MaxLifeTime" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="SUBSC_MTU" title="MaxLifeTime" related-entity-name="Uom">
             <key-map field-name="maxLifeTimeUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="SUBSC_ROLE_TYPE" related-entity-name="RoleType">
@@ -4058,7 +4058,7 @@
         <relationship type="one" fk-name="REORDER_GD_FAC" related-entity-name="Facility">
             <key-map field-name="facilityId"/>
         </relationship>
-        <relationship type="one" fk-name="REORDER_GD_GEO" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="REORDER_GD_GEO" related-entity-name="Geo">
             <key-map field-name="geoId"/>
         </relationship>
     </entity>
@@ -4099,10 +4099,10 @@
         <relationship type="one" fk-name="SUPPL_PROD_SRTPE" related-entity-name="SupplierRatingType">
             <key-map field-name="supplierRatingTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="SUPPL_PROD_CUOM" title="Currency" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="SUPPL_PROD_CUOM" title="Currency" related-entity-name="Uom">
             <key-map field-name="currencyUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="SUPPL_PROD_QUOM" title="Quantity" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="SUPPL_PROD_QUOM" title="Quantity" related-entity-name="Uom">
             <key-map field-name="quantityUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="SUPPL_PROD_AGRIT" related-entity-name="AgreementItem">
@@ -4137,7 +4137,7 @@
         <relationship type="one" fk-name="SUPPL_FEAT_FEAT" related-entity-name="ProductFeature">
             <key-map field-name="productFeatureId"/>
         </relationship>
-        <relationship type="one" fk-name="SUPPL_FEAT_UOM" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="SUPPL_FEAT_UOM" related-entity-name="Uom">
             <key-map field-name="uomId"/>
         </relationship>
     </entity>

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-definition-1.0.xsd">
 
-    <extend-entity entity-name="NoteData">
+    <extend-entity entity-name="NoteData" package-name="org.ofbiz.common.note">
         <field name="moreInfoPortletId" type="text-long"/>
         <field name="moreInfoItemId" type="text-long"/>
-    <index name="systemInfo" unique="false">
-    <index-field name="noteName"/>
-    </index>
+        <index name="systemInfo" unique="false"><index-field name="noteName"/></index>
     </extend-entity>
 </entities>
 

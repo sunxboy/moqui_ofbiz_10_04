@@ -34,7 +34,7 @@
         <relationship type="one" fk-name="SERVER_HIT_VISIT" related-entity-name="Visit">
             <key-map field-name="visitId"/>
         </relationship>
-        <relationship type="one" fk-name="SERVER_HIT_STATUS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="SERVER_HIT_STATUS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="SERVER_HIT_USER" related-entity-name="UserLogin">
@@ -92,7 +92,7 @@
         <field name="userAgentTypeId" type="id" is-pk="true"/>
         <field name="description" type="text-long"/>
     </entity>
-    <entity group-name="org.ofbiz" entity-name="OfbizVisit" table-name="VISIT" package-name="org.ofbiz.webapp.visit" sequence-bank-size="100" cache="never">
+    <entity group-name="org.ofbiz" entity-name="Visit" table-name="VISIT" package-name="org.ofbiz.webapp.visit" sequence-bank-size="100" cache="never">
         <field name="visitId" type="id" is-pk="true"/>
         <field name="visitorId" type="id"/>
         <field name="userLoginId" type="id-very-long"/>
@@ -116,23 +116,23 @@
         <field name="cookie" type="text-medium"/>
         <field name="fromDate" type="date-time"/>
         <field name="thruDate" type="date-time"/>
-        <relationship type="one" fk-name="VISIT_VISITOR" related-entity-name="OfbizVisitor">
+        <relationship type="one" fk-name="VISIT_VISITOR" related-entity-name="Visitor">
             <key-map field-name="visitorId"/>
         </relationship>
         <relationship type="one" fk-name="VISIT_USER_AGNT" related-entity-name="UserAgent">
             <key-map field-name="userAgentId"/>
         </relationship>
-        <relationship type="one" fk-name="VISIT_CIP_STPRV" title="ClientIpStateProv" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="VISIT_CIP_STPRV" title="ClientIpStateProv" related-entity-name="Geo">
             <key-map field-name="clientIpStateProvGeoId" related-field-name="geoId"/>
         </relationship>
-        <relationship type="one" fk-name="VISIT_CIP_CNTRY" title="ClientIpCountry" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="VISIT_CIP_CNTRY" title="ClientIpCountry" related-entity-name="Geo">
             <key-map field-name="clientIpCountryGeoId" related-field-name="geoId"/>
         </relationship>
     <index name="VISIT_THRU_IDX" unique="false">
     <index-field name="thruDate"/>
     </index>
     </entity>
-    <entity group-name="org.ofbiz" entity-name="OfbizVisitor" table-name="VISITOR" package-name="org.ofbiz.webapp.visit" sequence-bank-size="100">
+    <entity group-name="org.ofbiz" entity-name="Visitor" table-name="VISITOR" package-name="org.ofbiz.webapp.visit" sequence-bank-size="100">
         <field name="visitorId" type="id" is-pk="true"/>
         <field name="userLoginId" type="id-very-long"/>
         <relationship type="one" fk-name="VISITOR_USRLGN" related-entity-name="UserLogin">

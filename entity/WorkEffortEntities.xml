@@ -48,7 +48,7 @@
         <relationship type="one" fk-name="TIMESHEET_CPTY" title="Client" related-entity-name="Party">
             <key-map field-name="clientPartyId" related-field-name="partyId"/>
         </relationship>
-        <relationship type="one" fk-name="TIMESHEET_STS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="TIMESHEET_STS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="TIMESHEET_AB_UL" title="ApprovedBy" related-entity-name="UserLogin">
@@ -178,7 +178,7 @@
         <relationship type="many" related-entity-name="WorkEffortTypeAttr">
             <key-map field-name="workEffortTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="WK_EFFRT_CURSTTS" title="Current" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="WK_EFFRT_CURSTTS" title="Current" related-entity-name="StatusItem">
             <key-map field-name="currentStatusId" related-field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="WK_EFFRT_SC_ENUM" title="Scope" related-entity-name="Enumeration">
@@ -190,7 +190,7 @@
         <relationship type="one" fk-name="WK_EFFRT_FACILITY" related-entity-name="Facility">
             <key-map field-name="facilityId"/>
         </relationship>
-        <relationship type="one" fk-name="WK_EFFRT_MON_UOM" title="Money" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="WK_EFFRT_MON_UOM" title="Money" related-entity-name="Uom">
             <key-map field-name="moneyUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="WK_EFFRT_RECINFO" related-entity-name="RecurrenceInfo">
@@ -388,10 +388,10 @@
         <relationship type="one" fk-name="WKEFF_FXDAA_FXAS" related-entity-name="FixedAsset">
             <key-map field-name="fixedAssetId"/>
         </relationship>
-        <relationship type="one" fk-name="WKEFF_FXDAA_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="WKEFF_FXDAA_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
-        <relationship type="one" fk-name="WKEFF_FXDAA_AVAIL" title="Availability" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="WKEFF_FXDAA_AVAIL" title="Availability" related-entity-name="StatusItem">
             <key-map field-name="availabilityStatusId" related-field-name="statusId"/>
         </relationship>
     </entity>
@@ -426,7 +426,7 @@
         <relationship type="one" fk-name="WKEFF_GDSTD_PROD" related-entity-name="Product">
             <key-map field-name="productId"/>
         </relationship>
-        <relationship type="one" fk-name="WKEFF_GDSTD_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="WKEFF_GDSTD_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
     </entity>
@@ -457,7 +457,7 @@
         <relationship type="one" fk-name="WKEFF_INVAS_INVIT" related-entity-name="InventoryItem">
             <key-map field-name="inventoryItemId"/>
         </relationship>
-        <relationship type="one" fk-name="WKEFF_INVAS_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="WKEFF_INVAS_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
     </entity>
@@ -543,7 +543,7 @@
         <relationship type="one" fk-name="WKEFF_PA_ABUSRLOG" title="AssignedBy" related-entity-name="UserLogin">
             <key-map field-name="assignedByUserLoginId" related-field-name="userLoginId"/>
         </relationship>
-        <relationship type="one" fk-name="WKEFF_PA_STTS" title="Assignment" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="WKEFF_PA_STTS" title="Assignment" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="WKEFF_PA_EXP_ENUM" title="Expectation" related-entity-name="Enumeration">
@@ -555,7 +555,7 @@
         <relationship type="one" fk-name="WKEFF_PA_FACILITY" related-entity-name="Facility">
             <key-map field-name="facilityId"/>
         </relationship>
-        <relationship type="one" fk-name="WKEFF_PA_AVSTTS" title="Availability" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="WKEFF_PA_AVSTTS" title="Availability" related-entity-name="StatusItem">
             <key-map field-name="availabilityStatusId" related-field-name="statusId"/>
         </relationship>
     </entity>
@@ -581,7 +581,7 @@
         <relationship type="one" fk-name="WEFF_REVIEW_UL" related-entity-name="UserLogin">
             <key-map field-name="userLoginId"/>
         </relationship>
-        <relationship type="one" fk-name="WEFF_REVIEW_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="WEFF_REVIEW_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
     </entity>
@@ -635,7 +635,7 @@
         <relationship type="one" fk-name="WKEFF_STTS_WE" related-entity-name="WorkEffort">
             <key-map field-name="workEffortId"/>
         </relationship>
-        <relationship type="one" fk-name="WKEFF_STTS_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="WKEFF_STTS_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="WKEFF_STTS_SB_UL" title="SetBy" related-entity-name="UserLogin">

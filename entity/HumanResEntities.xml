@@ -16,10 +16,10 @@
         <relationship type="one" fk-name="PARTY_QUAL_PQTYP" related-entity-name="PartyQualType">
             <key-map field-name="partyQualTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="PARTY_QUAL_STATUS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="PARTY_QUAL_STATUS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
-        <relationship type="one" fk-name="PARTY_QUAL_VERIF" title="Verification" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="PARTY_QUAL_VERIF" title="Verification" related-entity-name="StatusItem">
             <key-map field-name="verifStatusId" related-field-name="statusId"/>
         </relationship>
     </entity>
@@ -286,7 +286,7 @@
         <relationship type="one-nofk" fk-name="EMPLMNT_APP_POS" related-entity-name="EmplPosition">
             <key-map field-name="emplPositionId"/>
         </relationship>
-        <relationship type="one-nofk" fk-name="EMPLMNT_APP_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one-nofk" fk-name="EMPLMNT_APP_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one-nofk" fk-name="EMPLMNT_APP_EAST" related-entity-name="EmploymentAppSourceType">
@@ -484,7 +484,7 @@
             <key-map field-name="partyIdTo"/>
             <key-map field-name="fromDate"/>
         </relationship>
-        <relationship type="one-nofk" fk-name="UNMPL_CLM_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one-nofk" fk-name="UNMPL_CLM_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
     </entity>
@@ -503,7 +503,7 @@
         <field name="temporaryFlag" type="text-indicator"/>
         <field name="actualFromDate" type="date-time"/>
         <field name="actualThruDate" type="date-time"/>
-        <relationship type="one" fk-name="EMPL_POS_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="EMPL_POS_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="EMPL_POS_PRTY" related-entity-name="Party">

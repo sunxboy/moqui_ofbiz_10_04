@@ -71,10 +71,10 @@
             <key-map field-name="productPromoRuleId"/>
             <key-map field-name="productPromoActionSeqId"/>
         </relationship>
-        <relationship type="one" fk-name="ORDER_ADJ_PRGEO" title="Primary" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="ORDER_ADJ_PRGEO" title="Primary" related-entity-name="Geo">
             <key-map field-name="primaryGeoId" related-field-name="geoId"/>
         </relationship>
-        <relationship type="one" fk-name="ORDER_ADJ_SCGEO" title="Secondary" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="ORDER_ADJ_SCGEO" title="Secondary" related-entity-name="Geo">
             <key-map field-name="secondaryGeoId" related-field-name="geoId"/>
         </relationship>
         <relationship type="one" fk-name="ORDER_ADJ_TXA" related-entity-name="TaxAuthority">
@@ -231,13 +231,13 @@
             <key-map field-name="orderId"/>
             <key-map field-name="orderItemSeqId"/>
         </relationship>
-        <relationship type="one" fk-name="ORDER_DELSCH_TCUOM" title="TotalCubic" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="ORDER_DELSCH_TCUOM" title="TotalCubic" related-entity-name="Uom">
             <key-map field-name="totalCubicUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="ORDER_DELSCH_TWUOM" title="TotalWeight" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="ORDER_DELSCH_TWUOM" title="TotalWeight" related-entity-name="Uom">
             <key-map field-name="totalWeightUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="ORDER_DELSCH_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="ORDER_DELSCH_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
     </entity>
@@ -294,13 +294,13 @@
         <relationship type="one" fk-name="ORDER_HDR_CBUL" title="CreatedBy" related-entity-name="UserLogin">
             <key-map field-name="createdBy" related-field-name="userLoginId"/>
         </relationship>
-        <relationship type="one" fk-name="ORDER_HDR_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="ORDER_HDR_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
-        <relationship type="one" fk-name="ORDER_HDR_SYST" title="Sync" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="ORDER_HDR_SYST" title="Sync" related-entity-name="StatusItem">
             <key-map field-name="syncStatusId" related-field-name="statusId"/>
         </relationship>
-        <relationship type="one" fk-name="ORDER_HDR_CUOM" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="ORDER_HDR_CUOM" related-entity-name="Uom">
             <key-map field-name="currencyUom" related-field-name="uomId"/>
         </relationship>
         <index name="ORDEREXT_ID_IDX">
@@ -394,19 +394,19 @@
         <relationship type="one" fk-name="ORDER_ITEM_FMINV" title="From" related-entity-name="InventoryItem">
             <key-map field-name="fromInventoryItemId" related-field-name="inventoryItemId"/>
         </relationship>
-        <relationship type="one" fk-name="ORDER_ITEM_RFUOM" title="RecurringFreq" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="ORDER_ITEM_RFUOM" title="RecurringFreq" related-entity-name="Uom">
             <key-map field-name="recurringFreqUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="ORDER_ITEM_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="ORDER_ITEM_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="many" related-entity-name="ProductFacilityLocation">
             <key-map field-name="productId"/>
         </relationship>
-        <relationship type="many" related-entity-name="OfbizStatusValidChange">
+        <relationship type="many" related-entity-name="StatusValidChange">
             <key-map field-name="statusId"/>
         </relationship>
-        <relationship type="one" fk-name="ORDER_ITEM_SYST" title="Sync" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="ORDER_ITEM_SYST" title="Sync" related-entity-name="StatusItem">
             <key-map field-name="syncStatusId" related-field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="ORDER_ITEM_DCUL" title="DontCancelSet" related-entity-name="UserLogin">
@@ -832,7 +832,7 @@
         <relationship type="one" fk-name="ORDER_PMPRF_FINACT" related-entity-name="FinAccount">
             <key-map field-name="finAccountId"/>
         </relationship>
-        <relationship type="one" fk-name="ORDER_PMPRF_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="ORDER_PMPRF_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="ORDER_PMPRF_USRL" related-entity-name="UserLogin">
@@ -918,7 +918,7 @@
         <field name="statusDatetime" type="date-time"/>
         <field name="statusUserLogin" type="id-very-long"/>
         <field name="changeReason" type="text-long"/>
-        <relationship type="one" fk-name="ORDER_STTS_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="ORDER_STTS_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="ORDER_STTS_OHDR" related-entity-name="OrderHeader">
@@ -958,7 +958,7 @@
         <field name="textValue" type="text-long"/>
         <field name="description" type="text-long"/>
         <field name="uomId" type="id"/>
-        <relationship type="one" fk-name="ORDER_TERM_UOM" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="ORDER_TERM_UOM" related-entity-name="Uom">
             <key-map field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="ORDER_TERM_OHDR" related-entity-name="OrderHeader">
@@ -1073,10 +1073,10 @@
         <relationship type="one" fk-name="QUOTE_PRTY" related-entity-name="Party">
             <key-map field-name="partyId"/>
         </relationship>
-        <relationship type="one" fk-name="QUOTE_STATUS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="QUOTE_STATUS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
-        <relationship type="one" fk-name="QUOTE_CUOM" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="QUOTE_CUOM" related-entity-name="Uom">
             <key-map field-name="currencyUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="QUOTE_PRDS" related-entity-name="ProductStore">
@@ -1141,7 +1141,7 @@
         <relationship type="one" fk-name="QUOTE_ITM_SKLT" related-entity-name="SkillType">
             <key-map field-name="skillTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="QUOTE_ITM_UOM" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="QUOTE_ITM_UOM" related-entity-name="Uom">
             <key-map field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="QUOTE_ITM_WKEFF" related-entity-name="WorkEffort">
@@ -1286,10 +1286,10 @@
             <key-map field-name="productPromoRuleId"/>
             <key-map field-name="productPromoActionSeqId"/>
         </relationship>
-        <relationship type="one" fk-name="QUOTE_ADJ_PRGEO" title="Primary" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="QUOTE_ADJ_PRGEO" title="Primary" related-entity-name="Geo">
             <key-map field-name="primaryGeoId" related-field-name="geoId"/>
         </relationship>
-        <relationship type="one" fk-name="QUOTE_ADJ_SCGEO" title="Secondary" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="QUOTE_ADJ_SCGEO" title="Secondary" related-entity-name="Geo">
             <key-map field-name="secondaryGeoId" related-field-name="geoId"/>
         </relationship>
         <relationship type="one" fk-name="QUOTE_ADJ_TXA" related-entity-name="TaxAuthority">
@@ -1330,13 +1330,13 @@
         <relationship type="one" fk-name="CUST_REQ_CAT" related-entity-name="CustRequestCategory">
             <key-map field-name="custRequestCategoryId"/>
         </relationship>
-        <relationship type="one" fk-name="CUST_REQ_STATUS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="CUST_REQ_STATUS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="CUST_REQ_FRMPTY" title="From" related-entity-name="Party">
             <key-map field-name="fromPartyId" related-field-name="partyId"/>
         </relationship>
-        <relationship type="one" fk-name="CUST_REQ_AUOM" title="MaximumAmount" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="CUST_REQ_AUOM" title="MaximumAmount" related-entity-name="Uom">
             <key-map field-name="maximumAmountUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="CUST_REQ_PRDS" related-entity-name="ProductStore">
@@ -1351,7 +1351,7 @@
         <relationship type="one" fk-name="CUST_REQ_FULCM" title="Fulfill" related-entity-name="ContactMech">
             <key-map field-name="fulfillContactMechId" related-field-name="contactMechId"/>
         </relationship>
-        <relationship type="one" fk-name="CUST_REQ_CUOM" title="Currency" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="CUST_REQ_CUOM" title="Currency" related-entity-name="Uom">
             <key-map field-name="currencyUomId" related-field-name="uomId"/>
         </relationship>
     </entity>
@@ -1417,7 +1417,7 @@
         <relationship type="one" fk-name="CUST_REQITM_CREQ" related-entity-name="CustRequest">
             <key-map field-name="custRequestId"/>
         </relationship>
-        <relationship type="one" fk-name="CUST_REQITM_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="CUST_REQITM_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="CUST_REQITM_RES" related-entity-name="CustRequestResolution">
@@ -1498,7 +1498,7 @@
         <field name="custRequestId" type="id"/>
         <field name="custRequestItemSeqId" type="id"/>
         <field name="statusDatetime" type="date-time"/>
-        <relationship type="one" fk-name="CUST_REQST_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="CUST_REQST_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="CUST_REQ_STRQ" related-entity-name="CustRequest">
@@ -1629,7 +1629,7 @@
         <relationship type="one" fk-name="REQ_PRODUCT" related-entity-name="Product">
             <key-map field-name="productId"/>
         </relationship>
-        <relationship type="one" fk-name="REQ_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="REQ_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
     </entity>
@@ -1699,7 +1699,7 @@
         <relationship type="one" fk-name="REQ_STTS_REQ" related-entity-name="Requirement">
             <key-map field-name="requirementId"/>
         </relationship>
-        <relationship type="one" fk-name="REQ_STTS_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="REQ_STTS_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
     </entity>
@@ -1801,10 +1801,10 @@
             <key-map field-name="productPromoRuleId"/>
             <key-map field-name="productPromoActionSeqId"/>
         </relationship>
-        <relationship type="one" fk-name="RETURN_ADJ_PRGEO" title="Primary" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="RETURN_ADJ_PRGEO" title="Primary" related-entity-name="Geo">
             <key-map field-name="primaryGeoId" related-field-name="geoId"/>
         </relationship>
-        <relationship type="one" fk-name="RETURN_ADJ_SCGEO" title="Secondary" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="RETURN_ADJ_SCGEO" title="Secondary" related-entity-name="Geo">
             <key-map field-name="secondaryGeoId" related-field-name="geoId"/>
         </relationship>
         <relationship type="one" fk-name="RETURN_ADJ_TXA" related-entity-name="TaxAuthority">
@@ -1875,10 +1875,10 @@
         <relationship type="one-nofk" related-entity-name="PostalAddress">
             <key-map field-name="originContactMechId" related-field-name="contactMechId"/>
         </relationship>
-        <relationship type="one" fk-name="RTN_STTS_ITEM" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="RTN_STTS_ITEM" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
-        <relationship type="one" fk-name="RTN_HDR_CUOM" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="RTN_HDR_CUOM" related-entity-name="Uom">
             <key-map field-name="currencyUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one-nofk" related-entity-name="UserLogin">
@@ -1931,10 +1931,10 @@
             <key-map field-name="orderId"/>
             <key-map field-name="orderItemSeqId"/>
         </relationship>
-        <relationship type="one" fk-name="RTN_ITEM_STTSIT" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="RTN_ITEM_STTSIT" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
-        <relationship type="one" fk-name="RTN_ITEM_ITSTT" title="Inventory" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="RTN_ITEM_ITSTT" title="Inventory" related-entity-name="StatusItem">
             <key-map field-name="expectedItemStatus" related-field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="RTN_ITEM_PROD" related-entity-name="Product">
@@ -2012,7 +2012,7 @@
         <field name="returnItemSeqId" type="id"/>
         <field name="changeByUserLoginId" type="id-very-long"/>
         <field name="statusDatetime" type="date-time"/>
-        <relationship type="one" fk-name="RTN_STTS_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="RTN_STTS_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="RTN_STTS_RTN" related-entity-name="ReturnHeader">
@@ -2229,7 +2229,7 @@
         <field name="opportunityStageId" type="id"/>
         <field name="typeEnumId" type="id"/>
         <field name="createdByUserLogin" type="id-very-long"/>
-        <relationship type="one" fk-name="SLSOPP_CRNCY_UOM" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="SLSOPP_CRNCY_UOM" related-entity-name="Uom">
             <key-map field-name="currencyUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="SLSOPP_STAGE" related-entity-name="SalesOpportunityStage">
@@ -2258,7 +2258,7 @@
         <field name="changeNote" type="text-very-long"/>
         <field name="modifiedByUserLogin" type="id-very-long"/>
         <field name="modifiedTimestamp" type="date-time"/>
-        <relationship type="one" fk-name="SLOPHI_CRNCY_UOM" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="SLOPHI_CRNCY_UOM" related-entity-name="Uom">
             <key-map field-name="currencyUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="SLOPHI_STAGE" related-entity-name="SalesOpportunityStage">
@@ -2356,7 +2356,7 @@
         <relationship type="one" fk-name="SALES4C_TIME_PER" related-entity-name="CustomTimePeriod">
             <key-map field-name="customTimePeriodId"/>
         </relationship>
-        <relationship type="one" fk-name="SALES4C_CUR_UOM" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="SALES4C_CUR_UOM" related-entity-name="Uom">
             <key-map field-name="currencyUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="SALES4C_CRT_USER" title="CreatedBy" related-entity-name="UserLogin">
@@ -2377,7 +2377,7 @@
         <relationship type="one" fk-name="SALES4CDTL_SALES4C" related-entity-name="SalesForecast">
             <key-map field-name="salesForecastId"/>
         </relationship>
-        <relationship type="one" fk-name="SALES4CDTL_QTY_UOM" title="Quantity" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="SALES4CDTL_QTY_UOM" title="Quantity" related-entity-name="Uom">
             <key-map field-name="quantityUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="SALES4CDTL_PROD" related-entity-name="Product">
@@ -2416,7 +2416,7 @@
         <relationship type="one" fk-name="SALES4CH_TIME_PER" related-entity-name="CustomTimePeriod">
             <key-map field-name="customTimePeriodId"/>
         </relationship>
-        <relationship type="one" fk-name="SALES4CH_CUR_UOM" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="SALES4CH_CUR_UOM" related-entity-name="Uom">
             <key-map field-name="currencyUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="SALES4CH_MOD_USER" title="ModifiedBy" related-entity-name="UserLogin">

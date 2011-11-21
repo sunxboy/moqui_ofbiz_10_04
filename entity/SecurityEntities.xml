@@ -36,7 +36,7 @@
             <key-map field-name="userLoginId"/>
         </relationship>
     </entity>
-    <entity group-name="org.ofbiz" entity-name="OfbizUserLoginHistory" table-name="USER_LOGIN_HISTORY" package-name="org.ofbiz.security.login" cache="never">
+    <entity group-name="org.ofbiz" entity-name="UserLoginHistory" table-name="USER_LOGIN_HISTORY" package-name="org.ofbiz.security.login" cache="never">
         <field name="userLoginId" type="id-very-long" is-pk="true"/>
         <field name="visitId" type="id"/>
         <field name="blackBoxToken" type="text-very-long"/>

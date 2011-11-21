@@ -184,7 +184,7 @@
         <relationship type="one" fk-name="BUDGET_STTS_BDGT" related-entity-name="Budget">
             <key-map field-name="budgetId"/>
         </relationship>
-        <relationship type="one" fk-name="BUDGET_STTS_STTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="BUDGET_STTS_STTS" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
     </entity>
@@ -231,7 +231,7 @@
         <relationship type="one" fk-name="FINACCT_TYPE" related-entity-name="FinAccountType">
             <key-map field-name="finAccountTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="FINACCT_CURUOM" title="Currency" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="FINACCT_CURUOM" title="Currency" related-entity-name="Uom">
             <key-map field-name="currencyUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="FINACCT_ORGPTY" title="Organization" related-entity-name="Party">
@@ -318,7 +318,7 @@
         <relationship type="one" fk-name="FINACT_STTS_FNA" related-entity-name="FinAccount">
             <key-map field-name="finAccountId"/>
         </relationship>
-        <relationship type="one" fk-name="FINACT_STTS_STI" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="FINACT_STTS_STI" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
     </entity>
@@ -363,7 +363,7 @@
         <relationship type="one" fk-name="FIN_ACT_REAS_ENUM" title="Reason" related-entity-name="Enumeration">
             <key-map field-name="reasonEnumId" related-field-name="enumId"/>
         </relationship>
-        <relationship type="one" fk-name="FIN_ACT_TX_STI" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="FIN_ACT_TX_STI" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="FIN_ACT_TX_GLREC" related-entity-name="GlReconciliation">
@@ -536,7 +536,7 @@
             <key-map field-name="acquireOrderId" related-field-name="orderId"/>
             <key-map field-name="acquireOrderItemSeqId" related-field-name="orderItemSeqId"/>
         </relationship>
-        <relationship type="one" fk-name="FIXEDAST_UOM" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="FIXEDAST_UOM" related-entity-name="Uom">
             <key-map field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="FIXEDAST_CALENDAR" related-entity-name="TechDataCalendar">
@@ -581,7 +581,7 @@
         <relationship type="one" fk-name="FXDASTGEOPT_FXDAST" related-entity-name="FixedAsset">
             <key-map field-name="fixedAssetId"/>
         </relationship>
-        <relationship type="one" fk-name="FXDASTGEOPT_GEOPT" related-entity-name="OfbizGeoPoint">
+        <relationship type="one" fk-name="FXDASTGEOPT_GEOPT" related-entity-name="GeoPoint">
             <key-map field-name="geoPointId"/>
         </relationship>
     </entity>
@@ -592,7 +592,7 @@
         <member-entity entity-alias="FAGPT" entity-name="FixedAssetGeoPoint" join-from-alias="FA">
             <key-map field-name="fixedAssetId"/>
         </member-entity>
-        <member-entity entity-alias="GPT" entity-name="OfbizGeoPoint" join-from-alias="FAGPT">
+        <member-entity entity-alias="GPT" entity-name="GeoPoint" join-from-alias="FAGPT">
             <key-map field-name="geoPointId"/>
         </member-entity>
         <alias-all entity-alias="GPT">
@@ -610,7 +610,7 @@
         <relationship type="one-nofk" related-entity-name="FixedAsset">
             <key-map field-name="fixedAssetId"/>
         </relationship>
-        <relationship type="one-nofk" related-entity-name="OfbizGeoPoint">
+        <relationship type="one-nofk" related-entity-name="GeoPoint">
             <key-map field-name="geoPointId"/>
         </relationship>
     </view-entity> -->
@@ -649,7 +649,7 @@
         <relationship type="one" fk-name="FXDASTMNT_SCHWE" title="Schedule" related-entity-name="WorkEffort">
             <key-map field-name="scheduleWorkEffortId" related-field-name="workEffortId"/>
         </relationship>
-        <relationship type="one" fk-name="FXDASTMNT_INTUOM" title="Interval" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="FXDASTMNT_INTUOM" title="Interval" related-entity-name="Uom">
             <key-map field-name="intervalUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="FXDASTMNT_PDMTTYP" title="Interval" related-entity-name="ProductMeterType">
@@ -658,7 +658,7 @@
         <relationship type="one" fk-name="FXDASTMNT_PURORD" title="Purchase" related-entity-name="OrderHeader">
             <key-map field-name="purchaseOrderId" related-field-name="orderId"/>
         </relationship>
-        <relationship type="one" fk-name="FXDASTMNT_SI" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="FXDASTMNT_SI" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
     </entity>
@@ -710,7 +710,7 @@
         <relationship type="one" fk-name="FIXDASTPRD_FAPT" related-entity-name="FixedAssetProductType">
             <key-map field-name="fixedAssetProductTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="FIXDASTPRD_UOM" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="FIXDASTPRD_UOM" related-entity-name="Uom">
             <key-map field-name="quantityUomId" related-field-name="uomId"/>
         </relationship>
     </entity>
@@ -780,7 +780,7 @@
         <relationship type="one" fk-name="FIXASTCO_TYPCOS" related-entity-name="FixedAssetStdCostType">
             <key-map field-name="fixedAssetStdCostTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="FIXASTCO_AMCURR" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="FIXASTCO_AMCURR" related-entity-name="Uom">
             <key-map field-name="amountUomId" related-field-name="uomId"/>
         </relationship>
     </entity>
@@ -837,7 +837,7 @@
         <relationship type="one" fk-name="PTY_FASTAS_FA" related-entity-name="FixedAsset">
             <key-map field-name="fixedAssetId"/>
         </relationship>
-        <relationship type="one" fk-name="PTY_FASTAS_SI" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="PTY_FASTAS_SI" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
     </entity>
@@ -946,7 +946,7 @@
             <key-map field-name="partyId"/>
             <key-map field-name="roleTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="INVOICE_STTSITM" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="INVOICE_STTSITM" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="INVOICE_BILLACCT" related-entity-name="BillingAccount">
@@ -955,7 +955,7 @@
         <relationship type="one" fk-name="INVOICE_CMECH" related-entity-name="ContactMech">
             <key-map field-name="contactMechId"/>
         </relationship>
-        <relationship type="one" fk-name="INVOICE_CUOM" title="Currency" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="INVOICE_CUOM" title="Currency" related-entity-name="Uom">
             <key-map field-name="currencyUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="INVOICE_RECINFO" related-entity-name="RecurrenceInfo">
@@ -1033,7 +1033,7 @@
             <key-map field-name="invoiceId" related-field-name="parentInvoiceId"/>
             <key-map field-name="invoiceItemSeqId" related-field-name="parentInvoiceItemSeqId"/>
         </relationship>
-        <relationship type="one" fk-name="INVCE_ITM_UOM" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="INVCE_ITM_UOM" related-entity-name="Uom">
             <key-map field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="INVCE_ITM_ORGLA" title="Override" related-entity-name="GlAccount">
@@ -1042,7 +1042,7 @@
         <relationship type="one" fk-name="INVCE_ITM_TAXPTY" title="TaxAuthority" related-entity-name="Party">
             <key-map field-name="taxAuthPartyId" related-field-name="partyId"/>
         </relationship>
-        <relationship type="one" fk-name="INVCE_ITM_TAXGEO" title="Tax" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="INVCE_ITM_TAXGEO" title="Tax" related-entity-name="Geo">
             <key-map field-name="taxAuthGeoId" related-field-name="geoId"/>
         </relationship>
         <relationship type="one" fk-name="INVOICE_ITM_TARP" related-entity-name="TaxAuthorityRateProduct">
@@ -1185,7 +1185,7 @@
         <field name="statusId" type="id" is-pk="true"/>
         <field name="invoiceId" type="id" is-pk="true"/>
         <field name="statusDate" type="date-time" is-pk="true"/>
-        <relationship type="one" fk-name="INVCE_STS_STSITM" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="INVCE_STS_STSITM" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="INVCE_STS_INVCE" related-entity-name="Invoice">
@@ -1280,7 +1280,7 @@
         <relationship type="many" related-entity-name="InvoiceItem">
             <key-map field-name="invoiceId"/>
         </relationship>
-        <relationship type="one-nofk" related-entity-name="OfbizStatusItem">
+        <relationship type="one-nofk" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="many" related-entity-name="PaymentApplication">
@@ -1363,7 +1363,7 @@
         <relationship type="one" fk-name="ACCTTX_GLFST" related-entity-name="GlFiscalType">
             <key-map field-name="glFiscalTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="ACCTTX_GRPSTTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="ACCTTX_GRPSTTS" related-entity-name="StatusItem">
             <key-map field-name="groupStatusId" related-field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="ACCTTX_FASSET" related-entity-name="FixedAsset">
@@ -1451,10 +1451,10 @@
         <relationship type="one" fk-name="ACCTTXENT_ATET" related-entity-name="AcctgTransEntryType">
             <key-map field-name="acctgTransEntryTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="ACCTTXENT_CURNCY" title="Currency" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="ACCTTXENT_CURNCY" title="Currency" related-entity-name="Uom">
             <key-map field-name="currencyUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="ACCTTXENT_OCURNCY" title="OrigCurrency" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="ACCTTXENT_OCURNCY" title="OrigCurrency" related-entity-name="Uom">
             <key-map field-name="origCurrencyUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="ACCTTXENT_ACTX" related-entity-name="AcctgTrans">
@@ -1483,7 +1483,7 @@
             <key-map field-name="glAccountId"/>
             <key-map field-name="organizationPartyId"/>
         </relationship>
-        <relationship type="one" fk-name="ACCTTXENT_RCSTS" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="ACCTTXENT_RCSTS" related-entity-name="StatusItem">
             <key-map field-name="reconcileStatusId" related-field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="ACCTTXENT_STLEN" related-entity-name="SettlementTerm">
@@ -1926,7 +1926,7 @@
         <relationship type="one" fk-name="GLREC_GLPARTY" related-entity-name="Party">
             <key-map field-name="organizationPartyId" related-field-name="partyId"/>
         </relationship>
-        <relationship type="one" fk-name="GLREC_STI" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="GLREC_STI" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
     </entity>
@@ -1983,7 +1983,7 @@
         <relationship type="one" fk-name="ACTGPREF_COGS" title="Cogs" related-entity-name="Enumeration">
             <key-map field-name="cogsMethodId" related-field-name="enumId"/>
         </relationship>
-        <relationship type="one" fk-name="ACCTGPREF_CURNCY" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="ACCTGPREF_CURNCY" related-entity-name="Uom">
             <key-map field-name="baseCurrencyUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="ACTGPREF_INVSQ" title="InvoiceSequence" related-entity-name="Enumeration">
@@ -2066,7 +2066,7 @@
         <relationship type="one" fk-name="BILLACCT_CMECH" related-entity-name="ContactMech">
             <key-map field-name="contactMechId"/>
         </relationship>
-        <relationship type="one" fk-name="BILLACCT_CUOM" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="BILLACCT_CUOM" related-entity-name="Uom">
             <key-map field-name="accountCurrencyUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="BILLACCT_PADDR" related-entity-name="PostalAddress">
@@ -2172,7 +2172,7 @@
         <field name="termValue" type="currency-amount"/>
         <field name="termDays" type="number-integer"/>
         <field name="uomId" type="id"/>
-        <relationship type="one" fk-name="BILLACCT_TRM_UOM" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="BILLACCT_TRM_UOM" related-entity-name="Uom">
             <key-map field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="BILLACCT_TRM_TRM" related-entity-name="TermType">
@@ -2342,10 +2342,10 @@
         <relationship type="one" fk-name="PAYMENT_PMETH" related-entity-name="PaymentMethod">
             <key-map field-name="paymentMethodId"/>
         </relationship>
-        <relationship type="one" fk-name="PAYMENT_CUOM" title="Currency" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="PAYMENT_CUOM" title="Currency" related-entity-name="Uom">
             <key-map field-name="currencyUomId" related-field-name="uomId"/>
         </relationship>
-        <relationship type="one" fk-name="PAYMENT_ACUOM" title="ActualCurrency" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="PAYMENT_ACUOM" title="ActualCurrency" related-entity-name="Uom">
             <key-map field-name="actualCurrencyUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one-nofk" related-entity-name="CreditCard">
@@ -2376,7 +2376,7 @@
             <key-map field-name="partyIdTo" related-field-name="partyId"/>
             <key-map field-name="roleTypeIdTo" related-field-name="roleTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="PAYMENT_STTSITM" related-entity-name="OfbizStatusItem">
+        <relationship type="one" fk-name="PAYMENT_STTSITM" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one" fk-name="PAYMENT_FACTX" related-entity-name="FinAccountTrans">
@@ -2402,7 +2402,7 @@
         <member-entity entity-alias="PMT" entity-name="PaymentMethodType" join-from-alias="PY">
             <key-map field-name="paymentMethodTypeId"/>
         </member-entity>
-        <member-entity entity-alias="SI" entity-name="OfbizStatusItem" join-from-alias="PY">
+        <member-entity entity-alias="SI" entity-name="StatusItem" join-from-alias="PY">
             <key-map field-name="statusId"/>
         </member-entity>
         <alias-all entity-alias="PY">
@@ -2483,7 +2483,7 @@
         <relationship type="one-nofk" related-entity-name="PaymentApplication">
             <key-map field-name="paymentApplicationId"/>
         </relationship>
-        <relationship type="one-nofk" related-entity-name="OfbizStatusItem">
+        <relationship type="one-nofk" related-entity-name="StatusItem">
             <key-map field-name="statusId"/>
         </relationship>
         <relationship type="one-nofk" related-entity-name="PaymentType">
@@ -2495,7 +2495,7 @@
         <relationship type="one-nofk" related-entity-name="PaymentGatewayResponse">
             <key-map field-name="paymentGatewayResponseId"/>
         </relationship>
-        <relationship type="one-nofk" related-entity-name="OfbizGeo">
+        <relationship type="one-nofk" related-entity-name="Geo">
             <key-map field-name="taxAuthGeoId" related-field-name="geoId"/>
         </relationship>
     </view-entity> -->
@@ -2525,7 +2525,7 @@
         <relationship type="one" fk-name="PAYMENT_APP_TPMT" title="To" related-entity-name="Payment">
             <key-map field-name="toPaymentId" related-field-name="paymentId"/>
         </relationship>
-        <relationship type="one" fk-name="PAYMENT_APP_GEO" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="PAYMENT_APP_GEO" related-entity-name="Geo">
             <key-map field-name="taxAuthGeoId" related-field-name="geoId"/>
         </relationship>
         <relationship type="one" fk-name="PAYMENT_APP_ORGLA" related-entity-name="GlAccount">
@@ -3005,7 +3005,7 @@
         <relationship type="one" fk-name="PAYGATR_TXCODE" title="TranCode" related-entity-name="Enumeration">
             <key-map field-name="transCodeEnumId" related-field-name="enumId"/>
         </relationship>
-        <relationship type="one" fk-name="PAYGATR_CUOM" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="PAYGATR_CUOM" related-entity-name="Uom">
             <key-map field-name="currencyUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="PAYGATR_ORDPMPRF" related-entity-name="OrderPaymentPreference">
@@ -3108,7 +3108,7 @@
         <member-entity entity-alias="PG" entity-name="PartyGroup" join-from-alias="PTAI">
             <key-map field-name="taxAuthPartyId" related-field-name="partyId"/>
         </member-entity>
-        <member-entity entity-alias="GEO" entity-name="OfbizGeo" join-from-alias="PTAI">
+        <member-entity entity-alias="GEO" entity-name="Geo" join-from-alias="PTAI">
             <key-map field-name="taxAuthGeoId" related-field-name="geoId"/>
         </member-entity>
         <alias-all entity-alias="PTAI">
@@ -3124,7 +3124,7 @@
         <field name="requireTaxIdForExemption" type="text-indicator"/>
         <field name="taxIdFormatPattern" type="text-long"/>
         <field name="includeTaxInPrice" type="text-indicator"/>
-        <relationship type="one" fk-name="TAXAUTH_TAGEO" title="TaxAuth" related-entity-name="OfbizGeo">
+        <relationship type="one" fk-name="TAXAUTH_TAGEO" title="TaxAuth" related-entity-name="Geo">
             <key-map field-name="taxAuthGeoId" related-field-name="geoId"/>
         </relationship>
         <relationship type="one" fk-name="TAXAUTH_TAPARTY" title="TaxAuth" related-entity-name="Party">
@@ -3138,7 +3138,7 @@
         <member-entity entity-alias="PG" entity-name="PartyGroup" join-from-alias="TA">
             <key-map field-name="taxAuthPartyId" related-field-name="partyId"/>
         </member-entity>
-        <member-entity entity-alias="GEO" entity-name="OfbizGeo" join-from-alias="TA">
+        <member-entity entity-alias="GEO" entity-name="Geo" join-from-alias="TA">
             <key-map field-name="taxAuthGeoId" related-field-name="geoId"/>
         </member-entity>
         <alias-all entity-alias="TA">
@@ -3370,7 +3370,7 @@
         <relationship type="one" fk-name="RATE_AMOUNT_RT" related-entity-name="RateType">
             <key-map field-name="rateTypeId"/>
         </relationship>
-        <relationship type="one" fk-name="RATE_AMOUNT_RCT" related-entity-name="OfbizUom">
+        <relationship type="one" fk-name="RATE_AMOUNT_RCT" related-entity-name="Uom">
             <key-map field-name="rateCurrencyUomId" related-field-name="uomId"/>
         </relationship>
         <relationship type="one" fk-name="RATE_AMOUNT_WE" related-entity-name="WorkEffort">
